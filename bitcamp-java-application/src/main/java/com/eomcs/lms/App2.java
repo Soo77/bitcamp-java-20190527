@@ -23,6 +23,7 @@ public class App2 {
     System.out.print("가입일? ");
     String signupDate = keyScan.nextLine();
     
+    System.out.println();
     
     System.out.println("번호: " + no);
     System.out.println("이름: " + name);
