@@ -1,12 +1,12 @@
-package com.eomcs.lms;
+package com.eomcs.lms.util;
 
 import java.sql.Date;
 import java.util.Scanner;
 
 public class Input {
-  static Scanner keyScan;
+  public static Scanner keyScan;
   
-  static String getStringValue(String msg) {
+  public static String getStringValue(String msg) {
     while(true) {
       try {
         System.out.print(msg);
@@ -17,7 +17,7 @@ public class Input {
     }
   }
 
-  static int getIntValue(String msg) {
+  public static int getIntValue(String msg) {
     while(true) {
       try {
         System.out.print(msg);
@@ -28,7 +28,7 @@ public class Input {
     }
   }
   
-  static Date getDateValue(String msg) {
+  public static Date getDateValue(String msg) {
     while(true) {
       try {
         System.out.print(msg);
