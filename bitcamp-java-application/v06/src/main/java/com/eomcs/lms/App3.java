@@ -11,18 +11,20 @@ public class App3 {
   public static void main(String[] args) {
     keyScan = new Scanner(System.in);
 
-    Board[] boards = new Board[100];
-   
-    int i=0;
-    for( ; i < boards.length; i++) {
-      Board board = new Board();
-      
-      board.no = getIntValue("번호 ?");
-      board.contents = getStringValue("내용? ");
-      board.createdDate = new Date(System.currentTimeMillis());
-      board.viewCount = getIntValue("조회수? ");
 
-      boards[i] = board;
+    int[] no = new int[100];
+    String[] name = new String[100];
+    Date[] writeDate = new Date[100];
+    int[] viewNum = new int[100];
+
+    int i=0;
+    
+    while(true) {
+      no[i] = getIntValue("번호 ?");
+      name[i] = getStringValue("내용? ");
+      writeDate[i] = getDateValue("작성일? ");
+      viewNum[i] = getIntValue("조회수? ");
+      i++;
       
       System.out.println("계속 입력하시겠습니까?(Y/n)");
       String response = keyScan.nextLine();
@@ -34,17 +36,17 @@ public class App3 {
     System.out.println();
     
     int i2=0;
-    for( ; i2 <= i; i2++) {
-      Board board = boards[i2];
+    while(i2 < i) {
       System.out.printf("%s, %s, %s, %s\n", 
-          board.no, board.contents, board.createdDate, board.viewCount);
+          no[i2], name[i2], writeDate[i2], viewNum[i2]);
+      i2++;
     }
   }
 
     
 
   private static int getIntValue(String msg) {
-    while (true) {
+    while(true) {
       try {
         System.out.print(msg);
         return Integer.parseInt(keyScan.nextLine());
@@ -53,9 +55,9 @@ public class App3 {
       }
     }
   }
-
+  
   private static java.sql.Date getDateValue(String msg) {
-    while (true) {
+    while(true) {
       try {
         System.out.print(msg);
         return java.sql.Date.valueOf(keyScan.nextLine());
@@ -64,9 +66,9 @@ public class App3 {
       }
     }
   }
-
+  
   private static String getStringValue(String msg) {
-    while (true) {
+    while(true) {
       try {
         System.out.print(msg);
         return keyScan.nextLine();

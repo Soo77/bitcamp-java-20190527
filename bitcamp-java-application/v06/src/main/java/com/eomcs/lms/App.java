@@ -12,30 +12,25 @@ public class App {
   public static void main(String[] args) {
     keyScan = new Scanner(System.in);
     
-    Lesson[] lessons = new Lesson[100];
-    
-
-    
+    int[] no = new int[100];
+    String[] lectureName = new String[100];
+    String[] description = new String[100];
+    Date[] startDate = new Date[100];
+    Date[] endDate = new Date[100];
+    int[] totalHours = new int[100];
+    int[] dayHours = new int[100];
     
     int i=0;
-    for( ; i < lessons.length; i++) {
-      
-      // 수업 데이터를 저장할 메모리를 Lesson 설계도에 따라 만든다.
-      Lesson lesson = new Lesson();
-      
-      // 사용자가 입력한 값을 Lesson 인스턴스의 각 변수에 저장한다.
-      lesson.no = getIntValue("번호 ?");
-      lesson.title = getStringValue("수업명? ");
-      lesson.contents = getStringValue("설명? ");
-      lesson.startDate = getDateValue("시작일? ");
-      lesson.endDate = getDateValue("종료일? ");
-      lesson.totalHours = getIntValue("총 수업시간? ");
-      lesson.dayHours = getIntValue("일 수업시간? ");
-
-      
-      // 수업 데이터를 저장하고 있는 인스턴스의 주소를 레퍼런스 배열에 저장한다.
-      
-
+    
+    while(true) {
+      no[i] = getIntValue("번호 ?");
+      lectureName[i] = getStringValue("수업명? ");
+      description[i] = getStringValue("설명? ");
+      startDate[i] = getDateValue("시작일? ");
+      endDate[i] = getDateValue("종료일? ");
+      totalHours[i] = getIntValue("총 수업시간? ");
+      dayHours[i] = getIntValue("일 수업시간? ");
+      i++;
       
       System.out.println("계속 입력하시겠습니까?(Y/n)");
       String response = keyScan.nextLine();
@@ -45,16 +40,11 @@ public class App {
     }
     System.out.println();
     
-    int i2 = 0;
-    for ( ; i2 <= i; i2++) {
-      
-      // 레퍼런스 배열에서 한 개의 인스턴스 주소를 꺼낸다.
-      Lesson lesson = lessons[i2];
-      
-      // 그 인스턴스 주소로 찾아가서 인스턴스의 각 변수 값을 꺼내 출력한다.
+    int i2=0;
+    while(i2 < i) {
       System.out.printf("%s, %s, %s ~ %s, %s, %s\n", 
-          lesson.no, lesson.title, lesson.contents, 
-          lesson.startDate, lesson.endDate, lesson.totalHours, lesson.dayHours);
+          no[i2], lectureName[i2], description[i2], startDate[i2], endDate[i2], totalHours[i2], dayHours[i2]);
+      i2++;
     }
   }
   

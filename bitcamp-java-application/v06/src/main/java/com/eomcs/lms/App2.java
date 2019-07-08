@@ -3,26 +3,33 @@ package com.eomcs.lms;
 import java.sql.Date;
 import java.util.Scanner;
 
-public class App3 {
+public class App2 {
 
   static Scanner keyScan;
-  
   
   public static void main(String[] args) {
     keyScan = new Scanner(System.in);
 
-    Board[] boards = new Board[100];
-   
+    
+    int[] no = new int[100];
+    String[] lectureName = new String[100];
+    String[] email = new String[100];
+    String[] pw = new String[100];
+    String[] pic = new String[100];
+    String[] phoneNum = new String[100];
+    Date[] signedUpDate = new Date[100];
+    
     int i=0;
-    for( ; i < boards.length; i++) {
-      Board board = new Board();
-      
-      board.no = getIntValue("번호 ?");
-      board.contents = getStringValue("내용? ");
-      board.createdDate = new Date(System.currentTimeMillis());
-      board.viewCount = getIntValue("조회수? ");
-
-      boards[i] = board;
+    
+    while(true) {
+      no[i] = getIntValue("번호 ?");
+      lectureName[i] = getStringValue("이름? ");
+      email[i] = getStringValue("이메일? ");
+      pw[i] = getStringValue("암호? ");
+      pic[i] = getStringValue("사진? ");
+      phoneNum[i] = getStringValue("전화? ");
+      signedUpDate[i] = getDateValue("가입일? ");
+      i++;
       
       System.out.println("계속 입력하시겠습니까?(Y/n)");
       String response = keyScan.nextLine();
@@ -30,21 +37,21 @@ public class App3 {
         break;
       }
     }
-
+    
+    
     System.out.println();
     
     int i2=0;
-    for( ; i2 <= i; i2++) {
-      Board board = boards[i2];
-      System.out.printf("%s, %s, %s, %s\n", 
-          board.no, board.contents, board.createdDate, board.viewCount);
+    while(i2 < i) {
+      System.out.printf("%s, %s, %s ~ %s, %s, %s\n", 
+          no[i2], lectureName[i2], email[i2], pw[i2], pic[i2], phoneNum[i2], signedUpDate[i2]);
+      i2++;
     }
   }
-
-    
-
+  
+  
   private static int getIntValue(String msg) {
-    while (true) {
+    while(true) {
       try {
         System.out.print(msg);
         return Integer.parseInt(keyScan.nextLine());
@@ -53,9 +60,9 @@ public class App3 {
       }
     }
   }
-
+  
   private static java.sql.Date getDateValue(String msg) {
-    while (true) {
+    while(true) {
       try {
         System.out.print(msg);
         return java.sql.Date.valueOf(keyScan.nextLine());
@@ -64,9 +71,9 @@ public class App3 {
       }
     }
   }
-
+  
   private static String getStringValue(String msg) {
-    while (true) {
+    while(true) {
       try {
         System.out.print(msg);
         return keyScan.nextLine();
@@ -75,4 +82,5 @@ public class App3 {
       }
     }
   }
+
 }
