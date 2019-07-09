@@ -5,12 +5,13 @@ import java.util.Scanner;
 import com.eomcs.lms.domain.Board;
 import com.eomcs.lms.util.Input;
 
-public class BoardHandler2 {
-  public static Scanner keyScan;
-  static Board[] boards = new Board[100];
-  static int boardsSize = 0;
+public class BoardHandler {
+  private Board[] boards = new Board[100];
+  private int boardsSize = 0;
   
-    public static void listBoard() {
+  public static Scanner keyScan;
+  
+    public void listBoard() {
     for(int i=0; i < boardsSize; i++) {
       Board board = boards[i];
       System.out.printf("%s, %s, %s\n\n", 
@@ -19,7 +20,7 @@ public class BoardHandler2 {
   }
 
 
-    public static void addBoard() {
+    public void addBoard() {
     Board board = new Board();
     
     board.no = Input.getIntValue("번호 ?");
