@@ -2,6 +2,7 @@
 package ch06;
 
 public class Test11 {
+
   public static void main(String[] args) {
     int value = 100;
     
