@@ -17,6 +17,7 @@ public class Test15 {
     Date d3 = new Date(System.currentTimeMillis());
     System.out.println(d3);
     
+    // 기준이 1900년 +119하면 2019년
     Date d4 = new Date(119, 0, 15);
     System.out.println(d4);
     

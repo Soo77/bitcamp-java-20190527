@@ -32,6 +32,7 @@ class Monitor6 {
     this.heightRes = 1200;
   }
   
+
   public void on() {
     // 모니터를 켜면 bright, contrast, widthRes, heightRes 값에 맞춰서 
     // LCD의 불을 밝힌다.

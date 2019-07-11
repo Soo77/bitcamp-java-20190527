@@ -36,7 +36,7 @@ public class Test03 {
     s1 = new Score(); // Score 설계도에 따라 메모리(변수들)를 준비시킨다.
                       // 그리고 메모리의 주소를 레퍼런스에 저장한다.
     
-    Class c = Class.forName("ch07.Test03$Score");
+    Class c = Class.forName("ch07.Test03$Score");//Test03 안에 Score클래스가 있다는 뜻. Score클래스는 중첩 클래스
     Score s3 = (Score)c.newInstance();
     
     
@@ -51,7 +51,6 @@ public class Test03 {
     s1.name = "홍길동";
     s1.kor = 100;
     s1.eng = 100;
-    s1.math = 100;
     
     s2.name = "임꺽정";
     s2.kor = 90;

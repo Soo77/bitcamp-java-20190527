@@ -59,12 +59,16 @@ public class Test09 {
       float aver;
     }
     
+    class Score5 {
+      
+    }
+    
     // 익명 클래스(anonymouse class)
     // => 클래스 이름이 없는 중첩 클래스이다.
     // => 딱 한 개의 인스턴스를 생성할 때 사용한다.
     // => 클래스를 정의할 때 수퍼 클래스나 인터페이스를 지정해야 한다.
     // => 클래스를 정의할 때 new 연산자를 사용하여 즉시 인스턴스를 생성해야 한다.
-    Object obj = new Object() {
+    Object obj = new Object() { //익명 클래스
       String name;
       int age;
     };

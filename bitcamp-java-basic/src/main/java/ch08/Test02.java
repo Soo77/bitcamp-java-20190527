@@ -1,6 +1,8 @@
 // 클래스 로딩과 클래스 필드의 생성, Method Area의 관계
 package ch08;
 
+import java.util.Scanner;
+
 class My2 {
   // 클래스 필드
   static String manager = "관리자";
@@ -15,8 +17,23 @@ class My2 {
 
 public class Test02 {
   public static void main(String[] args) {
+    
+    // 클래스에 대해 레퍼런스 변수를 만들 때는 클래스를 로딩하지 않는다. 여기선 에러안뜸.
+    My2 temp;
+    
+    Scanner keyScan = new Scanner(System.in);
+    System.out.println("> ");
+    keyScan.nextLine(); // 사용자가 입력한 값 중에서 Line Feed(LF; 0x0A) 코드를 
+    
+    // 다음과 같이 My2 클래스를 사용하는 시점에
+    // My.class 파일을 Method Area 영역에 로딩한다.
+    // 이것을 테스트하려면 이 클래스를 실행하기 전에 My2.class 파일을 삭제하라.
+    // 그리고 이 클래스를 실행하면 위의 코드를 실행할 때는 오류가 발생하지 않는다.
+    // 그러나 아래의 아래의 코드를 실행할 때 My2.class가 없다고 오류가 발생한다.
     System.out.println(My2.manager);
     System.out.println(My2.member);
+    
+    
     
     // 클래스 로딩 과정
     //      $ java ch08.Test02
