@@ -24,7 +24,7 @@ public class App {
     //   "의존성 주입(Dependency Injection; DI)"라고 한다.
     // => DI를 전문적으로 관리해주는 프레임워크가 있으니 그 이름도 유명한
     //   Spring IoC 컨테이너!
-    LessonHandler lessonHandler = new LessonHandler(input);
+    LessonHandler lessonHandler = new LessonHandler(input); 
     MemberHandler memberHandler = new MemberHandler(input);
     BoardHandler boardHandler = new BoardHandler(input);
     BoardHandler boardHandler2 = new BoardHandler(input);
