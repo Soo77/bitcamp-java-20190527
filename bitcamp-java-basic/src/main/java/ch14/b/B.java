@@ -22,11 +22,11 @@ public class B extends A {
   
   // => 접근 범위를 확대하는 것은 괜찮다.
   //@Override protected void m1(int a) {} // OK!
-  @Override public void m1(int a) {} // OK!
+  //@Override public void m1(int a) {} // OK!
   
   // => 접근 범위를 축소하는 것은 안된다.
   //@Override void m2(String a, int b) {} // 컴파일 오류!
-  @Override public void m2(String a, int b) {} // OK!
+  //@Override public void m2(String a, int b) {} // OK!
 }
 
 

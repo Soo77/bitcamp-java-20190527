@@ -41,6 +41,16 @@ public class Test11 {
       System.out.println("obj3 == obj4");
     else 
       System.out.println("obj3 != obj4");
+    
+    
+    Integer obj5 = 100;
+    Integer obj6 = 100;
+    System.out.println(obj5 == obj6);
+    System.out.println(obj3 == obj5);
+    
+    // Wrapper 객체를 valueOf()나 리터럴로 생성할 때는 
+    // String 객체와 마찬가지로 상수 풀에 생성된다.
+    // 그리고 같은 값인경우 중복생성되지 않는다.
   }
 }
 
