@@ -21,10 +21,10 @@ public class BoardHandler {
   
   
   public void listBoard() {
-//    Board[] boards = new Board[boardList.size()]; // 정확한 크기의 배열을 만듦
-//    boardList.toArray(boards);
+    Board[] boards = new Board[boardList.size()]; // 정확한 크기의 배열을 만듦
+    boardList.toArray(boards);
     
-    Board[] boards = boardList.toArray(new Board[] {}); // 배열크기 주지 않음.
+//    Board[] boards = boardList.toArray(new Board[] {}); // 배열크기 주지 않음.
     for(Board board : boards) {
       System.out.printf("%s, %s, %s, %s\n", 
           board.getNo(), board.getContents(), board.getCreatedDate(), board.getViewCount());
