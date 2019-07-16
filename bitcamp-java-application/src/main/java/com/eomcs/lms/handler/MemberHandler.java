@@ -7,25 +7,13 @@ import com.eomcs.util.Input;
 
 public class MemberHandler {
   
-  private ArrayList memberList = new ArrayList();
+  private ArrayList<Member> memberList = new ArrayList<>();
   public Input input;
   
   public MemberHandler(Input input) {
     this.input = input;
   }
   
-  public void listMember() {
-    Object[] list = memberList.toArray();
-    for (Object obj : list){
-      Member member = (Member) obj;
-      System.out.printf("%s, %s, %s, %s, %s, %s, %s\n", 
-          member.getNo(), member.getLectureName(), member.getEmail(), member.getPw(), 
-          member.getPic(), member.getPhoneNum(), member.getSignedUpDate());
-    }
-  }
-
-
-
   public void addMember() {
     Member member = new Member();
     
@@ -42,7 +30,12 @@ public class MemberHandler {
     
   }
   
-  
-  
-
+  public void listMember() {
+    Member[] members = memberList.toArray(new Member[] {});
+    for (Member member : members){
+      System.out.printf("%s, %s, %s, %s, %s, %s, %s\n", 
+          member.getNo(), member.getLectureName(), member.getEmail(), member.getPw(), 
+          member.getPic(), member.getPhoneNum(), member.getSignedUpDate());
+    }
+  }
 }

@@ -7,7 +7,7 @@ import com.eomcs.util.Input;
 
 public class BoardHandler {
 
-  private ArrayList boardList = new ArrayList();
+  private ArrayList<Board> boardList = new ArrayList<>();
   private Input input;
   
   // BoardHandler가 사용하는 Input 객체를 반드시 설정하도록 강제해보자!
@@ -21,9 +21,11 @@ public class BoardHandler {
   
   
   public void listBoard() {
-    Object[] list = boardList.toArray();
-    for(Object obj : list) {
-      Board board = (Board) obj;
+//    Board[] boards = new Board[boardList.size()]; // 정확한 크기의 배열을 만듦
+//    boardList.toArray(boards);
+    
+    Board[] boards = boardList.toArray(new Board[] {}); // 배열크기 주지 않음.
+    for(Board board : boards) {
       System.out.printf("%s, %s, %s, %s\n", 
           board.getNo(), board.getContents(), board.getCreatedDate(), board.getViewCount());
     }    
