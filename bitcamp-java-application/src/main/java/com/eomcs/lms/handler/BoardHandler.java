@@ -2,6 +2,8 @@ package com.eomcs.lms.handler;
 
 import java.sql.Date;
 import com.eomcs.lms.domain.Board;
+import com.eomcs.lms.domain.Lesson;
+import com.eomcs.lms.domain.Member;
 import com.eomcs.util.ArrayList;
 import com.eomcs.util.Input;
 
@@ -26,7 +28,7 @@ public class BoardHandler {
     
 //    Board[] boards = boardList.toArray(new Board[] {}); // 배열크기 주지 않음.
     for(Board board : boards) {
-      System.out.printf("%s, %s, %s, %s\n", 
+      System.out.printf("%s, %s \t, %s, %s\n", 
           board.getNo(), board.getContents(), board.getCreatedDate(), board.getViewCount());
     }    
   }
@@ -40,6 +42,72 @@ public class BoardHandler {
     
     boardList.add(board);
     System.out.println("저장하였습니다.");
+  }
+
+
+  public void detailBoard() {
+    int no = input.getIntValue("번호 ?");
+    
+    // 사용자가 입력한 번호를 가지고 목록에서 그 번호에 해당하는 Lesson 객체를 찾는다.
+    Board board = null;
+    for (int i = 0; i < boardList.size(); i++) {
+      Board temp = boardList.get(i);
+      if (temp.getNo() == no) {
+        board = temp;
+        break; 
+      }
+    }
+    
+    if (board == null) {
+      System.out.println("해당 번호의 데이터가 없습니다.");
+      return; // 함수 리턴타입이 void라면 함수를 끝내고싶을때 그냥 return하면 됨.
+    }
+    
+    // null이 아니면 데이터를 찾았다는 것이기 떄문에 찾은 데이터를 프린트해준다.
+    System.out.printf("내용: %s\n", board.getContents());
+    System.out.printf("작성일: %s\n", board.getCreatedDate());
+  }
+
+
+  public void updateBoard() {
+    int no = input.getIntValue("번호 ?");
+    
+    // 사용자가 입력한 번호를 가지고 목록에서 그 번호에 해당하는 Lesson 객체를 찾는다.
+    Board board = null;
+    for (int i = 0; i < boardList.size(); i++) {
+      Board temp = boardList.get(i);
+      if (temp.getNo() == no) {
+        board = temp;
+        break; 
+      }
+    }
+    
+    if (board == null) {
+      System.out.println("해당 게시글을 찾을 수 없습니다.");
+      return; // 함수 리턴타입이 void라면 함수를 끝내고싶을때 그냥 return하면 됨.
+    }
+    
+    String str = input.getStringValue("내용(" + board.getContents() + ")? ");
+    if (str.length() > 0) {
+      board.setContents(str);
+    }
+
+    System.out.println("게시글을 변경하였습니다.");
+  }
+
+
+  public void deleteBoard() {
+    int no = input.getIntValue("번호 ?");
+    
+    for (int i = 0; i < boardList.size(); i++) {
+      Board temp = boardList.get(i);
+      if (temp.getNo() == no) {
+        boardList.remove(i);
+        System.out.println("게시글을 삭제하였습니다.");
+        return; 
+      }
+    }
+      System.out.println("해당 게시글을 찾을 수 없습니다.");
   }
   
   
