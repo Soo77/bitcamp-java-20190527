@@ -28,7 +28,7 @@ public class Test05 {
   
   // 예1) 제네릭의 타입 파라미터로 레퍼런스 배열을 생성할 수 없다.
   static <T> T[] create1() {
-    //T[] arr = new T[10]; // 컴파일 오류!
+    //T[] arr = new T[10]; // 컴파일 오류! new 명령어를 사용할 때 제네릭의 타입 파라미터를 사용할수없다.
     return null;
   }
   
