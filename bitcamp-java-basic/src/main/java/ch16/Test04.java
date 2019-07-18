@@ -43,18 +43,16 @@ public class Test04 {
     Box1 b1 = new Box1(100); // <= Integer.valueOf(100)
     Box1 b2 = new Box1("Hello");
     Box1 b3 = new Box1(new Date());
-    
     // Box1 객체에서 값 꺼내기
     // => 값을 꺼낼 때마다 형변환 해야 한다.
     //
-    int v1 = (int) b1.getValue(); // <= 리턴값.intValue()
-    String v2 = (String) b2.getValue();
-    Date v3 = (Date)b3.getValue();
-    
+    int v1 =  (int) b1.getValue(); // <= 리턴값.intValue()
+    String v2 =  (String) b2.getValue();
+    Date v3 = (Date) b3.getValue();
+
     // 제네릭이 적용된 Box2 클래스 이용
     // 먼저 Box2가 어떤 타입의 값을 다룰 것인지 지정해야 한다.
     Box2<String> x1 = new Box2<String>("홍길동");
-    
     // 변수 선언에서 이미 어떤 타입을 다룰지 지정했기 때문에 
     // new 를 실행할 때는 굳이 또 타입을 지정할 필요가 없다. 생략해도 된다.
     Box2<String> x2 = new Box2<>("임꺽정");
@@ -74,9 +72,9 @@ public class Test04 {
     String y3 = x3.getValue();
     
     Box2<Date> x4 = new Box2<>(new Date());
+    System.out.println(x4);
     Date y4 = x4.getValue(); // 형변환 할 필요가 없다.
                              // 마치 Date을 리턴하는 getValue() 메서드가 있는 것 같다.
-    
     // 제네릭은 다형성의 유연함을 그대로 유지하면서 특정 타입의 데이터를 다루도록 
     // 도와주는 매우 편리한 문법이다.
   }
