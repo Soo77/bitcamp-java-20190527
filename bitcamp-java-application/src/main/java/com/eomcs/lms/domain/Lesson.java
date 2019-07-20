@@ -12,7 +12,7 @@ public class Lesson {
   private Date endDate;
   private int totalHours;
   private int dayHours;
-  
+   
   public int getNo() {
     return no;
   }
