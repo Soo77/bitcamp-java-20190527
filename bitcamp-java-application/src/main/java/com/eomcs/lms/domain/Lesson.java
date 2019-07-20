@@ -13,7 +13,7 @@ public class Lesson {
   private int totalHours;
   private int dayHours;
    
-  public int getNo() {
+  public int getNo() { 
     return no;
   }
   public void setNo(int no) {
