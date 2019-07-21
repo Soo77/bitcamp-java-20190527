@@ -2,36 +2,26 @@
 // => 애플리케이션을 실행할 때 이 클래스를 실행한다.
 package com.eomcs.lms;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Scanner;
 import com.eomcs.lms.handler.BoardHandler;
 import com.eomcs.lms.handler.LessonHandler;
 import com.eomcs.lms.handler.MemberHandler;
+import com.eomcs.util.ArrayList;
 import com.eomcs.util.Input;
+import com.eomcs.util.LinkedList;
+import com.eomcs.util.Queue;
+import com.eomcs.util.Stack;
 
 public class App {
   
   static Scanner keyScan;
+  static Stack<String> commandStack = new Stack<>();
+  static Queue<String> commandQueue = new Queue<>();
   
   public static void main(String[] args) throws Exception {
     
     keyScan = new Scanner(System.in);
     
-    // 명령어를 저장하는 컬렉션(collection)
-    // => java.util.Stack 에서는 Vector 클래스의 Iterator를 리턴한다.
-    //    Vector에서 제공하는 Iterator는 입력한 순서대로 값을 꺼낸다.
-    //    즉 FIFO 방식으로 꺼내기 때문에 스택의 LIFO 방식과 맞지 않다.
-    //    그래서 ArrayDeque를 사용하는 것이다.
-    //    ArrayDeque에서 제공하는 Iterator는 LIFO 방식으로 값을 꺼낸다.
-    //
-    Deque<String> commandStack = new ArrayDeque<>();
-    Queue<String> commandQueue = new LinkedList<>();
-
     // Input 생성자를 통해 Input이 의존하는 객체인 Scanner를 주입한다.
     Input input = new Input(keyScan);
     
@@ -49,20 +39,16 @@ public class App {
       
       String command = prompt();
       
-      // 사용자가 아무것도 입력하지 않았으면 다시 입력 받는다.
-      if (command.length() == 0)
-        continue;
-      
       commandStack.push(command); // 사용자가 입력한 명령을 보관한다.
       commandQueue.offer(command); // 사용자가 입력한 명령을 보관한다.
       
       if (command.equals("quit")) {
         break;
       } else if (command.equals("history")) {
-        printCommandHistory(commandStack);
+        printCommandHistory();
         
       } else if (command.equals("history2")) {
-        printCommandHistory(commandQueue);
+        printCommandHistory2();
         
       } else if (command.equals("/lesson/add")) {
         lessonHandler.addLesson(); // addLesson() 메서드 블록에 묶어 놓은 코드를 실행한다.
@@ -129,14 +115,14 @@ public class App {
       }
       
       System.out.println();
-    } 
+    }
   }
 
-  private static void printCommandHistory(Iterable<String> list) throws Exception {
-    Iterator<String> iterator = list.iterator();
+  private static void printCommandHistory() throws Exception {
+    Stack<String> stack = commandStack.clone();
     int count = 0;
-    while (iterator.hasNext()) {
-      System.out.println(iterator.next());
+    while (!stack.empty()) {
+      System.out.println(stack.pop());
       if (++count % 5 == 0) {
         System.out.print(":");
         if (keyScan.nextLine().equalsIgnoreCase("q"))
@@ -145,6 +131,19 @@ public class App {
     }
   }
   
+  private static void printCommandHistory2() throws Exception {
+    Queue<String> queue = commandQueue.clone();
+    int count = 0;
+    while (!queue.empty()) {
+      System.out.println(queue.poll());
+      if (++count % 5 == 0) {
+        System.out.print(":");
+        if (keyScan.nextLine().equalsIgnoreCase("q"))
+          break;
+      }
+    }
+  }
+
   private static String prompt() {
     System.out.print("명령> ");
     return keyScan.nextLine();

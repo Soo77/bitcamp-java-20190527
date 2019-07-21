@@ -129,7 +129,7 @@ public class App {
       }
       
       System.out.println();
-    } 
+    }
   }
 
   private static void printCommandHistory(Iterable<String> list) throws Exception {

@@ -159,7 +159,7 @@ public class LinkedList<T> implements List<T> {
     
     public Node() {
     }
-    
+     
     public Node(T value) {
       this.value = value;
     }

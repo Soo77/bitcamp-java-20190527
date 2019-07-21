@@ -1,9 +1,9 @@
 package com.eomcs.lms.handler;
 
 import java.sql.Date;
-import java.util.List;
 import com.eomcs.lms.domain.Member;
 import com.eomcs.util.Input;
+import com.eomcs.util.List;
 
 public class MemberHandler {
   private List<Member> memberList;

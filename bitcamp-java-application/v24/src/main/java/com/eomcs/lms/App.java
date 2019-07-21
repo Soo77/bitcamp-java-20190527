@@ -2,17 +2,16 @@
 // => 애플리케이션을 실행할 때 이 클래스를 실행한다.
 package com.eomcs.lms;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Scanner;
 import com.eomcs.lms.handler.BoardHandler;
 import com.eomcs.lms.handler.LessonHandler;
 import com.eomcs.lms.handler.MemberHandler;
+import com.eomcs.util.ArrayList;
 import com.eomcs.util.Input;
+import com.eomcs.util.Iterator;
+import com.eomcs.util.LinkedList;
+import com.eomcs.util.Queue;
+import com.eomcs.util.Stack;
 
 public class App {
   
@@ -23,14 +22,8 @@ public class App {
     keyScan = new Scanner(System.in);
     
     // 명령어를 저장하는 컬렉션(collection)
-    // => java.util.Stack 에서는 Vector 클래스의 Iterator를 리턴한다.
-    //    Vector에서 제공하는 Iterator는 입력한 순서대로 값을 꺼낸다.
-    //    즉 FIFO 방식으로 꺼내기 때문에 스택의 LIFO 방식과 맞지 않다.
-    //    그래서 ArrayDeque를 사용하는 것이다.
-    //    ArrayDeque에서 제공하는 Iterator는 LIFO 방식으로 값을 꺼낸다.
-    //
-    Deque<String> commandStack = new ArrayDeque<>();
-    Queue<String> commandQueue = new LinkedList<>();
+    Stack<String> commandStack = new Stack<>();
+    Queue<String> commandQueue = new Queue<>();
 
     // Input 생성자를 통해 Input이 의존하는 객체인 Scanner를 주입한다.
     Input input = new Input(keyScan);
@@ -59,10 +52,10 @@ public class App {
       if (command.equals("quit")) {
         break;
       } else if (command.equals("history")) {
-        printCommandHistory(commandStack);
+        printCommandHistory(commandStack.clone());
         
       } else if (command.equals("history2")) {
-        printCommandHistory(commandQueue);
+        printCommandHistory(commandQueue.clone());
         
       } else if (command.equals("/lesson/add")) {
         lessonHandler.addLesson(); // addLesson() 메서드 블록에 묶어 놓은 코드를 실행한다.
@@ -129,10 +122,10 @@ public class App {
       }
       
       System.out.println();
-    } 
+    }
   }
 
-  private static void printCommandHistory(Iterable<String> list) throws Exception {
+  private static void printCommandHistory(com.eomcs.util.Iterable<String> list) throws Exception {
     Iterator<String> iterator = list.iterator();
     int count = 0;
     while (iterator.hasNext()) {
