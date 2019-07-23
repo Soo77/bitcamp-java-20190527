@@ -75,14 +75,16 @@ public class Test11 {
     System.out.println(map.get(k1));
     System.out.println(map.get(k2));
     System.out.println(map.get(k3));
+    System.out.println("-------------------------------------");
 
     Key k4 = new Key(100, 2);
-    System.out.println(map.get(k4));
+    System.out.println(map.get(k4)); // 정확하게 꺼냈다.
 
-    System.out.println(k2 == k4);
+    System.out.println(k2 == k4); // 인스턴스가 다르다.
     System.out.println(k2.hashCode() == k4.hashCode());
     System.out.println(k2.equals(k4));
-    
+    // 인스턴스가 다르더라도 두개의 해시코드가 같고 이퀄스가 같다면 같은 키로 간주한다.
+    // 이렇게 코드를 짜면 해시코드와 이퀄스를 오버라이딩해야한다.
   }
 }
 

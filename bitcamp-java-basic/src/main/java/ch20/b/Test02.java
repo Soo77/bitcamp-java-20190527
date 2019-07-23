@@ -13,8 +13,8 @@ public class Test02 {
     stack.push("bbb");
     stack.push("ccc");
     
-    while (!stack.empty()) {
-      System.out.println(stack.pop());
+    while (!stack.empty()) { //비어있지 않다면 
+      System.out.println(stack.pop()); //반복한다.
     }
   }
 
