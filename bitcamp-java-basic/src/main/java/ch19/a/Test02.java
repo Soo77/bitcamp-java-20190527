@@ -1,28 +1,6 @@
 // 중첩 클래스 종류 
 package ch19.a;
 
-// 익명 클래스의 예제를 위한 클래스
-class Car {
-  String model;
-  
-  public void run() {
-    System.out.println("달린다!");
-  }
-  
-  public Car() {
-    this.model = "미정";
-  }
-  
-  public Car(String model) {
-    this.model = model;
-  }
-}
-
-// 익명 클래스의 예제를 위한 인터페이스
-interface Pen {
-  void write();
-}
-
 public class Test02 {
 
   // 중첩 클래스
@@ -31,11 +9,19 @@ public class Test02 {
   //
   // 1) static nested class 
   // => 바깥 클래스의 특정 인스턴스에 종속되지 않는 클래스.
-  static class A {}
+  static class A {} // ex) Test02.A obj = new Test02.A();
+  
+  // => 다른 스태틱 멤버
+  static int a; // ex) Test02.a = 100;
+  static void f1() {} // ex) Test02.f1();
+  static {}  // 클래스 로딩할 때 자동으로 실행
   
   // 2) non-static nested class = inner class
   // => 바깥 클래스의 특정 인스턴스에 종속되는 클래스.
-  class B {}
+  class B {} // ex) Test02.B obj = t.new B() {}
+  int b; // ex) t.b = 100;
+  void f2() {}; // ex) t.f2();
+  {} // 인스턴스가 생성된 후 생성자 호출 전에 실행
   
   public static void main(String[] args) {
     // 3) local class
