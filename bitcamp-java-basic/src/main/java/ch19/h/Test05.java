@@ -17,11 +17,11 @@ public class Test05 {
     System.out.println(c2.compute(10, 20));
     
     // Math.max()는 int 값을 리턴한다. 그래서 이 메서드를 호출하는 문장은 표현식이다.
-    Calculator c3 = (a, b) -> Math.max(a, b);
+    Calculator c3 = (a, b) -> Math.max(a, b);// 익명클래스를 만드는 것이다.
     System.out.println(c3.compute(10, 20));
     
     // 값을 리턴해야 하는데 람다 문장에서 값을 리턴하지 않으면 컴파일 오류!
-    //Calculator c4 = (a, b) -> System.out.println(a + ",", b); // 컴파일 오류!
+    //Calculator c4 = (a, b) -> System.out.println(a + ",", b); // 컴파일 오류! 규격준수하지않음
     //System.out.println(c4.compute(10, 20));
   }
   
