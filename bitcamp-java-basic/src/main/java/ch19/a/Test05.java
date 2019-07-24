@@ -3,7 +3,7 @@ package ch19.a;
 
 public class Test05 {
 
-  // 중첩 클래스도 멤버이기 때문에 필드나 메서드처럼 접근 제한자를 붙일 수 있다.
+  // 중첩 클래스도 클래스의 멤버이기 때문에 필드나 메서드처럼 접근 제한자를 붙일 수 있다.
   private static class A1 {}
   static class A2 {}
   protected static class A3 {}
