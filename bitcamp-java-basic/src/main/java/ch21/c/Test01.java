@@ -2,11 +2,12 @@
 package ch21.c;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Scanner;
 
 public class Test01 {
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     
     Scanner keyboard = new Scanner(System.in);
     
@@ -42,9 +43,14 @@ public class Test01 {
     // => 이 계열의 예외가 발생하는 경우에는 "예외 처리"가 필수가 아니다.
     //    선택이다.
     //    즉 try ~ catch를 쓰지 않아도 컴파일 오류가 발생하지 않는다.
-    // => 그러나 예외를 처리하지 않으면 JVM에게 보고되고,
-    //    JVM은 프로그램을 멈추기 때문에
-    //    애플리케이션을 개발할 때 이런 예외도 처리하도록 하라!
+    // => 그러나 예외를 처리하지 않으면 메서드 호출자에게 예외가 전달된다.
+    //    메서드 호출자가 예외를 처리하지 않으면 그 상위 호출자에게 전달도니다.
+    //    그 상위 호출자가 예외를 처리하지 않으면 그 상위의 상위 호출자에게 전달된다.
+    //    이런 식으로 계속 전달되다보면 main() 메서드까지 전달되고,
+    //    main()에서도 예외를 처리하지 않으면 최종적으로 JVM에게 전달된다.
+    //    JVM이 예외를 받으면 그 즉시 프로그램을 멈춘다.
+    //    따라서 try ~ catch 사용을 강요받지 않더라도 
+    //    RuntimeExcption 예외를 처리하는 것이 JVM을 멈추지 않게 하는 것이다.
     //
     // execute() 메서드 
     // => PlusCommand나 DivideCommand의 execute() 메서드는 
@@ -59,12 +65,17 @@ public class Test01 {
       String className = keyboard.nextLine();
       
       // 사용자가 알려준 클래스를 로딩한다.
+      // 만약 해당 클래스가 없다면 Exception의 직계 자식인
+      // ClssNotFoundException 예외가 발생한다. 
       Class<?> clazz = Class.forName(className);
       
       // 클래스 정보를 가지고 Scanner를 파라미터로 받는 생성자를 얻어낸다.
+      // 만약 해당 생성자가 없다면 Exception의 직계 자식인
+      // NoSuchMethodException 예외가 발생한다.
       Constructor<?> constructor = clazz.getConstructor(Scanner.class);
       
       // 생성자를 가지고 인스턴스를 생성한다.
+      // 
       Command command = (Command) constructor.newInstance(keyboard);
       
       // 커맨드 객체를 실행한다.
@@ -83,9 +94,12 @@ public class Test01 {
       // 클래스 이름을 입력할 때> java.lang.String
       //
       System.out.println("해당 생성자를 찾지 못했습니다.");
-      
-    } catch (ReflectiveOperationException e) {
+
+    } catch (InstantiationException e) {
       System.out.println("기타 예외 발생!");
+      
+    } catch (Exception e) {
+      System.out.println("기타 예외가 발생했습니다.");
     }
 
   }

@@ -4,7 +4,7 @@ package ch21.c;
 import java.lang.reflect.Constructor;
 import java.util.Scanner;
 
-public class Test02 {
+public class Test02_2 {
 
   public static void main(String[] args) {
     

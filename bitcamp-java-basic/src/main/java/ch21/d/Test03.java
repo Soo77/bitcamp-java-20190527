@@ -22,7 +22,7 @@ public class Test03 {
         String name = getName(i);
         System.out.println(getName(i));
       } catch (Exception e) {
-        System.out.println("목록에서 데이터를 꺼낸 중에 오류 발생!");
+        System.out.println("목록에서 데이터를 꺼내는 중에 오류 발생!");
       }
     }
    

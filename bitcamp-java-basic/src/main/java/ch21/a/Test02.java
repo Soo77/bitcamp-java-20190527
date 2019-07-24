@@ -26,6 +26,9 @@ public class Test02 {
       //
       System.out.println(list.size());
       System.out.println("시스템 예외가 발생했습니다!");
+      
+      // 시스템 예외가 발생했으면  적절한 조치를 취한 후 프로그램 종료
+      return;
     }
 
     // 시스템 예외가 발생했을 때 위와 같이 적절하게 조치를 취하고 다음과 같이 
