@@ -1,5 +1,5 @@
 // // DataInputStream + 버퍼 기능  = DataInputStream2 
-package ch22.c.ex4;
+package ch22.c.ex4.byte_stream;
 
 import java.io.FileInputStream;
 

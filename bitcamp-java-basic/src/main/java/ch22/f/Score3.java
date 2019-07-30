@@ -24,6 +24,14 @@ public class Score3 implements Serializable {
   
   private String name;
   private String tel; // Test3_1을 실행한 후에 이 필드를 추가한다.
+  public String getTel() {
+    return tel;
+  }
+
+  public void setTel(String tel) {
+    this.tel = tel;
+  }
+
   private int kor;
   private int eng;
   private int math;
@@ -50,19 +58,15 @@ public class Score3 implements Serializable {
         + math + ", sum=" + sum + ", aver=" + aver + "]";
   }
 
+  
   //Test3_1을 실행하여 score3.data 파일에 인스턴스를 출력한 후,
   // tel 필드를 추가하고 getter/setter 를 추가한다.
-  public String getTel() {
-    return tel;
-  }
 
-  public void setTel(String tel) {
-    this.tel = tel;
-  }
   
   public String getName() {
     return name;
   }
+
 
   public void setName(String name) {
     this.name = name;

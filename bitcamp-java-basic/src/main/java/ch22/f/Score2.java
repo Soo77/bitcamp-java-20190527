@@ -12,6 +12,12 @@ import java.io.Serializable;
 //
 public class Score2 implements Serializable {
   
+  /**
+   * 
+   */
+  /**
+   * 
+   */
   private String name;
   private String tel; // Test2_1을 실행한 후 이 필드를 추가하라!
   private int kor;
@@ -38,8 +44,12 @@ public class Score2 implements Serializable {
     return "Score2 [name=" + name + ", tel=" + tel + ", kor=" + kor + ", eng=" + eng + ", math="
         + math + ", sum=" + sum + ", aver=" + aver + "]";
   }
+//  @Override
+//  public String toString() {
+//    return "Score2 [name=" + name + ", kor=" + kor + ", eng=" + eng + ", math=" + math + ", sum="
+//        + sum + ", aver=" + aver + "]";
+//  }
 
-  //Test2_1을 실행하여 Score2 값을 출력한 후 tel 필드의 getter/setter를 추가하라. 
   public String getTel() {
     return tel;
   }
@@ -48,6 +58,7 @@ public class Score2 implements Serializable {
     this.tel = tel;
   }
 
+  //Test2_1을 실행하여 Score2 값을 출력한 후 tel 필드의 getter/setter를 추가하라. 
   public String getName() {
     return name;
   }
@@ -64,6 +75,7 @@ public class Score2 implements Serializable {
     this.kor = kor;
     this.compute();
   }
+
 
   public int getEng() {
     return eng;
