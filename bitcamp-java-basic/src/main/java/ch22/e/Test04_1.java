@@ -27,11 +27,13 @@ public class Test04_1 {
     out.writeInt(students.size());
 
     for (Score s : students) {
-      out.writeObject(s); // 낱개가 아닌 통째로 출력
+      out.writeObject(s);
     }
 
     out.flush();
+
     out.close();
+
     System.out.println("출력 완료!");
   }
 

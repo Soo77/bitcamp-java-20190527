@@ -4,7 +4,6 @@ package ch22.e;
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 public class Test02_2 {
 
@@ -20,7 +19,6 @@ public class Test02_2 {
     BufferedInputStream in1 = new BufferedInputStream(in0);
     DataInputStream in = new DataInputStream(in1);
 
-
     int len = in.readInt();
     students = new Score[len];
 
@@ -33,9 +31,8 @@ public class Test02_2 {
       students[i] = s;
     }
 
-
-
     in.close();
+
     // 그리고 세 학생의 정보를 다음과 같은 형식으로 출력하라.
     // =>   홍길동, 100, 100, 100, 300, 100 
     // 

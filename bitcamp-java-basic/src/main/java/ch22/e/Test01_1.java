@@ -20,7 +20,7 @@ public class Test01_1 {
     FileOutputStream out0 = new FileOutputStream("temp/score.data");
     BufferedOutputStream out1 = new BufferedOutputStream(out0);
     DataOutputStream out = new DataOutputStream(out1);
-    
+
     out.writeUTF(s1.getName());
     out.writeInt(s1.getKor());
     out.writeInt(s1.getEng());
@@ -40,7 +40,9 @@ public class Test01_1 {
     // => 버퍼는 꽉 찼을 때 자동으로 출력된다.
     // => 따라서 출력을 마무리할 때는 반드시 버퍼에 남아 있는 데이터를 강제로 출력해야 한다.
     out.flush();
+    
     out.close();
+
     System.out.println("출력 완료!");
   }
 

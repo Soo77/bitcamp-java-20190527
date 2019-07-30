@@ -3,7 +3,6 @@ package ch22.e;
 
 import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 
@@ -34,7 +33,9 @@ public class Test03_1 {
     }
 
     out.flush();
+
     out.close();
+
     System.out.println("출력 완료!");
   }
 

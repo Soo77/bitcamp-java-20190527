@@ -4,7 +4,6 @@ package ch22.e;
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class Test03_2 {
@@ -32,8 +31,8 @@ public class Test03_2 {
       students.add(s);
     }
 
-
     in.close();
+
     // 그리고 세 학생의 정보를 다음과 같은 형식으로 출력하라.
     // =>   홍길동, 100, 100, 100, 300, 100 
     // 

@@ -3,7 +3,6 @@ package ch22.e;
 
 import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 public class Test02_1 {
@@ -20,7 +19,6 @@ public class Test02_1 {
         new Score("유관순", 80, 80, 80)
     };
 
-
     FileOutputStream out0 = new FileOutputStream("temp/score.data");
     BufferedOutputStream out1 = new BufferedOutputStream(out0);
     DataOutputStream out = new DataOutputStream(out1);
@@ -34,12 +32,13 @@ public class Test02_1 {
       out.writeInt(s.getMath());
     }
 
-    out.flush();
+    out.flush(); // 버퍼에 남아 있는 잔여 데이터 추출을 잊지말라!
 
     out.close();
-    System.out.println("출력 완료!");
 
+    System.out.println("출력 완료!");
   }
+
 }
 
 

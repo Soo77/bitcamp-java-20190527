@@ -4,7 +4,6 @@ package ch22.e;
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 public class Test01_2 {
 
@@ -21,7 +20,7 @@ public class Test01_2 {
     FileInputStream in0 = new FileInputStream("temp/score.data");
     BufferedInputStream in1 = new BufferedInputStream(in0);
     DataInputStream in = new DataInputStream(in1);
-    
+
     // 데이터를 읽을 때는 반드시 파일에 출력한 형식(file format)에 맞춰서 읽어야 한다.
     s1 = new Score();
     s1.setName(in.readUTF());
@@ -35,13 +34,11 @@ public class Test01_2 {
     s2.setEng(in.readInt());
     s2.setMath(in.readInt());
 
-    
     s3 = new Score();
     s3.setName(in.readUTF());
     s3.setKor(in.readInt());
     s3.setEng(in.readInt());
     s3.setMath(in.readInt());
-
 
 
     // 그리고 세 학생의 정보를 다음과 같은 형식으로 출력하라.
@@ -60,13 +57,13 @@ public class Test01_2 {
         s3.getName(), s3.getKor(), s3.getEng(), s3.getMath(),
         s3.getSum(), s3.getAver());
     
-    
-    // 데이터가 없는 파일에서 학생의 성적 정보를 읽으려 한다면
+    // 읽을 데이터가 없는 파일에서 학생의 성적 정보를 읽으로 한다면 
     Score s4 = new Score();
     s4.setName(in.readUTF());
     s4.setKor(in.readInt());
     s4.setEng(in.readInt());
     s4.setMath(in.readInt());
+
     in.close();
   }
 
