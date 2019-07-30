@@ -2,10 +2,12 @@
 package ch21.g;
 
 public class Test02_2 {
+  
   public static void main(String[] args) {
 
     try {
       System.out.println(100 / 0);
+      
     } catch (RuntimeException e) {
       // RuntimeException을 처리하고 싶다면
       // Exception 예외와 마찬가지로 try ~ catch ~ 를 사용하라!
@@ -17,5 +19,6 @@ public class Test02_2 {
       // 아니면 호출자에게 전달할 것인지 결정해야 한다.
     }
 
+    System.out.println("종료!");
   }
 }

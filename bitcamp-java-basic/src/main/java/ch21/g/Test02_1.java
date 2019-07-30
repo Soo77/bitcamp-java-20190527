@@ -1,8 +1,6 @@
 // 예외 처리 연습 II - 예외 처리 안했을 때
 package ch21.g;
 
-import java.io.FileReader;
-
 public class Test02_1 {
   public static void main(String[] args) {
 
@@ -12,6 +10,6 @@ public class Test02_1 {
     // 다만 예외가 발생하면 호출자에게 전달한다.
     // 즉 여기서 예외가 발생하면 main()의 호출자인 JVM에게 전달한다.
     
-    
+    System.out.println("종료!");
   }
 }
