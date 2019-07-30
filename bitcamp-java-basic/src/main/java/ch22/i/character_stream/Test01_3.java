@@ -1,7 +1,6 @@
 // 스트링버퍼에 출력할 때 Stream API를 사용하기
 package ch22.i.character_stream;
 
-import java.io.ByteArrayOutputStream;
 import java.io.StringWriter;
 
 public class Test01_3 {

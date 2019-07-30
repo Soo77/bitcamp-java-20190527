@@ -16,7 +16,7 @@ public class HybridConvertible extends Hybrid {
   
   public void run2() {
     if (openRoof) {
-      System.out.println("뚜껑 연다.");
+      System.out.println("뚜껑 연다."+openRoof);
     } else {
       System.out.println("뚜껑 닫는다.");
     }
