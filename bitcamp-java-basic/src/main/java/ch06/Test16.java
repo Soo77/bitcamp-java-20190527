@@ -21,7 +21,6 @@ public class Test16 {
     System.out.println(value3);
   }
   
-  
 }
 
 

@@ -1,4 +1,4 @@
-// 인스턴스 읽기 - Serialize
+// 인스턴스 읽기 - Serializable 구현체의 인스턴스를 읽기
 package ch22.f;
 
 import java.io.FileInputStream;
@@ -41,6 +41,7 @@ public class Test2_2 {
     //    deserialize 할 때 사용할 Score2 클래스의 serialVersionUID 값을 
     //    비교하여 같다면 파일의 데이터를 읽어 인스턴스를 생성하여 리턴하고,
     //    다르다면 예외를 발생시킨다.
+
     in.close();
   }
 }

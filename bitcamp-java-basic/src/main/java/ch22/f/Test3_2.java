@@ -30,6 +30,7 @@ public class Test3_2 {
     // serialVesionUID 값을 같게 하는 것은 좋지 않다.
     // 지금처럼 이전 클래스와 비교해 큰 변경이 없을 경우에만 
     // 이 변수의 값을 그대로 유지하는 것이다.
+
     in.close();
   }
 }

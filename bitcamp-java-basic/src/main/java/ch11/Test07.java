@@ -7,7 +7,6 @@ public class Test07 {
     
     // StringBuffer는 mutable 객체이다. 내부의 문자열을 변경할 수 있다.
     StringBuffer b2 = b1.replace(2, 4, "xxxxx");
-
     
     System.out.println(b1 == b2);
     System.out.println(b1.toString());

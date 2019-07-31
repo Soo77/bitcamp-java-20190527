@@ -1,8 +1,6 @@
 // Wrapper 클래스 : 사용 전
 package ch11;
 
-import java.util.Date;
-
 public class Test09_2 {
   public static void main(String[] args) {
     // Wrapper 클래스의 가장 큰 목적!
@@ -12,10 +10,10 @@ public class Test09_2 {
     // 여러 개 만들어야 한다.
     printInt(100);
     printFloat(3.14f);
-    // printInt("Hello"); // 컴파일 오류!
+    //printInt(3.14f); // 컴파일 오류!
   }
-   
-    static void printInt(int i) {
+  
+  static void printInt(int i) {
     System.out.println("값 => " + i);
   }
   

@@ -53,10 +53,11 @@ public class Test04 {
       } catch (NumberFormatException e) {
         System.out.println("정수 값을 입력하세요!");
         
-      } catch (RuntimeException e) { // OK! 공통 부모이기 때문에 가능! // 부모클래스를 아래에 두기
+      } catch (RuntimeException e) { // OK! 공통 부모이기 때문에 가능!
         System.out.println("명령어 처리 중 오류 발생!");
         System.out.println(e.toString());
-      }        
+
+      } 
     }
      
     

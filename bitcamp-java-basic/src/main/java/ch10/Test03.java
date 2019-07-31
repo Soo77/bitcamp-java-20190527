@@ -42,12 +42,13 @@ public class Test03 {
     // 모니터의 인스턴스 필드의 값을 유효한 값으로 설정해야 한다.
     // 그래야 모니터의 기능(funciton=method)을 제대로 사용할 수 있다.
     // 
+    
     // 다음은 모니터 인스턴스를 만든 후 에 모니터 인스턴스를 사용하는 사용자가 
     // 직접 값을 초기화시킨 후 사용하는 예이다.
     m1.bright = 50;
     m1.contrast = 50;
     m1.widthRes = 1920;
-    m1.heightRes = 1080;
+    m1.bright = 1080;
     
     m1.display();
     

@@ -1,8 +1,6 @@
 // Wrapper 클래스
 package ch11;
 
-import java.util.Date;
-
 public class Test09_1 {
   public static void main(String[] args) {
     // 자바는 primitive type의 값을 좀 더 정교하게 제어할 수 있도록 

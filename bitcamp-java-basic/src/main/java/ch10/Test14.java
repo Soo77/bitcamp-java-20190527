@@ -11,11 +11,9 @@ public class Test14 {
     // => 만약 생성자에 아무것도 넘겨주지 않으면 빈 배열이 생성된다.
     
     System.out.println(s1); // 빈 문자열 출력
-    System.out.printf("s1=%s\n", s1);
     
     String s2 = new String("Hello"); // 문자열 리터럴로 String 인스턴스 생성
-    System.out.printf("s2\2=%s\n", s2);
-    
+    System.out.printf("s2=%s\n", s2);
     
     char[] chars = {'H', 'e', 'l', 'l', 'o'};
     String s3 = new String(chars); // char 배열로 String 인스턴스 생성
@@ -53,7 +51,6 @@ public class Test14 {
     
     String s7 = new String(bytes3, "utf-8");
     System.out.printf("s7=%s\n", s7);
-
   }
 }
 

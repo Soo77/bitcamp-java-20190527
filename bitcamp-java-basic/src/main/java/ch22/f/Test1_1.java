@@ -1,4 +1,4 @@
-// 인스턴스 출력 - Serialize 
+// 인스턴스 출력 - Serialize
 package ch22.f;
 
 import java.io.FileOutputStream;
@@ -7,7 +7,7 @@ import java.io.ObjectOutputStream;
 public class Test1_1 {
 
   public static void main(String[] args) throws Exception {
-    
+
     FileOutputStream out0 = new FileOutputStream("temp/score.data");
     ObjectOutputStream out = new ObjectOutputStream(out0);
 
@@ -25,10 +25,11 @@ public class Test1_1 {
     //    NotSerializableException 예외가 발생한다.
     //
     out.writeObject(new Score1("홍길동", 100, 100, 100));
-    out.close();
+
     // Score1 클래스는 java.io.Serializable을 구현하지 않았기 때문에
     // writeObject()를 사용할 수 없다.
 
+    out.close();
 
   }
 

@@ -5,7 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 
 public class Test01_2 {
+
   public static void main(String[] args) {
+    
     FileReader in;
     
     try {
@@ -13,7 +15,7 @@ public class Test01_2 {
     } catch (FileNotFoundException e) {
       System.out.println("해당 파일을 찾을 수 없습니다!");
     }
-    
-    
+
   }
+
 }

@@ -31,9 +31,9 @@ public class Test09 {
     table.put("ccc", s);
     table.put("ddd", s);
     
-    // HashTable도 해시맵과 마찬가지로 vlaues()를 사용하여 값 목록만 꺼낼수있다.
-    // 그런데 해시테이블은 enumeration으로 값 목록을 꺼내는 메서드를 추가로 제공한다.
-    // Enumeration의 사용법은 Iterator과 유사하다.
+    // Hashtable도 HashMap과 마찬가지로 values()를 사용하여 값 목록만 꺼낼 수 있다.
+    // 또한 Hashtable은 Enumeration으로 값 목록을 꺼내는 메서드를 추가로 제공한다.
+    // => Enumeration의 사용법은 Iterator와 유사하다.
     Enumeration<Student> values = table.elements();
     while (values.hasMoreElements()) {
       System.out.println(values.nextElement());

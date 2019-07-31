@@ -5,7 +5,7 @@ public class Score {
   private String name;
   protected int kor;
   protected int eng;
-  protected int math;
+  protected int math; 
   
   // 서브 클래스에서 사용할 필드는 protected로 접근을 풀어 준다.
   // => 접근 범위를 넓히는 것은 기존 코드에 영향을 미치지 않는다.
@@ -27,8 +27,7 @@ public class Score {
   public void setKor(int kor) {
     if (kor >= 0 && kor <= 100) { // 유효한 점수인 경우에만 저장한다.
       this.kor = kor;
-      this.compute(); // 유효한 값이라면 다시 합계와 평균을 계산한다. 
-      // 메서드 호출할 때 주어지는 인스턴스 주소가 Score3의 인스턴스 주소이기 떄문에 Score3로 가서 찾음
+      this.compute(); // 유효한 값이라면 다시 합계와 평균을 계산한다.
     }
   }
   

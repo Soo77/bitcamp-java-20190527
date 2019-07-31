@@ -16,8 +16,7 @@ public class Score {
     return this.aver;
   }
   
-  protected void compute() {
-    System.out.println("Score.compute()");
+  public void compute() {
     this.sum = this.kor + this.eng + this.math;
     this.aver = this.sum / 3f;
   }

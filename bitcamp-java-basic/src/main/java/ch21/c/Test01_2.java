@@ -1,44 +1,40 @@
-// 애플리케이션 예외의 종류: main() 과 RuntimeException
+// 애플리케이션 예외의 종류: Exception 계열의 예외와 RuntimeException 계열의 예외
 package ch21.c;
-
-import java.util.Scanner;
 
 public class Test01_2 {
 
   public static void main(String[] args) {
-    
-    // RuntimeException을 발생시키는 메서드를 호출할 때
-    // 예외 처리 코드를 작성하지 않더라도
-    // 컴파일러는  에러를 띄우지 않는다.
+    // 2) RuntimeException 계열의 예외
+    // => Exception 클래스의 서브 클래스이다.
+    // => 이 계열의 예외가 발생하는 경우에는 "예외 처리"가 필수가 아니다.
+    //    선택이다.
+    //    즉 try ~ catch를 쓰지 않아도 컴파일 오류가 발생하지 않는다.
+    // => 그러나 예외를 처리하지 않으면 메서드 호출자에게 예외가 전달된다.
+    //    메서드 호출자가 예외를 처리하지 않으면 그 상위 호출자에게 전달된다.
+    //    그 상위 호출자가 예외를 처리하지 않으면 그 상위의 상위 호출자에게 전달된다.
+    //    이런 식으로 계속 전달되다보면 main() 메서드까지 전달되고,
+    //    main()에서도 예외를 처리하지 않으면 최종적으로 JVM에게 전달된다.
+    //    JVM이 예외를 받으면 그 즉시 프로그램을 멈춘다.
+    //    따라서 try ~ catch 사용을 강요받지 않더라도 
+    //    RuntimeException 예외를 처리하는 것이 JVM을 멈추지 않게 하는 것이다. 
     //
-    // 하지만 RuntimeException 예외를 처리하지 않으면
-    // 최종적으로 JVM에게 전달되고, 즉시 프로그램을 종료하기 때문에
-    // 프로그램을 종료하기 싫으면 RuntimeException에 대해서도
-    // 예외처리를 하라!
+
+    int result = divide(100, 2); // OK!
+    System.out.println(result);
     
-    Scanner keyScan = new Scanner(System.in);
+    // RuntimeException 예외가 발생할 수 있는 메서드를 호출할 경우
+    // 컴파일러가 try ~ catch ~ 로 예외를 처리하라고 요구하지 않는다.
+    // 그렇다고 특정 예외 조건(0으로 나누는 것)에서 예외가 발생되지 않는 것은 아니다.
+    // 다만 이 메서드에서 처리하지 않으면
+    // 이 메서드를 호출한 쪽에 예외를 자동으로 전달한다.
+    // main()을 호출한 것은 JVM이기 때문에 
+    // main()에서 예외를 처리하지 않으면 JVM에게 전달되고 
+    // JVM은 예외를 받는 즉시 실행을 멈춘다.
     
-    while (true) {
-      try {
-        // 아래의 코드에서 예외가 발생한다면 RuntimeException 예외이다.
-        // 따라서 try ~ catch ~ 블록을 사용하지 않아도 컴파일러가 에러를 띄우지는 않는다.
-        // 그러나 예외는 예외이기 때문에 발생하는 순간 호출자에게 전달한다.
-        // main()에서는 발생된 예외는 JVM에게 바로 전달되기 때문에
-        // 즉시 실행을 멈출것이다.
-        // 그래서 예외 처리가 강제 사항이 아니라 할지라도
-        // 이렇게 try ~ catch ~로 처리한 것이다.
-        
-        System.out.print("값1?");
-        int a = Integer.parseInt(keyScan.nextLine());
-        
-        System.out.print("값2?");
-        int b = Integer.parseInt(keyScan.nextLine());
-        
-        System.out.println(divide(a, b));
-      } catch (RuntimeException e) {
-        System.out.println("입력 또는 계산 중에 오류 발생!");
-      }
-    }
+    result = divide(100, 0); // 예외 발생! main() 호출자에게 전달. 즉 JVM에 전달. 즉시 종료!
+    System.out.println(result);
+    
+    System.out.println("실행 종료!");
   }
   
   static int divide(int a, int b) throws RuntimeException {
@@ -46,5 +42,14 @@ public class Test01_2 {
       throw new RuntimeException("0으로 나눌 수 없습니다.");
     return a / b;
   }
-  
+
 }
+
+
+
+
+
+
+
+
+

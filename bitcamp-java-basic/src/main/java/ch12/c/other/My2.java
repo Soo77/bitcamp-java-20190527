@@ -3,7 +3,6 @@ package ch12.c.other;
 import ch12.c.My;
 
 public class My2 extends My {
-  // My의 인스턴스 필드가 여기 있다.
   
   public void m1() {
     My obj1 = new My();

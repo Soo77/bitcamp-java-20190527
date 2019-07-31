@@ -1,23 +1,26 @@
 package algorithm.data_structure.linkedlist2.step1;
 
 public class LinkedListTest {
+
   public static void main(String[] args) {
     LinkedList list = new LinkedList();
-//    list.add("aaa"); //aaa의 주소가 넘어간다
-//    list.add("bbb");
-//    list.add("ccc");
-//    list.add("ddd");
-//    list.add("eee");
-//    list.add("fff");
-//    list.add("ggg");
+    list.add("aaa");
+    list.add("bbb");
+    list.add("ccc");
+    list.add("ddd");
+    list.add("eee");
+    list.add("fff");
+    list.add("ggg");
     
-//    list.remove(3); // "ddd" 삭제
-//    list.remove(0); // "aaa" 삭제
-//    list.remove(4); // "ggg" 삭제
-//    list.remove(0); // "bbb" 삭제
-//    list.remove(0); // "ccc" 삭제
-//    list.remove(0); // "eee" 삭제
-//    list.remove(0); // "fff" 삭제
+    list.set(2, "xxx"); // "ccc" -> "xxx"
+    
+    list.remove(3); // "ddd" 삭제
+    list.remove(0); // "aaa" 삭제
+    list.remove(4); // "ggg" 삭제
+    list.remove(0); // "bbb" 삭제
+    list.remove(0); // "xxx" 삭제
+    list.remove(0); // "eee" 삭제
+    list.remove(0); // "fff" 삭제
     
     list.add("okok");
     list.add("nono");
@@ -25,16 +28,10 @@ public class LinkedListTest {
     
     //list.clear();
     
-//    for (int i = 0; i < list.size(); i++) {
-//      Object value = list.get(i);
-//      System.out.println(value);
-//    }
-    
-    Object[] array = list.toArray();
-    for (Object obj : array) {
+    Object[] arr = list.toArray();
+    for (Object obj : arr) {
       System.out.println(obj);
     }
-
-    
   }
+
 }

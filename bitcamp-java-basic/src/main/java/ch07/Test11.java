@@ -1,4 +1,4 @@
-  // import 명령문 
+// import 명령문 
 package ch07;
 
 import ch07.sub.Score12;

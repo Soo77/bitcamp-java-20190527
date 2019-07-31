@@ -6,8 +6,8 @@ import java.io.ObjectInputStream;
 
 public class Test2_2 {
   public static void main(String[] args) throws Exception {
-    
-    FileInputStream in0 = new FileInputStream("temp/score2.data");
+
+    FileInputStream in0 = new FileInputStream("temp/score.data");
     ObjectInputStream in = new ObjectInputStream(in0);
 
     // deserialize 할 때 
@@ -16,7 +16,7 @@ public class Test2_2 {
     // 인스턴스를 생성한 후 직접 인스턴스의 필드 값을 저장한다.
     Score2 score = (Score2) in.readObject();
     System.out.println(score);
-    in.close();
 
+    in.close();
   }
 }

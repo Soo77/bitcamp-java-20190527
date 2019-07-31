@@ -9,7 +9,7 @@ public class Test04 {
   
   public static void main(String[] args) {
     // 이 메서드 안에서만 사용할 클래스라면 이렇게 로컬 클래스로 만든다.
-    // 로컬 중첩 클래스 - 메소드 안에 집어넣음.
+    //
     class MyFilenameFilter implements FilenameFilter {
       @Override
       public boolean accept(File dir, String name) {

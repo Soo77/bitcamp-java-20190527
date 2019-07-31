@@ -18,8 +18,6 @@ public class BufferedInputStream extends FileInputStream {
   
   @Override
   public int read() throws IOException {
-//    System.out.println("size: " + size);
-//    System.out.println("cursor: " + cursor);
     if (cursor >= size) { // 버퍼에 보관된 데이터를 다 읽었으면, 
       count++;
       size = read(buf); // 다시 상속 받은 메서드를 사용하여 8192 바이트를 읽어 온다.

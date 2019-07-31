@@ -45,3 +45,4 @@ dependencies {
 // 만약 Gradle을 사용하여 프로젝트를 실행한다면 다음 클래스가 실행될 것이다.
 // $ gradle run
 mainClassName = 'ch01.Test02'
+aa

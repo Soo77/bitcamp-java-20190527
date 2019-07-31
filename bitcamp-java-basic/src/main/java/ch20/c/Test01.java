@@ -16,12 +16,14 @@ public class Test01 {
     
     // Set은 집합의 특성을 따른다.
     // => 같은 값을 중복해서 넣을 수 없다.
-    set.add("aaa");
-    set.add("bbb");
+    set.add(new String("aaa"));
+    set.add(new String("bbb"));
     
     // => null을 넣을 수 있다. 단 중복해서 넣을 수 없다.
     set.add(null);
     set.add(null);
+    
+    System.out.println(set.size());
     
     // Set에 들어 있는 값 꺼내기
     // => 직접 값을 한 개씩 꺼내는 메서드가 없다.
@@ -36,7 +38,6 @@ public class Test01 {
     // 출력 결과를 보면 입력 순서로 꺼낼 수 없다.
     // 이유?
     // => 저장할 때 각 인스턴스에 대해 hashCode()의 리턴 값으로 위치를 정하기 때문이다.
-    // 해시값은 들어간 순서대로 뽑을수없다.
     
     System.out.println("-----------------------");
     

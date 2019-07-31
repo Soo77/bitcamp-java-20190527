@@ -14,14 +14,15 @@ public class Test06 {
     // 그렇다면 레퍼런스에 따로 인스턴스 주소를 저장하지 말고,
     // 필요한 곳에 바로 선언하자!
     //
-    String[] names = dir.list((File f, String name) -> name.endsWith(".txt"));
-//    String[] names = dir.list(new FilenameFilter() {
-//      @Override
-//      public boolean accept(File dir, String name) {
-//        return (name.endsWith(".txt"));
-//
-//      }
-//    });
+    String[] names = dir.list(new FilenameFilter() {
+      @Override
+      public boolean accept(File dir, String name) {
+        if (name.endsWith(".txt"))
+          return true;
+        else 
+          return false;
+      }
+    });
     // 
     // 필터가 무슨일을 하는지 바로 알 수 있다!!!
     // => 필터의 소스 코드를 확인하기 위해 돌아 다닐 필요가 없다.

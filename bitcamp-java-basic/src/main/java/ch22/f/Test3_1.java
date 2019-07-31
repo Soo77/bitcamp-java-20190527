@@ -19,8 +19,8 @@ public class Test3_1 {
     out.writeObject(new Score3("홍길동", 100, 100, 100));
 
     System.out.println("출력 완료!");
-    out.close();
 
+    out.close();
   }
 
 }

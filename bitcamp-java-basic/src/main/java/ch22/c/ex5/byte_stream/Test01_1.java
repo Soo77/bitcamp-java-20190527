@@ -6,14 +6,11 @@ import java.io.FileOutputStream;
 
 public class Test01_1 {
   public static void main(String[] args) throws Exception {
-    
     // 실제 파일에 출력을 수행하는 객체를 준비한다.
     FileOutputStream other = new FileOutputStream("temp/data.bin");
-    // 데이타 싱크 스트림 클래스
     
     // 파일을 출력하는 객체에 primitive 타입의 값을 출력하는 데코레이터 객체를 붙인다.
-    DataOutputStream out = new DataOutputStream(other);// 데이타 프로세싱
-    // 중간에서 가공하는 역할
+    DataOutputStream out = new DataOutputStream(other);
 
     short s = 0x1122;
     int i = 0x33445566;

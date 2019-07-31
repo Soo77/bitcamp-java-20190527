@@ -14,8 +14,7 @@ import ch13.Calculator;
 //    상속을 해주는 클래스를 "수퍼(super) 클래스", "부모(parent) 클래스" 라 부른다.
 //    상속을 받는 클래스를 "서브(sub) 클래스", "자식(child) 클래스" 라 부른다.
 //
-public class Calculator2 extends Calculator {// 권한을 획득했다는 뜻이지 코드를 가져온것이 아님.
-  
+public class Calculator2 extends Calculator {
   
   // 기존 기능은 Calculator를 통해 사용한다.
   

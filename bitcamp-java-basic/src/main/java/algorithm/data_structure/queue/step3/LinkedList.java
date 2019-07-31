@@ -151,7 +151,7 @@ public class LinkedList<T> {
     
     public Node() {
     }
-    
+     
     public Node(T value) {
       this.value = value;
     }

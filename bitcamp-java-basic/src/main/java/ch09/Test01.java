@@ -14,11 +14,6 @@ public class Test01 {
     
     System.out.println(result);
     
-    int a;
-    a = 5;
-    a = a++;
-    System.out.println(a);
-    
     // Calculator1의 메서드를 이용하여 계산을 수행할 때
     // 계산 결과를 호출하는 쪽에서 직접 관리하였다.
     // result 변수는 Calculator1의 메서드들이 사용하는 변수인데

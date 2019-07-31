@@ -17,18 +17,6 @@ public class LinkedList {
     size = 0;
   }
   
-  public void add2(Object value) {
-    Node node = new Node(value);
-    if (head == null) {
-      head = node;
-    }
-    if (tail != null) {
-      tail.next = node;
-    }
-    tail = node;
-    size++;
-  }
-  
   public void add(Object value) {
     tail.value = value;
     Node node = new Node();

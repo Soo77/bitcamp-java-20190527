@@ -8,7 +8,7 @@ class My5 {
   String email;
   int gender;
   boolean working;
-
+  
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
@@ -42,7 +42,7 @@ class My5 {
     return true;
   }
   
-  
+
 }
 
 public class Test05 {
@@ -71,8 +71,6 @@ public class Test05 {
     // => 인스턴스의 내용물이 같은지 비교하도록 만들고 싶다면 equals()을 오버라이딩 하라!
     // => String와 wrapper 클래스는 equals() 오버라이딩 하였다.
     // => StringBuffer 클래스는 equals()를 오버라이딩 하지 않았다.
-    
-    // 인스턴스 주소는 다르지만 내용은 같다.
   }
 
 }

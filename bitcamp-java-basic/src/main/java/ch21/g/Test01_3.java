@@ -5,12 +5,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 
 public class Test01_3 {
+
   public static void main(String[] args) throws FileNotFoundException {
+    
     FileReader in;
     
-    in = new FileReader("build.gradle"); 
+    in = new FileReader("build.gradle");
     // 여기서 예외가 발생하면 main()의 호출자인 JVM에게 전달될 것이다.
-    
-    
   }
+
 }

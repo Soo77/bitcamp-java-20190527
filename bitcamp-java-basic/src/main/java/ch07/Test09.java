@@ -59,16 +59,12 @@ public class Test09 {
       float aver;
     }
     
-    class Score5 {
-      
-    }
-    
     // 익명 클래스(anonymouse class)
     // => 클래스 이름이 없는 중첩 클래스이다.
     // => 딱 한 개의 인스턴스를 생성할 때 사용한다.
     // => 클래스를 정의할 때 수퍼 클래스나 인터페이스를 지정해야 한다.
     // => 클래스를 정의할 때 new 연산자를 사용하여 즉시 인스턴스를 생성해야 한다.
-    Object obj = new Object() { //익명 클래스
+    Object obj = new Object() {
       String name;
       int age;
     };
@@ -104,6 +100,24 @@ public class Test09 {
     // 다른 메서드에 정의된 로컬 클래스도 사용할 수 없다.
     //Score4 s4 = new Score4(); // 컴파일 오류!
     
+  }
+  
+  static void m3() {
+    // 로컬 클래스(local class)
+    // => 특정 메서드 안에서만 사용되는 클래스인 경우 로컬 클래스로 정의한다.
+    //
+    class Score4 {
+      String name; 
+      int kor;
+      int eng;
+      int math;
+      int sum;
+      float aver;
+    }
+    
+    class Score5 {
+      
+    }
   }
 }
 

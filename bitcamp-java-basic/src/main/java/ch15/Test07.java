@@ -4,10 +4,6 @@ package ch15;
 class My7 {
   String name;
   int age;
-
-  // Map에 값을 저장하는 key로 사용할 때 hashCode()를 오버라이딩 하라!
-  // 보통 값이 같은지 비교할 때 equals()와 함께 사용된다.
-  // 그래서 hashCode()를 오버라이딩 할 때 equals()도 함께 오버라이딩 한다.
   
   @Override
   public int hashCode() {
@@ -36,6 +32,12 @@ class My7 {
       return false;
     return true;
   }
+
+  // Map에 값을 저장하는 key로 사용할 때 hashCode()를 오버라이딩 하라!
+  // 보통 값이 같은지 비교할 때 equals()와 함께 사용된다.
+  // 그래서 hashCode()를 오버라이딩 할 때 equals()도 함께 오버라이딩 한다.
+
+  
 }
 
 public class Test07 {
@@ -84,11 +86,6 @@ public class Test07 {
     //          파일의 해시 값은 같다. 
     // - 해시 알고리즘
     //   => SHA, MD, PGP 등 
-    // 30억 바이트 등을 비교하려면 너무 오래걸리니까 해시값을 비교한다. 지문값으로 비교한다.'
-    // 30억 바이트 비교보단 64바이트를 비교하는게 낫다.
-    //  수학공식을 통해 32 64 128 256 512bit 
-    // 개인에게 발급된 해시값이 인증서이다.
-    
   }
 
 }

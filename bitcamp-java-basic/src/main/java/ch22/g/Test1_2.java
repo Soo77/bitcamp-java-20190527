@@ -7,7 +7,7 @@ import java.io.ObjectInputStream;
 public class Test1_2 {
   public static void main(String[] args) throws Exception {
 
-    FileInputStream in0 = new FileInputStream("temp/score1.data");
+    FileInputStream in0 = new FileInputStream("temp/score.data");
     ObjectInputStream in = new ObjectInputStream(in0);
 
     Score1 score = (Score1) in.readObject();

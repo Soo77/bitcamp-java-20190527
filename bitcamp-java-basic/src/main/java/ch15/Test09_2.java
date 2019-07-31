@@ -1,17 +1,14 @@
-// hash code 응용 V - MyKey의 hashCode()와 equals() 오버라이딩 하기
-// hashset에 중복 저장하지 않기 위해
-
+// hash code 응용 II - MyKey의 hashCode()와 equals() 오버라이딩 하기
 package ch15;
 
 import java.util.HashMap;
-
 
 
 public class Test09_2 {
   
   static class MyKey2 {
     String contents;
-
+    
     public MyKey2(String contents) {
       this.contents = contents;
     }
@@ -45,11 +42,9 @@ public class Test09_2 {
         return false;
       return true;
     }
-    
-    
   }
   public static void main(String[] args) {
-    HashMap<MyKey2, Student> map = new HashMap<>();
+    HashMap<MyKey2,Student> map = new HashMap<>();
     
     MyKey2 k1 = new MyKey2("ok");
     MyKey2 k2 = new MyKey2("no");
@@ -57,7 +52,6 @@ public class Test09_2 {
     MyKey2 k4 = new MyKey2("ohora");
     MyKey2 k5 = new MyKey2("hul");
     
-    // String을 key로 사용해보자! 
     map.put(k1, new Student("홍길동", 20, false));
     map.put(k2, new Student("임꺽정", 30, true));
     map.put(k3, new Student("유관순", 17, true));
@@ -66,11 +60,11 @@ public class Test09_2 {
     
     System.out.println(map.get(k3));
     
-    // 다른 key를 사용하여 값을 꺼내보자.
+    // 다른 key 객체를 사용하여 값을 꺼내보자.
     MyKey2 k6 = new MyKey2("haha");
 
-    System.out.printf("k3(%s), k6(%s)\n", k3, k6);
     System.out.println(k3 == k6); // 인스턴스는 다르다.  
+    System.out.printf("k3(%s), k6(%s)\n", k3, k6);
     System.out.println(k3.hashCode()); // hash code는 같다. 
     System.out.println(k6.hashCode()); // hash code는 같다.
     System.out.println(k3.equals(k6)); // equals()의 비교 결과도 같다.
@@ -81,7 +75,6 @@ public class Test09_2 {
     // HashMap 클래스에서는 서로 같은 key라고 간주한다.
     
     System.out.println(map.get(k6));
-    
   }
 }
 

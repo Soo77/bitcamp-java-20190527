@@ -36,7 +36,7 @@ public class Score2 extends Score {
     this.compute();
     
     this.sum += this.music + this.art;
-    this.aver = this.sum / 5f; //기존점수 변화줌.
+    this.aver = this.sum / 5f;
   }
 }
 

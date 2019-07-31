@@ -5,5 +5,4 @@ public class X3 extends X2 {
 //  void m1() {
 //    System.out.println("X3.m1()");
 //  }
-  
 }

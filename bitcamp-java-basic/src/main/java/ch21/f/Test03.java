@@ -30,7 +30,7 @@ public class Test03 {
         //String str = "Hello"; // 컴파일 오류!
         
         // java.lang.AutoCloseable 을 구현한 클래스는 객체를 선언할 수 있다.
-        MyResource2 r2 = new MyResource2(); // OK! // 나중에 close를 따로 호출할 필요가 업삳.
+        MyResource2 r2 = new MyResource2(); // OK! 
     ) {
       System.out.println(r2.divide(10, 2));
       System.out.println(r2.divide(10, 0));
@@ -40,7 +40,7 @@ public class Test03 {
     } catch (Exception e){
       System.out.println("예외 발생!");
     }
-     
+    
     System.out.println("종료!");
   }
 }

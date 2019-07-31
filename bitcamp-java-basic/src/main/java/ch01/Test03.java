@@ -42,6 +42,6 @@ public class Test03 { // 주석
  /* 
  # javadoc 사용법
 
-   $ javadoc -d [문서를저장할폴더] -sourcepath [소스폴더] 패키지명
-   $ javadoc -d doc -sourcepath src/main/java ch01
+   $ javadoc -encoding UTF-8 -d [문서를저장할폴더] -sourcepath [소스폴더] 패키지명
+   $ javadoc -encoding UTF-8 -d doc -sourcepath src/main/java ch01
 */

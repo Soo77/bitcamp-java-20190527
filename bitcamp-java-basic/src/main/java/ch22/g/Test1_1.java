@@ -7,7 +7,7 @@ import java.io.ObjectOutputStream;
 public class Test1_1 {
 
   public static void main(String[] args) throws Exception {
-    FileOutputStream out0 = new FileOutputStream("temp/score1.data");
+    FileOutputStream out0 = new FileOutputStream("temp/score.data");
     ObjectOutputStream out = new ObjectOutputStream(out0);
 
     Score1 score = new Score1();
@@ -26,6 +26,7 @@ public class Test1_1 {
     // getter/setter 없어도 필드 값을 출력하는데 문제 없다.
 
     out.close();
+
   }
 
 }
