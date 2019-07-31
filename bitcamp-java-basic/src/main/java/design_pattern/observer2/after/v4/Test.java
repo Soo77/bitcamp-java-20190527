@@ -1,4 +1,4 @@
-//v4(유관순, 8월 15일에 추가함): mainClassName 값을 알아내기
+// v4(유관순, 8월15일에 추가함): mainClassName 값을 알아내기
 package design_pattern.observer2.after.v4;
 
 import java.io.FileReader;
@@ -6,8 +6,7 @@ import java.io.FileReader;
 public class Test {
 
   public static void main(String[] args) {
-    try (FileReader in = new FileReader("build.gradle")){
-      
+    try (FileReader in = new FileReader("build.gradle")) {
       TextAnalyzer analyzer = new TextAnalyzer(in);
       
       // 분석기로부터 보고를 받을 리스너(=observer)를 추가한다.
@@ -34,9 +33,9 @@ public class Test {
       l3.displayResult();
       l4.displayResult();
       
-      
     } catch (Exception e) {
       System.out.println("실행 중 오류 발생!");
     }
   }
+
 }
