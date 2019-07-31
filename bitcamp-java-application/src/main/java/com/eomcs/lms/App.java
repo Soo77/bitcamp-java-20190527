@@ -1,5 +1,5 @@
-// 애플리케이션 메인 클래스
-// => 애플리케이션을 실행할 때 이 클래스를 실행한다.
+//v4: 수업관리 시스템의 데이터를 로딩하고 저장하는 코드를 옵저버로 분리한다.
+
 package com.eomcs.lms;
 
 import java.io.File;
@@ -15,8 +15,13 @@ import java.util.Deque;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Scanner;
+import com.eomcs.listener.DataLoaderListener;
+import com.eomcs.listener.HelloApplicationContextListener;
+import com.eomcs.lms.context.ApplicationContextListener;
 import com.eomcs.lms.domain.Board;
 import com.eomcs.lms.domain.Lesson;
 import com.eomcs.lms.domain.Member;
@@ -42,28 +47,33 @@ import com.eomcs.util.Input;
 
 public class App {
 
-  static Scanner keyScan;
+  // 옵저버를 보관할 컬렉션 객체 준비
+  ArrayList<ApplicationContextListener> appCtxListeners = new ArrayList<>();
+  
+  //App 객체가  사용할 값을 모아두는 바구니 준비
+  Map<String, Object> beanContainer = new HashMap<>();
+  
+  Scanner keyScan;
 
-  // Command 객체가 사용할 Collection 준비
-  static ArrayList<Lesson> lessonList = new ArrayList<>();
-  static ArrayList<Member> memberList = new ArrayList<>();
-  static ArrayList<Board> boardList = new ArrayList<>();
+  
 
-  public static void main(String[] args) {
 
-    // 이전에 저장된 애플리케이션 데이터를 로딩한다.
-    loadLessonData();
-    loadMemberData();
-    loadBoardData();
+
+  @SuppressWarnings("unchecked")
+  private void service() {
+
+    // 애필리케이션의 서비스를 시작할 때 등록된 옵저버에게 알린다.
+    for (ApplicationContextListener listener : appCtxListeners) {
+      listener.contextInitialized(beanContainer);
+    }
+    
+    // 옵저버에게 보고한 후 옵저버가 준비한 객체를 꺼낸다.
+    List<Lesson> lessonList = (List<Lesson>)beanContainer.get("lessonList");
+    List<Member> memberList = (List<Member>)beanContainer.get("memberList");
+    List<Board> boardList = (List<Board>)beanContainer.get("boardList");
+
 
     keyScan = new Scanner(System.in);
-
-    // 명령어를 저장하는 컬렉션(collection)
-    // => java.util.Stack 에서는 Vector 클래스의 Iterator를 리턴한다.
-    // Vector에서 제공하는 Iterator는 입력한 순서대로 값을 꺼낸다.
-    // 즉 FIFO 방식으로 꺼내기 때문에 스택의 LIFO 방식과 맞지 않다.
-    // 그래서 ArrayDeque를 사용하는 것이다.
-    // ArrayDeque에서 제공하는 Iterator는 LIFO 방식으로 값을 꺼낸다.
     //
     Deque<String> commandStack = new ArrayDeque<>();
     Queue<String> commandQueue = new LinkedList<>();
@@ -74,11 +84,6 @@ public class App {
     // Command 객체를 보관할 Map 준비
     HashMap<String, Command> commandMap = new HashMap<>();
 
-    // 각 핸들러의 생성자를 통해 의존 객체 "Input"을 주입한다.
-    // => 이렇게 어떤 객체가 필요로 하는 의존 객체를 주입하는 것을
-    // "의존성 주입(Dependency Injection; DI)"라고 한다.
-    // => DI를 전문적으로 처리해주는 프레임워크가 있으니 그 이름도 유명한
-    // "Spring IoC 컨테이너"!
     commandMap.put("/lesson/add", new LessonAddCommand(input, lessonList));
     commandMap.put("/lesson/delete", new LessonDeleteCommand(input, lessonList));
     commandMap.put("/lesson/detail", new LessonDetailCommand(input, lessonList));
@@ -134,15 +139,16 @@ public class App {
       System.out.println();
     } // while
 
-    // 애플리케이션의 실행을 종료하기 전에 데이터를 저장한다.
-    saveLessonData();
-    saveMemberData();
-    saveBoardData();
+    // 애플리케이션의 서비스를 종료할 때 등록된 옵저버에게 알린다.
+    for (ApplicationContextListener listener : appCtxListeners) {
+      listener.contextDestroyed(beanContainer);
+    }
 
   }
+  
 
 
-  private static void printCommandHistory(Iterable<String> list) {
+  private void printCommandHistory(Iterable<String> list) {
     Iterator<String> iterator = list.iterator();
     int count = 0;
     while (iterator.hasNext()) {
@@ -155,210 +161,26 @@ public class App {
     }
   }
 
-  private static String prompt() {
+  private  String prompt() {
     System.out.print("명령> ");
     return keyScan.nextLine();
   }
 
-  @SuppressWarnings("unchecked")
-  private static void loadLessonData() {
-    // File의 정보를 준비
-    File file = new File("./lesson.ser");
 
-    // 바이트 단위로 출력된 데이터를 읽을 객체를 준비한다.
-    FileInputStream in = null;
-    ObjectInputStream in2 = null;
-
-    try {
-      // 파일 정보를 바탕으로 데이터를 읽어주는 객체 준비
-      in = new FileInputStream(file);
-
-      // 바이트 배열을 읽어 객체로 복원해주는 객체 준비
-      in2 = new ObjectInputStream(in);
-      
-      lessonList = (ArrayList<Lesson>)in2.readObject();
-      
-    } catch (FileNotFoundException e) {
-      System.out.println("읽을 파일을 찾을 수 없습니다!");
-
-    } catch (Exception e) {
-      System.out.println("파일을 읽는 중에 오류가 발생했습니다.");
-
-    } finally {
-      try {in2.close();} catch (Exception e) {}
-      try {in.close();} catch (Exception e) {}
-    }
-
-
+  
+  // ApplicationContextListener 옵저버를 등록하는 메서드
+  public void addApplicationContextListener(ApplicationContextListener listener) {
+    this.appCtxListeners.add(listener);
   }
-
-  private static void saveLessonData() {
-    // File의 정보를 준비
-    File file = new File("./lesson.ser");
-
-    // 바이트 단위로 데이터를 다루기 위해 바이트 스트림 클래스를 준비한다.
-    FileOutputStream out = null;
-    ObjectOutputStream out2 = null;
-
-    try {
-      // 파일 정보를 바탕으로 데이터를 출력해주는 객체 준비
-      out = new FileOutputStream(file);
-      
-      // 객체를 통째로 바이트 배열로 변환해주는 출력 스트림 준비하기
-      out2 = new ObjectOutputStream(out);
-
-      // lessonList를 통째로 출력하기
-      out2.writeObject(lessonList);
-      
-    } catch (FileNotFoundException e) {
-      // 출력할 파일을 생성하지 못할 때
-      // JVM을 멈추지 말고 간단히 오류 안내 문구를 출력한 다음에
-      // 계속 실행하게 하자!
-      System.out.println("파일을 생성할 수 없습니다!");
-
-    } catch (IOException e) {
-      // 파일에 데이터를 출력하다가 오류가 발생하면,
-      // JVM을 멈추지 말고 간단히 오류 안내 문구를 출력한 다음에
-      // 계속 실행하게 하자!
-      System.out.println("파일에 데이터를 출력하는 중에 오류 발생!");
-      e.printStackTrace();
-      
-    } finally {
-      try {out2.close();} catch (Exception e) {}
-      try {out.close();} catch (Exception e) {}
-    }
-  }
-
-
-
-  @SuppressWarnings("unchecked")
-  private static void loadMemberData() {
-    // File의 정보를 준비
-    File file = new File("./member.ser");
-
-    FileInputStream in = null;
-    ObjectInputStream in2 = null;
-
-    try {
-      // 파일 정보를 바탕으로 데이터를 읽어주는 객체 준비
-      in = new FileInputStream(file);
-      in2 = new ObjectInputStream(in);
-      
-      memberList = (ArrayList<Member>)in2.readObject();
-      
-    } catch (FileNotFoundException e) {
-      // 읽을 파일을 찾지 못할 때
-      // JVM을 멈추지 말고 간단히 오류 안내 문구를 출력한 다음에
-      // 계속 실행하게 하자!
-      System.out.println("읽을 파일을 찾을 수 없습니다!");
-
-    } catch (Exception e) {
-      // FileNotFoundException 외의 다른 예외를 여기에서 처리한다.
-      System.out.println("파일을 읽는 중에 오류가 발생했습니다.");
-
-    } finally {
-      try {in2.close();} catch (Exception e) {}
-      try {in.close();} catch (Exception e) {}
-    }
-
-
-  }
-
-  private static void saveMemberData() {
-    // File의 정보를 준비
-    File file = new File("./member.ser");
-
-    FileOutputStream out = null;
-    ObjectOutputStream out2 = null;
-
-    try {
-      // 파일 정보를 바탕으로 데이터를 출력해주는 객체 준비
-      out = new FileOutputStream(file);
-      out2 = new ObjectOutputStream(out);
-      out2.writeObject(memberList);
-
-    } catch (FileNotFoundException e) {
-      // 출력할 파일을 생성하지 못할 때
-      // JVM을 멈추지 말고 간단히 오류 안내 문구를 출력한 다음에
-      // 계속 실행하게 하자!
-      System.out.println("파일을 생성할 수 없습니다!");
-
-    } catch (IOException e) {
-      // 파일에 데이터를 출력하다가 오류가 발생하면,
-      // JVM을 멈추지 말고 간단히 오류 안내 문구를 출력한 다음에
-      // 계속 실행하게 하자!
-      System.out.println("파일에 데이터를 출력하는 중에 오류 발생!");
-      e.printStackTrace();
-    } finally {
-      try {out2.close();} catch (Exception e) {}
-      try {out.close();} catch (Exception e) {}
-    }
-  }
-
-
-
-  @SuppressWarnings("unchecked")
-  private static void loadBoardData() {
-    // File의 정보를 준비
-    File file = new File("./board.ser");
-
-    FileInputStream in = null;
-    ObjectInputStream in2 = null;
-
-    try {
-      // 파일 정보를 바탕으로 데이터를 읽어주는 객체 준비
-      in = new FileInputStream(file);
-      in2 = new ObjectInputStream(in);
-
-      boardList = (ArrayList<Board>)in2.readObject();
-
-    } catch (FileNotFoundException e) {
-      // 읽을 파일을 찾지 못할 때
-      // JVM을 멈추지 말고 간단히 오류 안내 문구를 출력한 다음에
-      // 계속 실행하게 하자!
-      System.out.println("읽을 파일을 찾을 수 없습니다!");
-
-    } catch (Exception e) {
-      // FileNotFoundException 외의 다른 예외를 여기에서 처리한다.
-      System.out.println("파일을 읽는 중에 오류가 발생했습니다.");
-
-    } finally {
-      try {in2.close();} catch (Exception e) {}
-      try {in.close();} catch (Exception e) {}
-    }
-
-
-  }
-
-  private static void saveBoardData() {
-    // File의 정보를 준비
-    File file = new File("./board.ser");
-
-    FileOutputStream out = null;
-    ObjectOutputStream out2 = null;
-
-    try {
-      // 파일 정보를 바탕으로 데이터를 출력해주는 객체 준비
-      out = new FileOutputStream(file);
-      out2 = new ObjectOutputStream(out);
-      out2.writeObject(boardList);
-      
-    } catch (FileNotFoundException e) {
-      // 출력할 파일을 생성하지 못할 때
-      // JVM을 멈추지 말고 간단히 오류 안내 문구를 출력한 다음에
-      // 계속 실행하게 하자!
-      System.out.println("파일을 생성할 수 없습니다!");
-
-    } catch (IOException e) {
-      // 파일에 데이터를 출력하다가 오류가 발생하면,
-      // JVM을 멈추지 말고 간단히 오류 안내 문구를 출력한 다음에
-      // 계속 실행하게 하자!
-      System.out.println("파일에 데이터를 출력하는 중에 오류 발생!");
-      e.printStackTrace();
-    } finally {
-      try {out2.close();} catch (Exception e) {}
-      try {out.close();} catch (Exception e) {}
-    }
+  
+  public static void main(String[] args) {
+    App app = new App();
+    
+    // 애플리 케이션을 시작하거나 종료할 때 보고를 받고자 하는 객체를 등록한다.
+    app.addApplicationContextListener(new HelloApplicationContextListener());
+    app.addApplicationContextListener(new DataLoaderListener());
+    
+    app.service();
   }
 }
 

@@ -4,8 +4,8 @@ package design_pattern.observer2.before.v1;
 public class Test {
 
   public static void main(String[] args) {
-    
     TextAnalyzer analyzer = new TextAnalyzer();
     analyzer.execute();
   }
+
 }
