@@ -2,13 +2,6 @@
 
 package com.eomcs.lms;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -54,8 +47,6 @@ public class App {
   Map<String, Object> beanContainer = new HashMap<>();
   
   Scanner keyScan;
-
-  
 
 
 

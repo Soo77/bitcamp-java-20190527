@@ -10,11 +10,14 @@ public class Test01 {
     // AbstractCarObserver를 상속 받으면 코딩하기가 편하다.
     // => AbstractCarObserver 클래스를 참고할 것.
     //
+    
+    
     car.addObserver(new SafeBeltCarObserver());
     car.addObserver(new EngineOilCarObserver());
     car.addObserver(new BreakOilCarObserver());
     car.addObserver(new LightOffCarObserver());
     car.addObserver(new SunRoofCloseCarObserver());
+    
     
     car.start();
     car.run();

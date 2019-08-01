@@ -21,7 +21,6 @@ public class Test {
     car.run();
     car.stop();
     
-    
     System.out.println("-----------------------");
     // Observer 패턴은 리스너를 쉽게 추가하고 제거할 수 있다.
     // 언제든 특정 상태에 대해 관심이 없다면 제거하면 된다.
