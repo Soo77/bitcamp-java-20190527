@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.sql.Date;
 import java.util.List;
+import com.eomcs.lms.domain.Lesson;
 import com.eomcs.lms.domain.Member;
 
 public class ServerTest {

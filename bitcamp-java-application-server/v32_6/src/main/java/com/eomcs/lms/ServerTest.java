@@ -31,9 +31,8 @@ public class ServerTest {
       member.setNo(1);
       member.setName("홍길동");
       member.setEmail("hong@test.com");
-      member.setPassword("1111");
       member.setPhoto("hong.gif");
-      member.setTel("1111-2222");
+      member.setTel("1111-1111");
 
       if (!add(member)) {
         error();
@@ -45,9 +44,8 @@ public class ServerTest {
       member.setNo(2);
       member.setName("임꺽정");
       member.setEmail("leem@test.com");
-      member.setPassword("1111");
       member.setPhoto("leem.gif");
-      member.setTel("1111-3333");
+      member.setTel("1111-2222");
       
       if (!add(member)) {
         error();
@@ -58,11 +56,22 @@ public class ServerTest {
         error();
       }
       System.out.println("----------------------------");
+
+      if (!delete()) {
+        error();
+      }
+      System.out.println("----------------------------");
+
+      if (!list()) {
+        error();
+      }
+      System.out.println("----------------------------");
+
       if (!detail()) {
         error();
-      }   
-      
+      }
       System.out.println("----------------------------");
+
       member = new Member();
       member.setNo(1);
       member.setName("홍길동2");
@@ -71,16 +80,6 @@ public class ServerTest {
       member.setTel("1111-1111");
       
       if (!update(member)) {
-        error();
-      }
-
-      System.out.println("----------------------------");
-      if (!detail()) {
-        error();
-      } 
-      
-      System.out.println("----------------------------");
-      if (!delete()) {
         error();
       }
       System.out.println("----------------------------");
@@ -95,9 +94,6 @@ public class ServerTest {
       }
       System.out.println("----------------------------");
 
-  
-      
-      
     } catch (RequestException e) {
       // 서버에서 요청 처리에 실패했다면
       // 서버가 보낸 이유를 받는다.
@@ -157,7 +153,7 @@ public class ServerTest {
 
   private static boolean delete() throws Exception {
     out.writeUTF("/member/delete");
-    out.writeInt(1);
+    out.writeInt(2);
     out.flush();
     System.out.print("delete 요청함 => ");
 
