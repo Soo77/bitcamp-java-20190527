@@ -1,107 +1,110 @@
-package com.eomcs.lms;
+package com.eomcs.lms.servlet;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import com.eomcs.lms.domain.Lesson;
+import com.eomcs.lms.Servlet;
+import com.eomcs.lms.domain.Board;
 
-public class LessonServlet implements Servlet {
-  static ArrayList<Lesson> lessonList = new ArrayList<>();
+// 게시물 요청을 처리하는 담당자
+public class BoardServlet implements Servlet {
+  
+  ArrayList<Board> boardList = new ArrayList<>();
   
   ObjectInputStream in;
   ObjectOutputStream out;
   
-  public LessonServlet(ObjectInputStream in, ObjectOutputStream out) {
+  public BoardServlet(ObjectInputStream in, ObjectOutputStream out) {
     this.in = in;
     this.out = out;
   }
+  
+  
   @Override
   public void service(String command) throws Exception {
     switch (command) {
-      
-      case "/lesson/add":
+      case "/board/add":
         // 클라이언트가 보낸 객체를 읽는다.
-        addLesson();
+        addBoard();
         break;
-      case "/lesson/list":
-        listLesson();
+      case "/board/list":
+        listBoard();
         break;
-      case "/lesson/delete":
-        deleteLesson();
+      case "/board/delete":
+        deleteBoard();
         break;
-      case "/lesson/detail":
-        detailLesson();
+      case "/board/detail":
+        detailBoard();
         break;
-      case "/lesson/update":
-        updateLesson();
+      case "/board/update":
+        updateBoard();
         break;
       default:
         out.writeUTF("fail");
         out.writeUTF("지원하지 않는 명령입니다.");
     }
   }
-  
-  private void updateLesson() throws Exception {
-    Lesson lesson = (Lesson)in.readObject();
+  private void updateBoard() throws Exception {
+    Board board = (Board)in.readObject();
 
-    int index = indexOfLesson(lesson.getNo());
+    int index = indexOfBoard(board.getNo());
     if (index == -1) {
       fail("해당 번호의 강의가 없습니다.");
       return;
     }
-    lessonList.set(index, lesson);
+    boardList.set(index, board);
     out.writeUTF("ok");
 
   }
 
-  private void detailLesson() throws Exception {
+  private void detailBoard() throws Exception {
     int no = in.readInt();
 
-    int index = indexOfLesson(no);
+    int index = indexOfBoard(no);
     if (index == -1) {
       fail("해당 번호의 강의가 없습니다.");
       return;
     }
     out.writeUTF("ok");
-    out.writeObject(lessonList.get(index));
+    out.writeObject(boardList.get(index));
 
   }
 
 
-  private void deleteLesson() throws Exception {
+  private void deleteBoard() throws Exception {
     int no = in.readInt();
 
-    int index = indexOfLesson(no);
+    int index = indexOfBoard(no);
     if (index == -1) {
       fail("해당 번호의 강의가 없습니다.");
       return;
     }
-    lessonList.remove(index);
+    boardList.remove(index);
     out.writeUTF("ok");
    }
 
-  private void addLesson() throws Exception {
-    Lesson lesson = (Lesson)in.readObject();
+  private void addBoard() throws Exception {
+    Board board = (Board)in.readObject();
     out.writeUTF("ok");
-    lessonList.add(lesson);
+    boardList.add(board);
   }
 
-  private void listLesson() throws Exception {
+  private void listBoard() throws Exception {
     out.writeUTF("ok");
     out.reset(); // 기존에 serialize 했던 객체의 상태를 무시하고 다시 serialize한다.
-    out.writeObject(lessonList);
+    out.writeObject(boardList);
   }
 
-  private int indexOfLesson(int no) {
+  private int indexOfBoard(int no) {
     int i = 0;
-    for (Lesson m : lessonList) {
+    for (Board m : boardList) {
       if (m.getNo() == no) {
         return i;
       }
       i++;
     }
     return -1;
-  }
+  }  
   
   private void fail(String cause) throws Exception {
     out.writeUTF("fail");

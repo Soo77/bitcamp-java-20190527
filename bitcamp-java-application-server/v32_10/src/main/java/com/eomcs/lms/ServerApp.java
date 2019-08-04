@@ -1,4 +1,4 @@
-// v32_12: DAO 클래스들의 공통 필드나 메서드를 뽑ㅇ아 수퍼클래스로 정의 (generalization)
+// v32_10 : 파일 저장 기능 추가
 
 package com.eomcs.lms;
 
@@ -7,7 +7,9 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import com.eomcs.lms.domain.Board;
 import com.eomcs.lms.domain.Lesson;
+import com.eomcs.lms.domain.Member;
 import com.eomcs.lms.servlet.BoardServlet;
 import com.eomcs.lms.servlet.LessonServlet;
 import com.eomcs.lms.servlet.MemberServlet;

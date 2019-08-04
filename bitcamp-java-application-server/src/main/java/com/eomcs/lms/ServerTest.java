@@ -94,15 +94,6 @@ public class ServerTest {
         error();
       }
       System.out.println("----------------------------");
-
-  
-      
-      
-    } catch (RequestException e) {
-      // 서버에서 요청 처리에 실패했다면
-      // 서버가 보낸 이유를 받는다.
-      System.out.printf("오류: %s\n", in.readUTF());
-      
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -157,7 +148,7 @@ public class ServerTest {
 
   private static boolean delete() throws Exception {
     out.writeUTF("/member/delete");
-    out.writeInt(1);
+    out.writeInt(2);
     out.flush();
     System.out.print("delete 요청함 => ");
 

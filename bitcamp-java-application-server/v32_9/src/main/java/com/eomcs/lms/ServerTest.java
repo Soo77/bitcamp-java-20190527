@@ -4,11 +4,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.sql.Date;
 import java.util.List;
-import com.eomcs.lms.domain.Lesson;
+import com.eomcs.lms.domain.Member;
 
-public class ServerTest2 {
+public class ServerTest {
 
   static ObjectOutputStream out;
   static ObjectInputStream in;
@@ -24,36 +23,33 @@ public class ServerTest2 {
       System.out.println("서버와 연결되었음.");
 
       // 다른 메서드가 입출력 객체를 사용할 수 있도록 스태틱 변수에 저장한다.
-      ServerTest2.in = in;
-      ServerTest2.out = out;
+      ServerTest.in = in;
+      ServerTest.out = out;
       
 
+      Member member = new Member();
+      member.setNo(1);
+      member.setName("홍길동");
+      member.setEmail("hong@test.com");
+      member.setPassword("1111");
+      member.setPhoto("hong.gif");
+      member.setTel("1111-2222");
 
-      Lesson lesson = new Lesson();
-      lesson.setNo(1);
-      lesson.setTitle("자바프로그래밍");
-      lesson.setContents("okok");
-      lesson.setStartDate(Date.valueOf("2019-1-1"));
-      lesson.setEndDate(Date.valueOf("2019-2-2"));
-      lesson.setTotalHours(200);
-      lesson.setDayHours(4);
-
-      if (!add(lesson)) {
+      if (!add(member)) {
         error();
       }
       System.out.println("---------------");
 
 
-      lesson = new Lesson();
-      lesson.setNo(2);
-      lesson.setTitle("자바프로그래밍2");
-      lesson.setContents("okok2");
-      lesson.setStartDate(Date.valueOf("2019-2-2"));
-      lesson.setEndDate(Date.valueOf("2019-3-3"));
-      lesson.setTotalHours(400);
-      lesson.setDayHours(3);
+      member = new Member();
+      member.setNo(2);
+      member.setName("임꺽정");
+      member.setEmail("leem@test.com");
+      member.setPassword("1111");
+      member.setPhoto("leem.gif");
+      member.setTel("1111-3333");
       
-      if (!add(lesson)) {
+      if (!add(member)) {
         error();
       }
       System.out.println("----------------------------");
@@ -62,32 +58,29 @@ public class ServerTest2 {
         error();
       }
       System.out.println("----------------------------");
-
-      if (!delete()) {
-        error();
-      }
-      System.out.println("----------------------------");
-
-      if (!list()) {
-        error();
-      }
-      System.out.println("----------------------------");
-
       if (!detail()) {
         error();
-      }
-      System.out.println("----------------------------");
-
-      lesson = new Lesson();
-      lesson.setNo(1);
-      lesson.setTitle("자바 웹 프로그래밍");
-      lesson.setContents("웹개발자 양성과정");
-      lesson.setStartDate(Date.valueOf("2019-5-27"));
-      lesson.setEndDate(Date.valueOf("2019-11-27"));
-      lesson.setTotalHours(400);
-      lesson.setDayHours(3);
+      }   
       
-      if (!update(lesson)) {
+      System.out.println("----------------------------");
+      member = new Member();
+      member.setNo(1);
+      member.setName("홍길동2");
+      member.setEmail("hong2@test.com");
+      member.setPhoto("hong.gif");
+      member.setTel("1111-1111");
+      
+      if (!update(member)) {
+        error();
+      }
+
+      System.out.println("----------------------------");
+      if (!detail()) {
+        error();
+      } 
+      
+      System.out.println("----------------------------");
+      if (!delete()) {
         error();
       }
       System.out.println("----------------------------");
@@ -101,7 +94,6 @@ public class ServerTest2 {
         error();
       }
       System.out.println("----------------------------");
-
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -109,11 +101,9 @@ public class ServerTest2 {
     System.out.println("서버와 연결 끊음.");
   }
 
-  
-  
 
   private static boolean detail() throws Exception {
-    out.writeUTF("/lesson/detail");
+    out.writeUTF("/member/detail");
     out.writeInt(1);
     out.flush();
     System.out.print("detail 요청함 => ");
@@ -126,9 +116,9 @@ public class ServerTest2 {
     return true;
   }
   
-  private static boolean update(Lesson obj) throws Exception {
-    out.writeUTF("/lesson/update");
-    out.writeObject(obj);
+  private static boolean update(Member m) throws Exception {
+    out.writeUTF("/member/update");
+    out.writeObject(m);
     out.flush();
     System.out.print("update 요청함 => ");
 
@@ -157,8 +147,8 @@ public class ServerTest2 {
   }
 
   private static boolean delete() throws Exception {
-    out.writeUTF("/lesson/delete");
-    out.writeInt(2);
+    out.writeUTF("/member/delete");
+    out.writeInt(1);
     out.flush();
     System.out.print("delete 요청함 => ");
 
@@ -171,7 +161,7 @@ public class ServerTest2 {
   }
 
   private static boolean list() throws Exception {
-    out.writeUTF("/lesson/list");
+    out.writeUTF("/member/list");
     out.flush();
     System.out.print("list 요청함 =>");
 
@@ -180,17 +170,17 @@ public class ServerTest2 {
     
     System.out.println("처리완료!");
     @SuppressWarnings("unchecked")
-    List<Lesson> list = (List<Lesson>)in.readObject();
+    List<Member> list = (List<Member>)in.readObject();
     System.out.println("---------------");
-    for (Lesson obj : list) {
-      System.out.println(obj);
+    for (Member m : list) {
+      System.out.println(m);
     }    
     return true;
   }
 
-  private static boolean add(Lesson obj) throws Exception {
-    out.writeUTF("/lesson/add");
-    out.writeObject(obj);
+  private static boolean add(Member m) throws Exception {
+    out.writeUTF("/member/add");
+    out.writeObject(m);
     out.flush();
     System.out.print("add 요청함 => ");
 
