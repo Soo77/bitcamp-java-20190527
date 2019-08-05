@@ -23,6 +23,7 @@ public class TextAnalyzer {
       
       
       while ((ch = in.read()) != -1) { // 글자수 세기
+        System.out.println(ch);
         count++;
         
         if (ch == '\n') { // 몇줄인지
