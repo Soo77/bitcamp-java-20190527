@@ -4,15 +4,14 @@ import java.io.Serializable;
 import java.sql.Date;
 
 public class Board implements Serializable {
-  /**
-   * 
-   */
   private static final long serialVersionUID = 1L;
+  
   private int no;
   private String contents;
   private Date createdDate;
   private int viewCount;
-    @Override
+  
+  @Override
   public String toString() {
     return "Board [no=" + no + ", contents=" + contents + ", createdDate=" + createdDate
         + ", viewCount=" + viewCount + "]";
@@ -20,7 +19,6 @@ public class Board implements Serializable {
   public int getNo() {
     return no;
   }
-
   public void setNo(int no) {
     this.no = no;
   }
