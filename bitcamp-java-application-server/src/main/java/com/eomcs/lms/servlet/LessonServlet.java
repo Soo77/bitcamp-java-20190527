@@ -3,12 +3,12 @@ package com.eomcs.lms.servlet;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import com.eomcs.lms.Servlet;
-import com.eomcs.lms.dao.LessonSerialDao;
+import com.eomcs.lms.dao.csv.LessonCsvDao;
 import com.eomcs.lms.domain.Lesson;
 
 public class LessonServlet implements Servlet {
 
-  LessonSerialDao lessonDao;
+  LessonCsvDao lessonDao;
   ObjectInputStream in;
   ObjectOutputStream out;
   
@@ -18,7 +18,7 @@ public class LessonServlet implements Servlet {
     this.in = in;
     this.out = out;
 
-    lessonDao = new LessonSerialDao("./lesson.ser");
+    lessonDao = new LessonCsvDao("./lesson.csv");
   }
 
 
@@ -65,7 +65,7 @@ public class LessonServlet implements Servlet {
 
   private void detailLesson() throws Exception {
     int no = in.readInt();
-    Lesson lesson = lessonDao.findBy(no);
+    Lesson lesson = lessonDao.getLesson(no);
     if (lesson == null) {
       fail("해당 번호의 수업이 없습니다.");
       return;
@@ -88,7 +88,7 @@ public class LessonServlet implements Servlet {
 
   private void addLesson() throws Exception {
     Lesson lesson = (Lesson)in.readObject();
-    if (lessonDao.insert(lesson) == 0) {
+    if (lessonDao.append(lesson) == 0) {
       fail("수업을 등록할 수 없습니다.");
       return;
     }
@@ -98,7 +98,7 @@ public class LessonServlet implements Servlet {
   private void listLesson() throws Exception {
     out.writeUTF("ok");
     out.reset(); // 기존에 serialize 했던 객체의 상태를 무시하고 다시 serialize한다.
-    out.writeObject(lessonDao.findAll());
+    out.writeObject(lessonDao.getLessons());
   }
 
   
