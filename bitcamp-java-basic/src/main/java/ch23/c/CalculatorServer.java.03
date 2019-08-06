@@ -19,6 +19,8 @@ public class CalculatorServer {
                 new InputStreamReader(socket.getInputStream()));
             PrintStream out = new PrintStream(socket.getOutputStream());) {
           
+          
+          
           String[] input = in.readLine().split(" ");
           
           int a = Integer.parseInt(input[0]);
