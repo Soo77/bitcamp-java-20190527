@@ -34,6 +34,7 @@ public class HttpServer {
           
           out.println("HTTP/1.1 200 ok");
           out.println("Content-Type: text/html;charset=UTF-8");
+          out.println("Refresh: 3;url=https://namu.wiki/w/%ED%8C%8C%EC%9D%BC:%EC%8A%A4%EC%BF%A0%ED%8E%98%EC%8A%A4%20%EA%B0%90%EC%82%AC%EC%A0%9C%202019%20%ED%82%A4%20%EB%B9%84%EC%A3%BC%EC%96%BC.jpg");
           out.println();
           out.println("<html><body><h1>오호라!! 안녕하세요!</h1></body></html>");
           out.flush();
