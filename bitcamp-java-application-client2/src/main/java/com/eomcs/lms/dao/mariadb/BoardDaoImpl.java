@@ -16,7 +16,7 @@ public class BoardDaoImpl implements BoardDao{
     try (Connection con = DriverManager.getConnection(
         "jdbc:mariadb://localhost/bitcampdb?user=bitcamp&password=1111");
         Statement stmt = con.createStatement()) {
- 
+
       return stmt.executeUpdate( 
           "insert into lms_board(conts)"
               + " values('"+ board.getContents() + "')");
@@ -33,7 +33,7 @@ public class BoardDaoImpl implements BoardDao{
             "select * from lms_board order by board_id desc");) {
 
       ArrayList<Board> list = new ArrayList<>();
-      
+
       while (rs.next()) {
         Board board = new Board();
         board.setNo(rs.getInt("board_id"));
@@ -41,7 +41,7 @@ public class BoardDaoImpl implements BoardDao{
         board.setCreatedDate(rs.getDate("cdt"));
         board.setViewCount(rs.getInt("vw_cnt"));
         list.add(board);
-        
+
       }
       return list;
     }
@@ -49,14 +49,40 @@ public class BoardDaoImpl implements BoardDao{
 
   @Override
   public Board findBy(int no) throws Exception {
-    // TODO Auto-generated method stub
-    return null;
+    try (Connection con = DriverManager.getConnection(
+        "jdbc:mariadb://localhost/bitcampdb?user=bitcamp&password=1111");
+        Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery(
+            "select * from lms_board where board_id = " + no);) {
+
+
+      Board board = new Board();
+      board.setNo(rs.getInt("board_id"));
+      board.setContents(rs.getString("conts"));
+      board.setCreatedDate(rs.getDate("cdt"));
+      board.setViewCount(rs.getInt("vw_cnt"));
+      return board;
+
+    }
+
   }
+
 
   @Override
   public int update(Board board) throws Exception {
-    // TODO Auto-generated method stub
-    return 0;
+    try (Connection con = DriverManager.getConnection(
+        "jdbc:mariadb://localhost/bitcampdb?user=bitcamp&password=1111");
+        Statement stmt = con.createStatement();) {
+
+      // update 문장은 executeUpdate()를 사용하여 서버에 전달한다.
+      return stmt.executeUpdate(
+          "update lms_board set conts = '" + board.getContents() + "'"
+              + " where board_id = " + board.getNo());
+
+
+
+
+    }
   }
 
   @Override
