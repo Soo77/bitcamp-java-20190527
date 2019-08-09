@@ -10,8 +10,9 @@ import com.eomcs.util.Input;
 import com.eomcs.util.Stack;
 
 public class App {
+  
   static Scanner keyScan;
-  static Stack<String> commandStack = new Stack<>();
+  static Stack<String> commandStack = new Stack<>(); 
   
   public static void main(String[] args) throws Exception {
     
@@ -30,13 +31,11 @@ public class App {
     BoardHandler boardHandler = new BoardHandler(input);
     BoardHandler boardHandler2 = new BoardHandler(input);
 
-
-    
     while (true) {
       
       String command = prompt();
       
-      commandStack.push(command);
+      commandStack.push(command); // 사용자가 입력한 명령을 보관한다.
       
       if (command.equals("quit")) {
         break;

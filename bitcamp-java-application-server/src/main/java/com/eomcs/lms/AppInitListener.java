@@ -23,7 +23,6 @@ public class AppInitListener implements ServletContextListener {
     
     
     try {
-      
       boardDao = new BoardCsvDao("./board.csv");
     } catch (Exception e) {
       System.out.println("게시물 데이터 로딩 중 오류 발생!");

@@ -12,6 +12,4 @@ public class Car {
   // => new 명령을 실행하는 개수 만큼 인스턴스 필드가 생성된다.
   int no;
   String model;
-  
-
 }

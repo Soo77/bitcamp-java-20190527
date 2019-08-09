@@ -4,10 +4,8 @@ import java.io.Serializable;
 import java.sql.Date;
 
 public class Member implements Serializable {
-  /**
-   * 
-   */
-   private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
+  
   private int no;
   private String name;
   private String email;
@@ -16,7 +14,6 @@ public class Member implements Serializable {
   private String photo;
   private Date registeredDate;
   
- 
   @Override
   public String toString() {
     return "Member [no=" + no + ", name=" + name + ", email=" + email + ", password=" + password

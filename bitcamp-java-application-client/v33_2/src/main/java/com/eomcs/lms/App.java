@@ -1,6 +1,4 @@
-// client-v33_2 : Stateful 통신 방식을 Stateless 통신 방식으로 변경한다.
-
-
+// client-v33_2 : Stateful 통신 방식을 Stateless 통신 방식으로 변경한다. 
 package com.eomcs.lms;
 
 import java.io.ObjectInputStream;
@@ -40,8 +38,9 @@ import com.eomcs.lms.handler.MemberUpdateCommand;
 import com.eomcs.util.Input;
 
 public class App {
+
   Scanner keyScan;
-  
+
   String host;
   int port;
   
@@ -53,37 +52,34 @@ public class App {
   private void service() {
     // Command 객체가 사용할 데이터 처리 객체를 준비한다.
     BoardDao boardDao = new BoardDaoProxy(host, port);
-    LessonDao lessonDao = new LessonDaoProxy(host, port);
     MemberDao memberDao = new MemberDaoProxy(host, port);
+    LessonDao lessonDao = new LessonDaoProxy(host, port);
 
     keyScan = new Scanner(System.in);
-    //
+
     Deque<String> commandStack = new ArrayDeque<>();
     Queue<String> commandQueue = new LinkedList<>();
 
-    // Input 생성자를 통해 Input이 의존하는 객체인 Scanner를 주입한다.
     Input input = new Input(keyScan);
 
-    // Command 객체를 보관할 Map 준비
-    HashMap<String, Command> commandMap = new HashMap<>();
+    HashMap<String,Command> commandMap = new HashMap<>();
 
     commandMap.put("/lesson/add", new LessonAddCommand(input, lessonDao));
     commandMap.put("/lesson/delete", new LessonDeleteCommand(input, lessonDao));
     commandMap.put("/lesson/detail", new LessonDetailCommand(input, lessonDao));
-    commandMap.put("/lesson/list", new LessonListCommand(lessonDao));
+    commandMap.put("/lesson/list", new LessonListCommand(input, lessonDao));
     commandMap.put("/lesson/update", new LessonUpdateCommand(input, lessonDao));
 
     commandMap.put("/member/add", new MemberAddCommand(input, memberDao));
     commandMap.put("/member/delete", new MemberDeleteCommand(input, memberDao));
     commandMap.put("/member/detail", new MemberDetailCommand(input, memberDao));
-    commandMap.put("/member/list", new MemberListCommand(memberDao));
+    commandMap.put("/member/list", new MemberListCommand(input, memberDao));
     commandMap.put("/member/update", new MemberUpdateCommand(input, memberDao));
-
 
     commandMap.put("/board/add", new BoardAddCommand(input, boardDao));
     commandMap.put("/board/delete", new BoardDeleteCommand(input, boardDao));
     commandMap.put("/board/detail", new BoardDetailCommand(input, boardDao));
-    commandMap.put("/board/list", new BoardListCommand(boardDao));
+    commandMap.put("/board/list", new BoardListCommand(input, boardDao));
     commandMap.put("/board/update", new BoardUpdateCommand(input, boardDao));
 
     commandMap.put("/hi", new HiCommand(input));
@@ -93,15 +89,12 @@ public class App {
 
       String command = prompt();
 
-      // 사용자가 아무것도 입력하지 않았으면 다시 입력 받는다.
       if (command.length() == 0)
         continue;
 
-      commandStack.push(command); // 사용자가 입력한 명령을 보관한다.
-      commandQueue.offer(command); // 사용자가 입력한 명령을 보관한다.
+      commandStack.push(command); 
+      commandQueue.offer(command); 
 
-
-      // 사용자가 입력한 명령어를 처리할 Command 객체를 Map에서 꺼낸다.
       Command executor = commandMap.get(command);
 
       if (command.equals("quit")) {
@@ -118,17 +111,15 @@ public class App {
         printCommandHistory(commandQueue);
 
       } else if (executor != null) {
-        executor.execute(); // addLesson() 메서드 블록에 묶어 놓은 코드를 실행한다.
+        executor.execute();
 
       } else {
         System.out.println("해당 명령을 지원하지 않습니다!");
       }
 
       System.out.println();
-    } // while
+    } //while
   }
-
-
 
   private void printCommandHistory(Iterable<String> list) {
     Iterator<String> iterator = list.iterator();
@@ -143,14 +134,13 @@ public class App {
     }
   }
 
-  private  String prompt() {
+  private String prompt() {
     System.out.print("명령> ");
     return keyScan.nextLine();
   }
-
-
+  
   private void serverStop() {
-    try(Socket socket = new Socket(host, port);
+    try (Socket socket = new Socket(host, port);
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
       
@@ -158,18 +148,28 @@ public class App {
       out.flush();
       
     } catch (Exception e) {
-      // 서버를 종료하는 요청을 보낸후 발생하는 예외는 무시한다.
+      // 서버를 종료하는 요청을 보낸 후 발생하는 예외는 무시한다.
     }
   }
-  
+
   public static void main(String[] args) {
     if (args.length != 2) {
-      System.out.println("실행방법: java -Dfile.encoding=UTF-8 -cp bin/main com/eomcs.lms.App 서버주소 포트번호");
+      System.out.println(
+          "실행방법: java -Dfile.encoding=UTF-8 -cp bin/main com.eomcs.lms.App 서버주소 포트번호");
       return;
     }
+    
     App app = new App(args[0], Integer.parseInt(args[1]));
     app.service();
   }
 }
+
+
+
+
+
+
+
+
 
 

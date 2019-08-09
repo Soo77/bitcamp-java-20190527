@@ -20,8 +20,9 @@ public class BoardDeleteCommand implements Command {
     try {
       boardDao.delete(no);
       System.out.println("데이터를 삭제하였습니다.");
+      
     } catch (Exception e) {
-      System.out.println("데이터 삭제에 실패했습니다.!");
+      System.out.println("데이터 삭제에 실패했습니다!");
       System.out.println(e.getMessage());
     }
   }

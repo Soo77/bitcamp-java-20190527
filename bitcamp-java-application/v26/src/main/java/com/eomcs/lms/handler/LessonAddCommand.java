@@ -6,12 +6,12 @@ import com.eomcs.util.Input;
 
 public class LessonAddCommand implements Command {
   
-  private List<Lesson> lessonList;
+  private List<Lesson> list;
   private Input input;
   
   public LessonAddCommand(Input input, List<Lesson> list) {
     this.input = input;
-    this.lessonList = list;
+    this.list = list;
   }
   
   @Override
@@ -30,13 +30,11 @@ public class LessonAddCommand implements Command {
     
     // LessonHandler에서 직접 데이터를 보관하지 않고 
     // LessonList에게 전달한다.
-    lessonList.add(lesson);
+    list.add(lesson);
     
     System.out.println("저장하였습니다.");
   }
-  
-  
-  
+
 }
 
 

@@ -5,13 +5,9 @@ public class Calculator {
   
   public static void plus(int value) {
     result += value;
-    
   }
   
   public static void minus(int value) {
     result -= value;
-    
   }
-  
-  
 }

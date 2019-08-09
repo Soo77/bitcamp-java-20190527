@@ -9,10 +9,10 @@ public class HiCommand implements Command {
   public HiCommand(Input input) {
     this.input = input;
   }
-
   @Override
   public void execute() {
     String name = input.getStringValue("이름?");
     System.out.println("안녕하세요, " + name + "님!");
   }
+
 }

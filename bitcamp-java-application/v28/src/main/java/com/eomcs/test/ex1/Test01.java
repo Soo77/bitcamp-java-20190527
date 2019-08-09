@@ -6,8 +6,7 @@ public class Test01 {
     Calculator.plus(100);
     Calculator.minus(30);
     System.out.println(Calculator.result);
-    
-    
+
   }
 
 }

@@ -13,6 +13,7 @@ public class BoardServlet implements Servlet {
   BoardDao boardDao;
   
   public BoardServlet(BoardDao boardDao) {
+    
     // 서블릿이 사용할 DAO를 직접 만들지 않고 외부에서 주입 받아 사용한다.
     // 이렇게 의존하는 객체를 외부에서 주입 받아 사용하는 방법을
     // "의존성 주입(Dependency Injection; DI)"이라 부른다.
@@ -22,7 +23,8 @@ public class BoardServlet implements Servlet {
   }
   
   @Override
-  public void service(String command, 
+  public void service(
+      String command, 
       ObjectInputStream in, 
       ObjectOutputStream out) throws Exception {
     switch (command) {

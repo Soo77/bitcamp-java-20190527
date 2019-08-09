@@ -7,6 +7,10 @@ import java.util.List;
 import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.domain.Member;
 
+//Stateful 통신 방식을 Stateless 통신 방식으로 변경한다.
+//=> 매번 요청할 때마다 서버와 연결한다.
+//=> 서버의 응답을 받으면 연결을 끊는다.
+//
 public class MemberDaoProxy implements MemberDao {
 
   String host;
@@ -22,6 +26,7 @@ public class MemberDaoProxy implements MemberDao {
     try (Socket socket = new Socket(host, port);
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
+
       out.writeUTF("/member/add");
       out.writeObject(member);
       out.flush();
@@ -39,22 +44,23 @@ public class MemberDaoProxy implements MemberDao {
     try (Socket socket = new Socket(host, port);
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
+
       out.writeUTF("/member/list");
       out.flush();
 
       if (!in.readUTF().equals("ok"))
         throw new Exception(in.readUTF());
 
-      return (List<Member>) in.readObject();
+      return (List<Member>)in.readObject();
     }
   }
-
 
   @Override
   public Member findBy(int no) throws Exception {
     try (Socket socket = new Socket(host, port);
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
+
       out.writeUTF("/member/detail");
       out.writeInt(no);
       out.flush();
@@ -62,7 +68,7 @@ public class MemberDaoProxy implements MemberDao {
       if (!in.readUTF().equals("ok"))
         throw new Exception(in.readUTF());
 
-      return (Member) in.readObject();
+      return (Member)in.readObject();
     }
   }
 
@@ -71,6 +77,7 @@ public class MemberDaoProxy implements MemberDao {
     try (Socket socket = new Socket(host, port);
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
+
       out.writeUTF("/member/update");
       out.writeObject(member);
       out.flush();
@@ -80,7 +87,6 @@ public class MemberDaoProxy implements MemberDao {
 
       return 1;
     }
-
   }
 
   @Override
@@ -88,6 +94,7 @@ public class MemberDaoProxy implements MemberDao {
     try (Socket socket = new Socket(host, port);
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
+
       out.writeUTF("/member/delete");
       out.writeInt(no);
       out.flush();
@@ -99,5 +106,13 @@ public class MemberDaoProxy implements MemberDao {
     }
   }
 
-
 }
+
+
+
+
+
+
+
+
+

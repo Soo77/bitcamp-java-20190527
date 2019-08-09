@@ -12,10 +12,9 @@ public class ServerTest {
   public static void main(String[] args) throws Exception {
     System.out.println("[수업관리시스템 서버 애플리케이션 테스트]");
 
-    
-    try (Socket socket = new Socket("localhost", 8888);
+    try (Socket socket = new Socket("192.168.0.37", 8888);
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-      ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
+        ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
       
       System.out.println("서버와 연결되었음.");
       
@@ -25,7 +24,6 @@ public class ServerTest {
       member.setEmail("hong@test.com");
       member.setPhoto("hong.gif");
       member.setTel("1111-1111");
-      
 
       out.writeUTF("add");
       out.writeObject(member);
@@ -36,16 +34,12 @@ public class ServerTest {
       String response = in.readUTF();
       System.out.println("==>" + response);
       
-      
-      //--------------------------------------------------------
-      
       member = new Member();
       member.setNo(2);
       member.setName("임꺽정");
       member.setEmail("leem@test.com");
       member.setPhoto("leem.gif");
       member.setTel("1111-2222");
-      
 
       out.writeUTF("add");
       out.writeObject(member);
@@ -60,17 +54,17 @@ public class ServerTest {
       out.flush();
       System.out.println("list 요청함.");
       
+      // 서버가 보낸 데이터를 읽는다.
       response = in.readUTF();
       System.out.println("==>" + response);
       
       @SuppressWarnings("unchecked")
       List<Member> list = (List<Member>)in.readObject();
-      System.out.println("---------------");
+      System.out.println("------------------");
       for (Member m : list) {
         System.out.println(m);
       }
-      
-      System.out.println("---------------");
+      System.out.println("------------------");
       
       // 서버가 처리할 수 없는 명령어 보내기
       out.writeUTF("delete");
@@ -94,10 +88,15 @@ public class ServerTest {
       System.out.println("==>" + response);
       
     } catch (IOException e) {
-      // 예외가 발생하면 일단 어디에서 예외가 발생했는지 호출 정보를 모두 출력한다.
       e.printStackTrace();
     }
-    
+
     System.out.println("서버와 연결 끊음.");
   }
 }
+
+
+
+
+
+

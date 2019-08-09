@@ -6,5 +6,5 @@ public class Board {
   public int no;
   public String contents;
   public Date createdDate;
-  int viewCount;
+  public int viewCount;
 }

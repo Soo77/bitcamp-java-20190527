@@ -10,7 +10,6 @@ public class Test01 {
     car.run();
     
     car.stop();
-    
   }
 
 }

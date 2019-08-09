@@ -1,33 +1,31 @@
 package com.eomcs.lms;
 
+import java.sql.Date;
 import java.util.Scanner;
 
 public class App3 {
 
   public static void main(String[] args) {
-    java.io.InputStream keyboard = System.in;
-    Scanner keyScan = new Scanner(keyboard);
-    
+    Scanner keyboard = new Scanner(System.in);
+
     System.out.print("번호? ");
-    String no = keyScan.nextLine();
+    int no = Integer.parseInt(keyboard.nextLine());
+    
     System.out.print("내용? ");
-    String name = keyScan.nextLine();
-    System.out.print("작성일? ");
-    String email = keyScan.nextLine();
-    System.out.print("조회수? ");
-    String viewNum = keyScan.nextLine();
-
-    System.out.println();
+    String contents = keyboard.nextLine();
     
-    System.out.println("번호: " + no);
-    System.out.println("내용: "+ name);
-    System.out.println("작성일: " + email);
-    System.out.println("조회수: " + viewNum);
+    Date createdDate = new Date(System.currentTimeMillis()); 
     
-//    System.out.println("번호: 1");
-//    System.out.println("내용: 게시글입니다.");
-//    System.out.println("작성일: 2019-01-01");
-//    System.out.println("조회수: 0");
+    int viewCount = 0;
+    
+    // 사용후 스캐너 객체의 자원을 해제한다.
+    keyboard.close();
+    
+    System.out.println(); // 빈 줄 출력
+    
+    System.out.printf("번호: %d\n", no);
+    System.out.printf("내용: %s\n", contents);
+    System.out.printf("작성일: %s\n", createdDate);
+    System.out.printf("조회수: %d\n", viewCount);
   }
-
 }

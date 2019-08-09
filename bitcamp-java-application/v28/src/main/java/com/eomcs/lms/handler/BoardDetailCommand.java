@@ -1,6 +1,5 @@
 package com.eomcs.lms.handler;
 
-import java.sql.Date;
 import java.util.List;
 import com.eomcs.lms.domain.Board;
 import com.eomcs.util.Input;
@@ -37,4 +36,5 @@ public class BoardDetailCommand implements Command {
     System.out.printf("내용: %s\n", board.getContents());
     System.out.printf("작성일: %s\n", board.getCreatedDate());
   }
+
 }

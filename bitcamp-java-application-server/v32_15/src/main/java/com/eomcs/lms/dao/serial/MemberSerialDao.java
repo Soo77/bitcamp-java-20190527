@@ -6,8 +6,9 @@ import java.util.List;
 import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.domain.Member;
 
-public class MemberSerialDao extends AbstractDataSerializer<Member,Integer> implements MemberDao{
-
+public class MemberSerialDao extends AbstractDataSerializer<Member,Integer> 
+    implements MemberDao {
+  
   public MemberSerialDao(String file) throws ClassNotFoundException {
     super(file);
     
@@ -17,12 +18,13 @@ public class MemberSerialDao extends AbstractDataSerializer<Member,Integer> impl
       System.out.println("회원 데이터 로딩 중 오류 발생!");
     }
   }
-
+  
+  @Override
   public void saveData() {
     try {
       super.saveData();
       System.out.println("회원 데이터 저장 완료!");
-
+      
     } catch (FileNotFoundException e) {
       System.out.println("파일을 생성할 수 없습니다!");
 
@@ -31,63 +33,66 @@ public class MemberSerialDao extends AbstractDataSerializer<Member,Integer> impl
       e.printStackTrace();
     }
   }
-
-
+  
+  @Override
+  public int indexOf(Integer key) {
+    int i = 0;
+    for (Member obj : list) {
+      if (obj.getNo() == key) {
+        return i;
+      }
+      i++;
+    }
+    return -1;
+  }
+  
+  @Override
   public int insert(Member member) throws Exception {
     list.add(member);
     return 1;
   }
   
+  @Override
   public List<Member> findAll() throws Exception {
     return list;
   }
   
+  @Override
   public Member findBy(int no) throws Exception {
     int index = indexOf(no);
-    if (index == -1) 
+    if (index == -1)
       return null;
+    
     return list.get(index);
   }
   
+  @Override
   public int update(Member member) throws Exception {
     int index = indexOf(member.getNo());
-    if (index == -1) 
+    if (index == -1)
       return 0;
+    
     list.set(index, member);
     return 1;
   }
   
+  @Override
   public int delete(int no) throws Exception {
     int index = indexOf(no);
-    if (index == -1) 
+    if (index == -1)
       return 0;
     
     list.remove(index);
     return 1;
   }
   
-  private int indexOf(int no) {
-    int i = 0;
-    for (Member m : list) {
-      if (m.getNo() == no) {
-        return i;
-      }
-      i++;
-    }
-    return -1;
-  }
-
-
-  @Override
-  public int indexOf(Integer key) {
-    int i = 0;
-    for (Member m : list) {
-      if (m.getNo() == key) {
-        return i;
-      }
-      i++;
-    }
-    return -1;
-  } 
 
 }
+
+
+
+
+
+
+
+

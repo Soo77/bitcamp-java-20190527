@@ -6,5 +6,4 @@ public class BreakOilCarObserver extends AbstractCarObserver {
     System.out.println("브레이크 오일 유무 검사");
     
   }
-  
 }

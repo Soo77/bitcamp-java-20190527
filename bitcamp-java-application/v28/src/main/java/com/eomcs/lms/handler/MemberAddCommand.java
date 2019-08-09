@@ -6,14 +6,14 @@ import com.eomcs.lms.domain.Member;
 import com.eomcs.util.Input;
 
 public class MemberAddCommand implements Command {
-  private List<Member> memberList;
+  private List<Member> list;
   private Input input;
   
   public MemberAddCommand(Input input, List<Member> list) {
     this.input = input;
-    this.memberList = list;
+    this.list = list;
   }
-  
+
   @Override
   public void execute() {
     Member member = new Member();
@@ -25,8 +25,9 @@ public class MemberAddCommand implements Command {
     member.setTel(input.getStringValue("전화? "));
     member.setRegisteredDate(new Date(System.currentTimeMillis())); 
       
-    memberList.add(member);
+    list.add(member);
     
     System.out.println("저장하였습니다.");
   }
+
 }

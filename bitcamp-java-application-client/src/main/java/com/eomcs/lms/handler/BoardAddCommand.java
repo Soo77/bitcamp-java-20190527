@@ -14,7 +14,7 @@ public class BoardAddCommand implements Command {
     this.input = input;
     this.boardDao = boardDao;
   }
-  
+
   @Override
   public void execute() {
     Board board = new Board();
@@ -22,7 +22,7 @@ public class BoardAddCommand implements Command {
     board.setNo(input.getIntValue("번호? "));
     board.setContents(input.getStringValue("내용? "));
     board.setCreatedDate(new Date(System.currentTimeMillis())); 
-
+    
     try {
       boardDao.insert(board);
       System.out.println("저장하였습니다.");
@@ -31,4 +31,5 @@ public class BoardAddCommand implements Command {
       System.out.println(e.getMessage());
     }
   }
+
 }

@@ -6,19 +6,17 @@ import com.eomcs.lms.domain.Member;
 import com.eomcs.util.Input;
 
 public class MemberAddCommand implements Command {
-  
   private MemberDao memberDao;
   private Input input;
-  
+
   public MemberAddCommand(Input input, MemberDao memberDao) {
     this.input = input;
     this.memberDao = memberDao;
   }
-  
+
   @Override
   public void execute() {
     Member member = new Member();
-    
     member.setNo(input.getIntValue("번호? "));
     member.setName(input.getStringValue("이름? "));
     member.setEmail(input.getStringValue("이메일? "));
@@ -30,10 +28,11 @@ public class MemberAddCommand implements Command {
     try {
       memberDao.insert(member);
       System.out.println("저장하였습니다.");
+      
     } catch (Exception e) {
-      System.out.println("수업 데이터 저장에 실패했습니다!");
+      System.out.println("데이터 저장에 실패했습니다!");
       System.out.println(e.getMessage());
     }
-
   }
+
 }

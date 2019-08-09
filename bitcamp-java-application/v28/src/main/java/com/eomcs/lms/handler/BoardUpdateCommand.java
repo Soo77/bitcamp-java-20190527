@@ -6,21 +6,22 @@ import com.eomcs.util.Input;
 
 public class BoardUpdateCommand implements Command {
   
-  private List<Board> boardList;
+  private List<Board> list;
   private Input input;
   
   public BoardUpdateCommand(Input input, List<Board> list) {
     this.input = input;
-    this.boardList = list;
+    this.list = list;
   }
-  
+
+  @Override
   public void execute() {
     int no = input.getIntValue("번호? ");
     
     // 사용자가 입력한 번호를 가지고 목록에서 그 번호에 해당하는 Board 객체를 찾는다.
     Board board = null;
-    for (int i = 0; i < boardList.size(); i++) {
-      Board temp = boardList.get(i);
+    for (int i = 0; i < list.size(); i++) {
+      Board temp = list.get(i);
       if (temp.getNo() == no) {
         board = temp;
         break;
@@ -40,4 +41,5 @@ public class BoardUpdateCommand implements Command {
     
     System.out.println("데이터를 변경하였습니다.");
   }
+
 }

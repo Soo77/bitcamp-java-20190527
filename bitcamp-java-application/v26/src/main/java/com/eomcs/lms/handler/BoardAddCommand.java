@@ -5,7 +5,7 @@ import java.util.List;
 import com.eomcs.lms.domain.Board;
 import com.eomcs.util.Input;
 
-public class BoardAddCommand implements Command{
+public class BoardAddCommand implements Command {
   
   private List<Board> list;
   private Input input;
@@ -14,7 +14,7 @@ public class BoardAddCommand implements Command{
     this.input = input;
     this.list = list;
   }
-  
+
   @Override
   public void execute() {
     Board board = new Board();
@@ -26,4 +26,5 @@ public class BoardAddCommand implements Command{
     list.add(board);
     System.out.println("저장하였습니다.");
   }
+
 }

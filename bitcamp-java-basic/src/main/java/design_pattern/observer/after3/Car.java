@@ -10,8 +10,6 @@ public class Car {
   //
   HashSet<CarObserver> observers = new HashSet<>();
   
-
-
   // 옵저버를 관리하는 메서드 추가
   public void addObserver(CarObserver observer) {
     observers.add(observer);

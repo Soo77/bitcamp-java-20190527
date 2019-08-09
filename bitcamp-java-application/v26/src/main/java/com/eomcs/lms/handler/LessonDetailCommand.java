@@ -6,22 +6,22 @@ import com.eomcs.util.Input;
 
 public class LessonDetailCommand implements Command {
   
-  private List<Lesson> lessonList;
+  private List<Lesson> list;
   private Input input;
   
   public LessonDetailCommand(Input input, List<Lesson> list) {
     this.input = input;
-    this.lessonList = list;
+    this.list = list;
   }
-  
+
   @Override
   public void execute() {
     int no = input.getIntValue("번호? ");
     
     // 사용자가 입력한 번호를 가지고 목록에서 그 번호에 해당하는 Lesson 객체를 찾는다.
     Lesson lesson = null;
-    for (int i = 0; i < lessonList.size(); i++) {
-      Lesson temp = lessonList.get(i);
+    for (int i = 0; i < list.size(); i++) {
+      Lesson temp = list.get(i);
       if (temp.getNo() == no) {
         lesson = temp;
         break;
@@ -39,9 +39,7 @@ public class LessonDetailCommand implements Command {
     System.out.printf("총수업시간: %d\n", lesson.getTotalHours());
     System.out.printf("일수업시간: %d\n", lesson.getDayHours());
   }
-  
-  
-  
+
 }
 
 

@@ -7,7 +7,7 @@ import java.util.List;
 import com.eomcs.lms.domain.Member;
 
 public class MemberCsvDao extends AbstractCsvDataSerializer<Member,Integer> {
-
+  
   public MemberCsvDao(String file) {
     super(file);
     
@@ -19,12 +19,13 @@ public class MemberCsvDao extends AbstractCsvDataSerializer<Member,Integer> {
       System.out.println("회원 데이터 로딩 중 오류 발생!");
     }
   }
-
+  
+  @Override
   public void saveData() {
     try {
       super.saveData();
       System.out.println("회원 데이터 저장 완료!");
-
+      
     } catch (FileNotFoundException e) {
       System.out.println("파일을 생성할 수 없습니다!");
 
@@ -33,10 +34,10 @@ public class MemberCsvDao extends AbstractCsvDataSerializer<Member,Integer> {
       e.printStackTrace();
     }
   }
-
   
   @Override
   protected Member createObject(String[] values) {
+    // CSV 형식: 번호,이름,이메일,암호,전화,사진,등록일
     
     Member member = new Member();
     member.setNo(Integer.parseInt(values[0]));
@@ -52,7 +53,7 @@ public class MemberCsvDao extends AbstractCsvDataSerializer<Member,Integer> {
   
   @Override
   protected String createCSV(Member obj) {
-    return String.format("%d,%s,%s,%s,%s,%s,%s",
+    return String.format("%d,%s,%s,%s,%s,%s,%s", 
         obj.getNo(),
         obj.getName(),
         obj.getEmail(),
@@ -60,28 +61,21 @@ public class MemberCsvDao extends AbstractCsvDataSerializer<Member,Integer> {
         obj.getTel(),
         obj.getPhoto(),
         obj.getRegisteredDate());
-        
-        
   }
   
-  
-
   @Override
-  public int indexOf(Integer no) {
+  public int indexOf(Integer key) {
     int i = 0;
-    for (Member m : list) {
-      if (m.getNo() == no) {
+    for (Member obj : list) {
+      if (obj.getNo() == key) {
         return i;
       }
       i++;
     }
     return -1;
-  } 
+  }
   
-
   public int insert(Member member) throws Exception {
-    // 등록일은 서버쪽에서 설정
-    
     list.add(member);
     return 1;
   }
@@ -92,22 +86,24 @@ public class MemberCsvDao extends AbstractCsvDataSerializer<Member,Integer> {
   
   public Member findBy(int no) throws Exception {
     int index = indexOf(no);
-    if (index == -1) 
+    if (index == -1)
       return null;
+    
     return list.get(index);
   }
   
   public int modify(Member member) throws Exception {
     int index = indexOf(member.getNo());
-    if (index == -1) 
+    if (index == -1)
       return 0;
+    
     list.set(index, member);
     return 1;
   }
   
   public int remove(int no) throws Exception {
     int index = indexOf(no);
-    if (index == -1) 
+    if (index == -1)
       return 0;
     
     list.remove(index);
@@ -115,6 +111,12 @@ public class MemberCsvDao extends AbstractCsvDataSerializer<Member,Integer> {
   }
   
 
-
-
 }
+
+
+
+
+
+
+
+

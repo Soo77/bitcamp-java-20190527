@@ -17,7 +17,6 @@ public class CalculatorServer2 {
     try (ServerSocket serverSocket = new ServerSocket(8888)) {
       System.out.println("서버 실행 중...");
       
-      
       // 서버의 Stateless 통신 방법에서 클라이언트를 구분하여 각 클라이언트의 계산 결과를 유지하려면?
       // => 커피숍에서는 고객의 쿠폰 포인트를 어떻게 관리할까?
       while (true) {

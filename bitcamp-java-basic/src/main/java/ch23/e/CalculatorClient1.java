@@ -1,4 +1,4 @@
-// Stateful 응용 - 클라이언트의 계산 결과를 서버에 유지하기
+// Stateful 응용 - 클라이언트의 계산 결과를 유지하기
 package ch23.e;
 
 import java.io.BufferedReader;

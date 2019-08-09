@@ -1,4 +1,4 @@
-// v33_1 : 반복해서 클라이언트 접속을 허용하기
+// v33_1: 반복해서 클라이언트 접속을 허용하기
 package com.eomcs.lms;
 
 import java.io.ObjectInputStream;
@@ -39,53 +39,52 @@ public class ServerApp {
       }
 
       loop:
-        while (true) {
-          try (Socket clientSocket = serverSocket.accept();
-              ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());
-              ObjectOutputStream out = new ObjectOutputStream(clientSocket.getOutputStream())) {
+      while (true) {
+        try (Socket clientSocket = serverSocket.accept();
+            ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());
+            ObjectOutputStream out = new ObjectOutputStream(clientSocket.getOutputStream())) {
 
-            System.out.println("클라이언트와 연결되었음.");
+          System.out.println("클라이언트와 연결되었음.");
 
-            BoardDao boardDao = (BoardDao)servletContext.get("boardDao");
-            MemberDao memberDao = (MemberDao)servletContext.get("memberDao");
-            LessonDao lessonDao = (LessonDao)servletContext.get("lessonDao");
+          BoardDao boardDao = (BoardDao)servletContext.get("boardDao");
+          MemberDao memberDao = (MemberDao)servletContext.get("memberDao");
+          LessonDao lessonDao = (LessonDao)servletContext.get("lessonDao");
 
-            BoardServlet boardServlet = new BoardServlet(boardDao, in, out);
-            MemberServlet memberServlet = new MemberServlet(memberDao, in, out);
-            LessonServlet lessonServlet = new LessonServlet(lessonDao, in, out);
+          BoardServlet boardServlet = new BoardServlet(boardDao, in, out);
+          MemberServlet memberServlet = new MemberServlet(memberDao, in, out);
+          LessonServlet lessonServlet = new LessonServlet(lessonDao, in, out);
 
+          while (true) {
+            // 클라이언트가 보낸 명령을 읽는다.
+            String command = in.readUTF();
+            System.out.println(command + " 요청 처리중...");
 
-            while (true) {
-              // 클라이언트가 보낸 명령을 읽는다.
-              String command = in.readUTF();
-              System.out.println(command + " 요청 처리중...");
+            if (command.startsWith("/board/")) {
+              boardServlet.service(command);
 
-              if (command.startsWith("/board/")) {
-                boardServlet.service(command);
+            } else if (command.startsWith("/member/")) {
+              memberServlet.service(command);
 
-              } else if (command.startsWith("/member/")) {
-                memberServlet.service(command);
+            } else if (command.startsWith("/lesson/")) {
+              lessonServlet.service(command);
 
-              } else if (command.startsWith("/lesson/")) {
-                lessonServlet.service(command);
+            } else if (command.equals("quit")) {
+              break;
+              
+            } else if (command.equals("serverstop")) {
+              break loop;
+              
+            } else {
+              out.writeUTF("fail");
+              out.writeUTF("지원하지 않는 명령입니다.");
+            }
+            out.flush();
+            System.out.println("클라이언트에게 응답 완료!");
+          } // loop:
+        } 
 
-              } else if (command.equals("quit")) {
-                break;
-
-              } else if (command.equals("serverstop")) {
-                break loop;
-
-              } else {
-                out.writeUTF("fail");
-                out.writeUTF("지원하지 않는 명령입니다.");
-              }
-              out.flush();
-              System.out.println("클라이언트에게 응답 완료!");
-            } // loop:
-          } 
-
-          System.out.println("클라이언트와 연결을 끊었음.");
-        } // while
+        System.out.println("클라이언트와 연결을 끊었음.");
+      } // while
 
       // 서버가 종료될 때 관찰자(observer)에게 보고한다.
       for (ServletContextListener listener : listeners) {

@@ -1,7 +1,1 @@
-// ㄴ/////
-나나나
-mainClassName = 'ch01.Test02'
-/////////
-hello = 'hi'
-5/3
-
+ABC홍길동012

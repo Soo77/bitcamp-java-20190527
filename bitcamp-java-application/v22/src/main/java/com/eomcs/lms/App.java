@@ -11,6 +11,7 @@ import com.eomcs.util.Queue;
 import com.eomcs.util.Stack;
 
 public class App {
+  
   static Scanner keyScan;
   static Stack<String> commandStack = new Stack<>();
   static Queue<String> commandQueue = new Queue<>();
@@ -32,8 +33,6 @@ public class App {
     BoardHandler boardHandler = new BoardHandler(input);
     BoardHandler boardHandler2 = new BoardHandler(input);
 
-
-    
     while (true) {
       
       String command = prompt();
@@ -45,9 +44,10 @@ public class App {
         break;
       } else if (command.equals("history")) {
         printCommandHistory();
+        
       } else if (command.equals("history2")) {
         printCommandHistory2();
-         
+        
       } else if (command.equals("/lesson/add")) {
         lessonHandler.addLesson(); // addLesson() 메서드 블록에 묶어 놓은 코드를 실행한다.
         
@@ -116,36 +116,32 @@ public class App {
     }
   }
 
-
   private static void printCommandHistory() throws Exception {
     Stack<String> stack = commandStack.clone();
     int count = 0;
     while (!stack.empty()) {
       System.out.println(stack.pop());
-      if(++count % 5 == 0) {
+      if (++count % 5 == 0) {
         System.out.print(":");
-        if (keyScan.nextLine().equalsIgnoreCase("q")) {
+        if (keyScan.nextLine().equalsIgnoreCase("q"))
           break;
-        }
       }
     }
   }
-
+  
   private static void printCommandHistory2() throws Exception {
     Queue<String> queue = commandQueue.clone();
     int count = 0;
     while (!queue.empty()) {
       System.out.println(queue.poll());
-      if (++count % 5 == 0) { 
+      if (++count % 5 == 0) {
         System.out.print(":");
-        if (keyScan.nextLine().equalsIgnoreCase("q")) {
+        if (keyScan.nextLine().equalsIgnoreCase("q"))
           break;
-        }
       }
     }
-
   }
-  
+
   private static String prompt() {
     System.out.print("명령> ");
     return keyScan.nextLine();

@@ -11,10 +11,8 @@ public class MemberServlet implements Servlet {
   //회원 데이터 관리 DAO를 교체하기 쉽도록 인터페이스의 레퍼런스로 선언한다.
   MemberDao memberDao;
   
-  ObjectInputStream in;
-  ObjectOutputStream out;
-  
   public MemberServlet(MemberDao memberDao) {
+    
     // 서블릿이 사용할 DAO를 직접 만들지 않고 외부에서 주입 받아 사용한다.
     // 이렇게 의존하는 객체를 외부에서 주입 받아 사용하는 방법을
     // "의존성 주입(Dependency Injection; DI)"이라 부른다.
@@ -24,8 +22,9 @@ public class MemberServlet implements Servlet {
   }
   
   @Override
-  public void service(String command, 
-      ObjectInputStream in,
+  public void service(
+      String command, 
+      ObjectInputStream in, 
       ObjectOutputStream out) throws Exception {
     switch (command) {
       case "/member/add":

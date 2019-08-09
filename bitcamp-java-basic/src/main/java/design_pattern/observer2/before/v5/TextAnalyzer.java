@@ -12,29 +12,26 @@ public class TextAnalyzer {
   public void execute() {
     try { 
       int ch;
-      int count = 0; //총 읽은 문자 수
-      int totalLine = 0; //총 줄 수
-      int totalLinecomment = 0; //총 한 줄 주석 수
+      int count = 0;
+      int totalLine = 0;
+      int totalLinecomment = 0;
       boolean startLinecomment = false;
       int countSlash = 0;
       boolean isEmpty = true;
       StringBuffer line = new StringBuffer();
       String mainClassName = null;
-      
-      
-      while ((ch = in.read()) != -1) { // 글자수 세기
-        System.out.println(ch);
+      while ((ch = in.read()) != -1) {
         count++;
         
-        if (ch == '\n') { // 몇줄인지
+        if (ch == '\n') {
           totalLine++;
           isEmpty = true;
           
         } else {
           isEmpty = false;
         }
-
-        if (!startLinecomment) { // 한줄주석 세기
+        
+        if (!startLinecomment) {
           if (ch == '/') {
             if (countSlash == 0) {
               countSlash++;

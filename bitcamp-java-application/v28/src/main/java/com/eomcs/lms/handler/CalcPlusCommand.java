@@ -12,10 +12,16 @@ public class CalcPlusCommand implements Command {
   
   @Override
   public void execute() {
-    int val1 = input.getIntValue("값1?");
-    int val2 = input.getIntValue("값2?");
-    int sum = val1 + val2;
-    System.out.println("합계는 " + sum + "입니다.");
+    int v1 = input.getIntValue("값1?");
+    int v2 = input.getIntValue("값2?");
+    System.out.println("합계는 " + (v1 + v2) + "입니다.");
   }
 
 }
+
+
+
+
+
+
+

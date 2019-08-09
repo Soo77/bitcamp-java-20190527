@@ -1,8 +1,8 @@
 package com.eomcs.lms.handler;
 
-import java.util.LinkedList;
 import com.eomcs.lms.domain.Lesson;
 import com.eomcs.util.Input;
+import com.eomcs.util.LinkedList;
 
 public class LessonHandler {
   

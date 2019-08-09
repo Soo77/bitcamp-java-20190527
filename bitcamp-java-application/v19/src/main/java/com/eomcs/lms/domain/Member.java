@@ -3,15 +3,13 @@ package com.eomcs.lms.domain;
 import java.sql.Date;
 
 public class Member {
-
   private int no;
-  private String Name;
+  private String name;
   private String email;
-  private String pw;
-  private String pic;
-  private String phoneNum;
-  private Date signedUpDate;
-  
+  private String password;
+  private String tel;
+  private String photo;
+  private Date registeredDate;
   
   public int getNo() {
     return no;
@@ -20,10 +18,10 @@ public class Member {
     this.no = no;
   }
   public String getName() {
-    return Name;
+    return name;
   }
-  public void setName(String Name) {
-    this.Name = Name;
+  public void setName(String name) {
+    this.name = name;
   }
   public String getEmail() {
     return email;
@@ -31,31 +29,29 @@ public class Member {
   public void setEmail(String email) {
     this.email = email;
   }
-  public String getPw() {
-    return pw;
+  public String getPassword() {
+    return password;
   }
-  public void setPw(String pw) {
-    this.pw = pw;
+  public void setPassword(String password) {
+    this.password = password;
   }
-  public String getPic() {
-    return pic;
+  public String getTel() {
+    return tel;
   }
-  public void setPic(String pic) {
-    this.pic = pic;
+  public void setTel(String tel) {
+    this.tel = tel;
   }
-  public String getPhoneNum() {
-    return phoneNum;
+  public String getPhoto() {
+    return photo;
   }
-  public void setPhoneNum(String phoneNum) {
-    this.phoneNum = phoneNum;
+  public void setPhoto(String photo) {
+    this.photo = photo;
   }
-  public Date getSignedUpDate() {
-    return signedUpDate;
+  public Date getRegisteredDate() {
+    return registeredDate;
   }
-  public void setSignedUpDate(Date signedUpDate) {
-    this.signedUpDate = signedUpDate;
+  public void setRegisteredDate(Date registeredDate) {
+    this.registeredDate = registeredDate;
   }
-  
-  
   
 }

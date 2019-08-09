@@ -1,4 +1,3 @@
-
 // Stateless 응용 - 계산 결과 유지하기
 package ch23.e;
 

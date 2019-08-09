@@ -3,20 +3,20 @@ package com.eomcs.lms.handler;
 import com.eomcs.lms.domain.Lesson;
 
 public class LessonList {
-  static final int DEFAULT_CAPACITY = 100;
-  private Lesson[] list = new Lesson[100];
+  private static final int DEFAULT_CAPACITY = 100;
+  
+  private Lesson[] list;
   private int size = 0;
   
   public LessonList() {
-    this(DEFAULT_CAPACITY); // 생성자에서 다른 생성자를 호출할수있다.
+    this(DEFAULT_CAPACITY);
   }
   
   public LessonList(int initialCapacity) {
-    if (initialCapacity < 50 || initialCapacity > 10000) {
-      list = new Lesson[DEFAULT_CAPACITY]; // 기본사이즈 갖게 하기 안전장치 마련.
-    } else {
+    if (initialCapacity < 50 || initialCapacity > 10000) 
+      list = new Lesson[DEFAULT_CAPACITY];
+    else
       list = new Lesson[initialCapacity];
-    }
   }
   
   public void add(Lesson lesson) {

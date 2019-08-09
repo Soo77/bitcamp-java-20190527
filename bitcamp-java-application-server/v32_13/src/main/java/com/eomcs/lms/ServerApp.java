@@ -1,63 +1,46 @@
-// v32_13 : CSV(comma-separated value) 형식으로 데이터를 다루는 DAO 추가
-
+// v32_13: CSV(comma-separated value) 형식으로 데이터를 다루는 DAO 추가
 package com.eomcs.lms;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import com.eomcs.lms.domain.Lesson;
 import com.eomcs.lms.servlet.BoardServlet;
 import com.eomcs.lms.servlet.LessonServlet;
 import com.eomcs.lms.servlet.MemberServlet;
 
 public class ServerApp {
 
-  static ArrayList<Lesson> lessonList = new ArrayList<>();
-
-
-  static ObjectInputStream in;
-  static ObjectOutputStream out;
-
   public static void main(String[] args) {
     System.out.println("[수업관리시스템 서버 애플리케이션]");
 
     try (ServerSocket serverSocket = new ServerSocket(8888)) {
       System.out.println("서버 시작!");
-
+ 
       try (Socket clientSocket = serverSocket.accept();
           ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());
           ObjectOutputStream out = new ObjectOutputStream(clientSocket.getOutputStream())) {
-
-
+        
         System.out.println("클라이언트와 연결되었음.");
-
+        
         BoardServlet boardServlet = new BoardServlet(in, out);
-        LessonServlet lessonServlet = new LessonServlet(in, out);
         MemberServlet memberServlet = new MemberServlet(in, out);
-
-
+        LessonServlet lessonServlet = new LessonServlet(in, out);
+        
         while (true) {
           // 클라이언트가 보낸 명령을 읽는다.
           String command = in.readUTF();
-          System.out.println(command + "요청 처리중..."); 
-
+          System.out.println(command + " 요청 처리중...");
+          
           if (command.startsWith("/board/")) {
             boardServlet.service(command);
-            out.flush();
-            System.out.println("클라이언트에게 응답 완료!");
-            continue;
+            
           } else if (command.startsWith("/member/")) {
             memberServlet.service(command);
-            out.flush();
-            System.out.println("클라이언트에게 응답 완료!");
-            continue;
+            
           } else if (command.startsWith("/lesson/")) {
             lessonServlet.service(command);
-            out.flush();
-            System.out.println("클라이언트에게 응답 완료!");
-            continue;
+            
           } else if (command.equals("quit")) {
             out.writeUTF("ok");
             out.flush();
@@ -67,23 +50,28 @@ public class ServerApp {
             out.writeUTF("fail");
             out.writeUTF("지원하지 않는 명령입니다.");
           }
+          out.flush();
           System.out.println("클라이언트에게 응답 완료!");
-        } 
-
-        // 클라이언트와 연결을 끊기전에 저장
+        } // loop:
+        
+        // 클라이언트와 연결을 끊기 전에 작업 내용을 파일에 저장한다. 
         boardServlet.saveData();
         lessonServlet.saveData();
         memberServlet.saveData();
       } 
-
+      
       System.out.println("클라이언트와 연결을 끊었음.");
-
+      
     } catch (Exception e) {
       e.printStackTrace();
-    } 
-
+    }
+    
     System.out.println("서버 종료!");
   }
-
-
 }
+
+
+
+
+
+

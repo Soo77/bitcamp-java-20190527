@@ -12,6 +12,7 @@ import java.util.List;
 import com.eomcs.lms.domain.Board;
 
 public class BoardSerialDao {
+  
   ArrayList<Board> list = new ArrayList<>();
   File file;
   
@@ -23,27 +24,25 @@ public class BoardSerialDao {
     } catch (IOException e) {
       System.out.println("게시물 데이터 로딩 중 오류 발생!");
     }
-
   }
   
   @SuppressWarnings("unchecked")
   private void loadData() throws IOException, ClassNotFoundException {
-    // File의 정보를 준비
     try (ObjectInputStream in = new ObjectInputStream(
-        new FileInputStream(file))) {
-      list = (ArrayList<Board>)in.readObject();
-    } 
-    System.out.println("게시물 데이터 로딩 완료!");
-
+          new FileInputStream(file))) {
+      list = (ArrayList<Board>) in.readObject();
+      System.out.println("게시물 데이터 로딩 완료!");
+    }
   }
-
+  
   public void saveData() {
     try (
       ObjectOutputStream out = new ObjectOutputStream(
           new FileOutputStream(file))) {
+      
       out.writeObject(list);
       System.out.println("게시물 데이터 저장 완료!");
-
+      
     } catch (FileNotFoundException e) {
       System.out.println("파일을 생성할 수 없습니다!");
 
@@ -64,22 +63,24 @@ public class BoardSerialDao {
   
   public Board findBy(int no) throws Exception {
     int index = indexOf(no);
-    if (index == -1) 
+    if (index == -1)
       return null;
+    
     return list.get(index);
   }
   
   public int update(Board board) throws Exception {
     int index = indexOf(board.getNo());
-    if (index == -1) 
+    if (index == -1)
       return 0;
+    
     list.set(index, board);
     return 1;
   }
   
   public int delete(int no) throws Exception {
     int index = indexOf(no);
-    if (index == -1) 
+    if (index == -1)
       return 0;
     
     list.remove(index);
@@ -88,12 +89,20 @@ public class BoardSerialDao {
   
   private int indexOf(int no) {
     int i = 0;
-    for (Board m : list) {
-      if (m.getNo() == no) {
+    for (Board obj : list) {
+      if (obj.getNo() == no) {
         return i;
       }
       i++;
     }
     return -1;
-  } 
+  }
 }
+
+
+
+
+
+
+
+

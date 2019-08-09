@@ -20,10 +20,8 @@ public class AppInitListener implements ServletContextListener {
     
     
     try {
-      
       boardDao = new BoardCsvDao("./board.csv");
-       
-//      boardDao = new BoardCsvDao("./board.ser");
+      //boardDao = new BoardSerialDao("./board.ser");
       context.put("boardDao", boardDao);
       
     } catch (Exception e) {
@@ -31,10 +29,8 @@ public class AppInitListener implements ServletContextListener {
     }
     
     try {
-      
       memberDao = new MemberCsvDao("./member.csv");
-       
-//      memberDao = new MemberCsvDao("./member.ser");
+      //memberDao = new MemberSerialDao("./member.ser");
       context.put("memberDao", memberDao);
       
     } catch (Exception e) {
@@ -42,10 +38,8 @@ public class AppInitListener implements ServletContextListener {
     }
     
     try {
-      
       lessonDao = new LessonCsvDao("./lesson.csv");
-       
-//      lessonDao = new LessonCsvDao("./lesson.ser");
+      //lessonDao = new LessonSerialDao("./lesson.ser");
       context.put("lessonDao", lessonDao);
       
     } catch (Exception e) {

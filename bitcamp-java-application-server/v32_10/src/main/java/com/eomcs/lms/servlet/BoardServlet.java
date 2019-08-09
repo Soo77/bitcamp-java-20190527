@@ -13,51 +13,42 @@ import com.eomcs.lms.domain.Board;
 
 // 게시물 요청을 처리하는 담당자
 public class BoardServlet implements Servlet {
-
+  
   ArrayList<Board> boardList = new ArrayList<>();
-
+  
   ObjectInputStream in;
   ObjectOutputStream out;
-
+  
   public BoardServlet(ObjectInputStream in, ObjectOutputStream out) throws ClassNotFoundException {
     this.in = in;
     this.out = out;
-
-
+    
     try {
       loadData();
     } catch (IOException e) {
       System.out.println("게시물 데이터 로딩 중 오류 발생!");
     }
-
   }
-
-
+  
   @SuppressWarnings("unchecked")
   private void loadData() throws IOException, ClassNotFoundException {
-    // File의 정보를 준비
     File file = new File("./board.ser");
-
-    if (!file.exists()) {
-      file.createNewFile();
-    }
-
     try (ObjectInputStream in = new ObjectInputStream(
-        new FileInputStream(file))) {
-      boardList = (ArrayList<Board>)in.readObject();
-    } 
-    System.out.println("게시물 데이터 로딩 완료!");
-
+          new FileInputStream(file))) {
+      boardList = (ArrayList<Board>) in.readObject();
+      System.out.println("게시물 데이터 로딩 완료!");
+    }
   }
-
+  
   public void saveData() {
     File file = new File("./board.ser");
     try (
       ObjectOutputStream out = new ObjectOutputStream(
           new FileOutputStream(file))) {
+      
       out.writeObject(boardList);
       System.out.println("게시물 데이터 저장 완료!");
-
+      
     } catch (FileNotFoundException e) {
       System.out.println("파일을 생성할 수 없습니다!");
 
@@ -66,11 +57,11 @@ public class BoardServlet implements Servlet {
       e.printStackTrace();
     }
   }
+  
   @Override
   public void service(String command) throws Exception {
     switch (command) {
       case "/board/add":
-        // 클라이언트가 보낸 객체를 읽는다.
         addBoard();
         break;
       case "/board/list":
@@ -78,7 +69,7 @@ public class BoardServlet implements Servlet {
         break;
       case "/board/delete":
         deleteBoard();
-        break;
+        break;  
       case "/board/detail":
         detailBoard();
         break;
@@ -90,39 +81,37 @@ public class BoardServlet implements Servlet {
         out.writeUTF("지원하지 않는 명령입니다.");
     }
   }
+  
   private void updateBoard() throws Exception {
     Board board = (Board)in.readObject();
-
+    
     int index = indexOfBoard(board.getNo());
     if (index == -1) {
-      fail("해당 번호의 강의가 없습니다.");
+      fail("해당 번호의 게시물이 없습니다.");
       return;
     }
     boardList.set(index, board);
     out.writeUTF("ok");
-
   }
 
   private void detailBoard() throws Exception {
     int no = in.readInt();
-
+    
     int index = indexOfBoard(no);
     if (index == -1) {
-      fail("해당 번호의 강의가 없습니다.");
+      fail("해당 번호의 게시물이 없습니다.");
       return;
     }
     out.writeUTF("ok");
     out.writeObject(boardList.get(index));
-
   }
-
 
   private void deleteBoard() throws Exception {
     int no = in.readInt();
-
+    
     int index = indexOfBoard(no);
     if (index == -1) {
-      fail("해당 번호의 강의가 없습니다.");
+      fail("해당 번호의 게시물이 없습니다.");
       return;
     }
     boardList.remove(index);
@@ -131,27 +120,26 @@ public class BoardServlet implements Servlet {
 
   private void addBoard() throws Exception {
     Board board = (Board)in.readObject();
-    out.writeUTF("ok");
     boardList.add(board);
+    out.writeUTF("ok");
   }
-
+  
   private void listBoard() throws Exception {
     out.writeUTF("ok");
-    out.reset(); // 기존에 serialize 했던 객체의 상태를 무시하고 다시 serialize한다.
+    out.reset(); // 기존에 serialize 했던 객체의 상태를 무시하고 다시 serialize 한다.
     out.writeObject(boardList);
   }
-
+  
   private int indexOfBoard(int no) {
     int i = 0;
-    for (Board m : boardList) {
-      if (m.getNo() == no) {
+    for (Board obj : boardList) {
+      if (obj.getNo() == no) {
         return i;
       }
       i++;
     }
     return -1;
-  }  
-
+  }
   private void fail(String cause) throws Exception {
     out.writeUTF("fail");
     out.writeUTF(cause);

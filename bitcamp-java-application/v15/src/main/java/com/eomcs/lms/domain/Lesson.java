@@ -13,7 +13,6 @@ public class Lesson {
   private int totalHours;
   private int dayHours;
   
-  
   public int getNo() {
     return no;
   }
@@ -58,5 +57,11 @@ public class Lesson {
   }
   
   
-  
 }
+
+
+
+
+
+
+

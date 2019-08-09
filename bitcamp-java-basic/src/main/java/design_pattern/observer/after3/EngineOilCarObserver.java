@@ -7,5 +7,4 @@ public class EngineOilCarObserver implements CarObserver {
     System.out.println("엔진 오일 유무 검사");
     
   }
-  
 }

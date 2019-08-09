@@ -12,7 +12,8 @@ import java.util.List;
 import com.eomcs.lms.domain.Lesson;
 
 public class LessonSerialDao {
-  static ArrayList<Lesson> list = new ArrayList<>();
+  
+  ArrayList<Lesson> list = new ArrayList<>();
   File file;
   
   public LessonSerialDao(String file) throws ClassNotFoundException {
@@ -21,37 +22,27 @@ public class LessonSerialDao {
     try {
       loadData();
     } catch (IOException e) {
-      System.out.println("게시물 데이터 로딩 중 오류 발생!");
+      System.out.println("수업 데이터 로딩 중 오류 발생!");
     }
-
   }
-
-
+  
   @SuppressWarnings("unchecked")
   private void loadData() throws IOException, ClassNotFoundException {
-    // File의 정보를 준비
-    File file = new File("./lesson.ser");
-
-    if (!file.exists()) {
-      file.createNewFile();
-    }
-
     try (ObjectInputStream in = new ObjectInputStream(
-        new FileInputStream(file))) {
-      list = (ArrayList<Lesson>)in.readObject();
-    } 
-    System.out.println("수업 데이터 로딩 완료!");
-
+          new FileInputStream(file))) {
+      list = (ArrayList<Lesson>) in.readObject();
+      System.out.println("수업 데이터 로딩 완료!");
+    }
   }
-
+  
   public void saveData() {
-    File file = new File("./lesson.ser");
     try (
       ObjectOutputStream out = new ObjectOutputStream(
           new FileOutputStream(file))) {
+      
       out.writeObject(list);
       System.out.println("수업 데이터 저장 완료!");
-
+      
     } catch (FileNotFoundException e) {
       System.out.println("파일을 생성할 수 없습니다!");
 
@@ -61,7 +52,6 @@ public class LessonSerialDao {
     }
   }
   
-
   public int insert(Lesson lesson) throws Exception {
     list.add(lesson);
     return 1;
@@ -73,22 +63,24 @@ public class LessonSerialDao {
   
   public Lesson findBy(int no) throws Exception {
     int index = indexOf(no);
-    if (index == -1) 
+    if (index == -1)
       return null;
+    
     return list.get(index);
   }
   
   public int update(Lesson lesson) throws Exception {
     int index = indexOf(lesson.getNo());
-    if (index == -1) 
+    if (index == -1)
       return 0;
+    
     list.set(index, lesson);
     return 1;
   }
   
   public int delete(int no) throws Exception {
     int index = indexOf(no);
-    if (index == -1) 
+    if (index == -1)
       return 0;
     
     list.remove(index);
@@ -97,15 +89,20 @@ public class LessonSerialDao {
   
   private int indexOf(int no) {
     int i = 0;
-    for (Lesson m : list) {
-      if (m.getNo() == no) {
+    for (Lesson obj : list) {
+      if (obj.getNo() == no) {
         return i;
       }
       i++;
     }
     return -1;
-  } 
-  
-  
+  }
 }
+
+
+
+
+
+
+
 

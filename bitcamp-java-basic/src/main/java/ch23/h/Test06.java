@@ -1,4 +1,4 @@
- // Apache HttpComponent 사용 - HttpGet 클래스
+// Apache HttpComponent 사용 - HttpGet 클래스
 package ch23.h;
 
 import org.apache.http.HttpEntity;

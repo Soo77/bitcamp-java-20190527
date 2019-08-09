@@ -9,17 +9,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 import com.eomcs.lms.context.ServletContextListener;
-import com.eomcs.lms.servlet.BoardServlet;
-import com.eomcs.lms.servlet.LessonServlet;
-import com.eomcs.lms.servlet.MemberServlet;
 import com.eomcs.lms.servlet.Servlet;
 
 public class ServerApp {
 
   ArrayList<ServletContextListener> listeners = new ArrayList<>();
   int port;
-
-  // 서버가 실행되는 동안 공유할 객체를 보관하는 저장소를 준비한다.
+  
+  //서버가 실행되는 동안 공유할 객체를 보관하는 저장소를 준비한다.
   HashMap<String,Object> servletContext = new HashMap<>();
 
   public ServerApp(int port) {
@@ -37,11 +34,6 @@ public class ServerApp {
         listener.contextInitialized(servletContext);
       }
 
-      BoardServlet boardServlet = (BoardServlet)servletContext.get("/board/");
-      MemberServlet memberServlet = (MemberServlet)servletContext.get("/member/");
-      LessonServlet lessonServlet = (LessonServlet)servletContext.get("/lesson/");
-
-
       while (true) {
         try (Socket clientSocket = serverSocket.accept();
             ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());
@@ -54,22 +46,25 @@ public class ServerApp {
           System.out.println(command + " 요청 처리중...");
 
           Servlet servlet = null;
-
+          
           if (command.equals("serverstop")) {
             break;
+            
           } else if ((servlet = findServlet(command)) != null) {
             servlet.service(command, in, out);
-
-          } else {  
+            
+          } else {
             out.writeUTF("fail");
             out.writeUTF("지원하지 않는 명령입니다.");
           }
+
           out.flush();
           System.out.println("클라이언트에게 응답 완료!");
-        }
-      } 
 
-      System.out.println("클라이언트와 연결을 끊었음.");
+        } 
+
+        System.out.println("클라이언트와 연결을 끊었음.");
+      } // while
 
       // 서버가 종료될 때 관찰자(observer)에게 보고한다.
       for (ServletContextListener listener : listeners) {
@@ -93,7 +88,7 @@ public class ServerApp {
 
   private Servlet findServlet(String command) {
     Set<String> keys = servletContext.keySet();
-
+    
     // 명령어에 포함된 키를 찾아서, 해당 키로 저장된 서블릿을 꺼낸다.
     // => 명령(/board/list) : 키(/board/)
     for (String key : keys) {
@@ -104,7 +99,7 @@ public class ServerApp {
     // => 명령(/files/list) : 키(?)
     return null;
   }
-
+  
   public static void main(String[] args) {
 
     ServerApp server = new ServerApp(8888);

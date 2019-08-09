@@ -38,6 +38,7 @@ public class ServerApp {
         listener.contextInitialized(servletContext);
       }
 
+
       while (true) {
         try (Socket clientSocket = serverSocket.accept();
             ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());
@@ -52,7 +53,6 @@ public class ServerApp {
           BoardServlet boardServlet = new BoardServlet(boardDao, in, out);
           MemberServlet memberServlet = new MemberServlet(memberDao, in, out);
           LessonServlet lessonServlet = new LessonServlet(lessonDao, in, out);
-
 
           // 클라이언트가 보낸 명령을 읽는다.
           String command = in.readUTF();
@@ -76,6 +76,7 @@ public class ServerApp {
           }
           out.flush();
           System.out.println("클라이언트에게 응답 완료!");
+
         } 
 
         System.out.println("클라이언트와 연결을 끊었음.");
