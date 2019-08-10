@@ -30,7 +30,7 @@ public class BoardDaoImpl implements BoardDao{
         "jdbc:mariadb://localhost/bitcampdb?user=bitcamp&password=1111");
         Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery(
-            "select * from lms_board order by board_id desc");) {
+            "select * from  order by board_id desc");) {
 
       ArrayList<Board> list = new ArrayList<>();
 
@@ -42,7 +42,7 @@ public class BoardDaoImpl implements BoardDao{
         board.setViewCount(rs.getInt("vw_cnt"));
         list.add(board);
 
-      }
+      } 
       return list;
     }
   }
