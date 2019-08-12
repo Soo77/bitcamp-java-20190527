@@ -52,6 +52,7 @@ public class App {
   private void service() {
     // Command 객체가 사용할 데이터 처리 객체를 준비한다.
     BoardDao boardDao = new BoardDaoImpl();
+    //MemberDao memberDao = new MemberDaoImpl();
     MemberDao memberDao = new MemberDaoProxy(host, port);
     LessonDao lessonDao = new LessonDaoProxy(host, port); 
 

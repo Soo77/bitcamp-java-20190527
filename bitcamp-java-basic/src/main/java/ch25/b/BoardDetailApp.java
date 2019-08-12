@@ -42,7 +42,7 @@ public class BoardDetailApp {
             //
             System.out.printf("제목: %s\n", rs.getString("title"));
             System.out.printf("내용: %s\n", rs.getString("contents"));
-            System.out.printf("등록일: %s\n", rs.getInt("board_id"));
+            System.out.printf("등록일: %s\n", rs.getString("created_date"));
             System.out.printf("조회수: %d\n", rs.getInt("view_count"));
           } else {
             System.out.println("해당 번호의 게시물이 존재하지 않습니다.");
