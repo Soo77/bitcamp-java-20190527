@@ -326,15 +326,15 @@ DBMS 중에는 고정 크기인 컬럼의 값을 비교할 때 빈자리까지 �
 - 그래서 PK를 대신해서 사용할 수 있는 key라고 해서 "대안키(alternate key)"라고 부른다.
 
 #### unique = alternate key(대안키)
-> create table test1(
-  no int primary key,
-  name varchar(20),
-  age int,
-  kor int,
-  eng int,
-  math int,
-  constraint test1_uk unique (name, age)
-  );
+		> create table test1(
+		  no int primary key,
+		  name varchar(20),
+		  age int,
+		  kor int,
+		  eng int,z
+		  math int,
+		  constraint test1_uk unique (name, age)
+		  );
 
 - 입력 테스트:
 > insert into test1(no,name,age,kor,eng,math) values(1,'a',10,90,90,90);
@@ -469,7 +469,7 @@ alter table test1
   add constraint primary key (no); /* 일단 no를 pk로 지정한다.*/
 
 alter table test1
-  modify column no int not null auto_increment; /* 그런 후 auto_increment를 지정한다.*/
+  add constraint primary key (no);/* 그런 후 auto_increment를 지정한다.*/
 ```
 
 - 입력 테스트
@@ -480,6 +480,8 @@ insert into test1(name) values('ccc');
 insert into test1(name) values('ddd');
 insert into test1(name) values('eee');
 ```
+
+select * from test1;
 
 ## 뷰(view)
 - 조회 결과를 테이블처럼 사용하는 문법
@@ -508,13 +510,13 @@ insert into test1(name,class,working) values('ooo','java101','N');
 
 - 직장인만 조회
 ```
-select no, name, class from test1 where working = 'Y';
+	select no, name, class from test1 where working = 'Y';
 ```
 
 - 직장인만 조회한 결과를 가상 테이블로 만들기
 ```
 create view worker
-  as select no, name, class from test1 where working = 'Y';
+  as select no, name, class from test1 where working = 'Y'9;
 ```
 
 - view가 참조하는 테이블에 데이터를 입력한 후 view를 조회하면?

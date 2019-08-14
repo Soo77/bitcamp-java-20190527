@@ -33,6 +33,7 @@ alter table test1
 insert into 테이블명 value(값,....);
 insert into test1 values(null,'aaa','111','222','10101','seoul');
 
+
 /* 컬럼을 명시할 수 있다. 이때 값을 입력하는 컬럼의 순서를 바꿀 수 있다. */
 insert into 테이블명(컬럼,컬럼,...) values(값,값,...);
 insert into test1(name,fax,tel,no,pstno,addr) 
@@ -73,7 +74,7 @@ update test1 set fax='333';
 
 ## autocommit
 mysql은 autocommit의 기본 값이 true이다. 따라서 명령창에서 SQL을 실행하면 바로 실제 테이블에 
-적용된다. 수동으로 처리하고 싶다면 autocommit을 false로 설정하라!
+적용된다. 수동으로 처리하고 싶다면 autocommit  을 false로 설정하라!
 ```
 > set autocommit=false;
 ```
