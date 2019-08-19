@@ -291,14 +291,14 @@ select str_to_date('2017.2.12', '%Y.%m.%d');
 
 
 /* 날짜 값을 저장할 때 기본 형식은 yyyy-MM-dd이다. */
-insert into test1 (title, regdt) values('aaaa', '2017-11-22');
-
-/* 다음 형식의 문자열을 날짜 값으로 지정할 수 없다.*/
-insert into test1 (title, regdt) values('bbbb', '11/22/2017');
-
-/* 위 형식의 문자열을 날짜 값으로 저장하려면 str_to_date() 함수를 사용해야 한다.*/
-insert into test1 (title, regdt) 
-  values('bbbb', str_to_date('11/22/2017', '%m/%d/%Y'));
+--insert into test1 (title, regdt) values('aaaa', '2017-11-22');
+--
+--/* 다음 형식의 문자열을 날짜 값으로 지정할 수 없다.*/
+--insert into test1 (title, regdt) values('bbbb', '11/22/2017');
+--
+--/* 위 형식의 문자열을 날짜 값으로 저장하려면 str_to_date() 함수를 사용해야 한다.*/
+--insert into test1 (title, regdt) 
+--  values('bbbb', str_to_date('11/22/2017', '%m/%d/%Y'));
 ```
 
 
