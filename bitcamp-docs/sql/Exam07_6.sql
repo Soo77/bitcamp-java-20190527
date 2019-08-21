@@ -103,6 +103,7 @@ from lect_appl la
 
 /* 과장 또는 대리 매니저가 담당하고 있는 수강 신청만 추출하기 */
 select 
+
     la.lano, 
     -- (select titl from lect where lno=la.lno) as lect_title, 
     (select name from memb where mno=la.mno) as stud_name,

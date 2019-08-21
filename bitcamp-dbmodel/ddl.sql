@@ -1,5 +1,7 @@
+SET FOREIGN_KEY_CHECKS = 0;
+
 -- 학생
-DROP TABLE IF EXISTS student RESTRICT;
+DROP TABLE IF EXISTS students RESTRICT;
 
 -- 강의
 DROP TABLE IF EXISTS lectures RESTRICT;
@@ -38,18 +40,18 @@ DROP TABLE IF EXISTS members RESTRICT;
 DROP TABLE IF EXISTS school_grade RESTRICT;
 
 -- 학생
-CREATE TABLE student (
-  member_id INTEGER      NOT NULL COMMENT '학생번호', -- 학생번호
-  pic       VARCHAR(255) NOT NULL COMMENT '사진', -- 사진
-  working   INTEGER      NOT NULL COMMENT '재직여부' -- 재직여부
+CREATE TABLE students (
+  student_id INTEGER      NOT NULL COMMENT '학생번호', -- 학생번호
+  photo_path VARCHAR(255) NOT NULL COMMENT '사진', -- 사진
+  working    INTEGER      NOT NULL COMMENT '재직여부' -- 재직여부
 )
 COMMENT '학생';
 
 -- 학생
-ALTER TABLE student
-  ADD CONSTRAINT PK_student -- 학생 기본키
+ALTER TABLE students
+  ADD CONSTRAINT PK_students -- 학생 기본키
     PRIMARY KEY (
-      member_id -- 학생번호
+      student_id -- 학생번호
     );
 
 -- 강의
@@ -81,11 +83,14 @@ CREATE INDEX IX_lectures
     title ASC -- 과정명
   );
 
+ALTER TABLE lectures
+  MODIFY COLUMN lecture_id INTEGER NOT NULL AUTO_INCREMENT COMMENT '강의번호';
+
 -- 강사
 CREATE TABLE teachers (
   teacher_id INTEGER      NOT NULL COMMENT '강사번호', -- 강사번호
-  pic_path   VARCHAR(255) NOT NULL COMMENT '사진', -- 사진
-  price      INTEGER      NULL     COMMENT '시강임금', -- 시강임금
+  photo_path VARCHAR(255) NOT NULL COMMENT '사진', -- 사진
+  salary_hr  INTEGER      NULL     COMMENT '시강임금', -- 시강임금
   ncs_score  INTEGER      NULL     COMMENT 'NCS점수' -- NCS점수
 )
 COMMENT '강사';
@@ -114,10 +119,15 @@ ALTER TABLE managers
       manager_id -- 매니저번호
     );
 
+ALTER TABLE managers
+  MODIFY COLUMN manager_id INTEGER NOT NULL AUTO_INCREMENT COMMENT '매니저번호';
+
 -- 교육센터
 CREATE TABLE centers (
   center_id INTEGER      NOT NULL COMMENT '교육센터번호', -- 교육센터번호
   name      VARCHAR(25)  NOT NULL COMMENT '지점명', -- 지점명
+  post_no   CHAR(6)      NULL     COMMENT '우편번호', -- 우편번호
+  bas_addr  VARCHAR(255) NULL     COMMENT '기본주소', -- 기본주소
   det_addr  VARCHAR(255) NOT NULL COMMENT '상세주소' -- 상세주소
 )
 COMMENT '교육센터';
@@ -129,9 +139,9 @@ ALTER TABLE centers
       center_id -- 교육센터번호
     );
 
--- 교육센터 인덱스
-CREATE INDEX IX_centers
-  ON centers( -- 교육센터
+-- 교육센터 유니크 인덱스
+CREATE UNIQUE INDEX UIX_centers
+  ON centers ( -- 교육센터
     name ASC -- 지점명
   );
 
@@ -166,11 +176,11 @@ ALTER TABLE rooms
 
 -- 수강신청
 CREATE TABLE add_drop (
-  ad_id      INTEGER            NOT NULL COMMENT '수강신청번호', -- 수강신청번호
-  lecture_id INTEGER            NOT NULL COMMENT '강의번호', -- 강의번호
-  member_id  INTEGER            NOT NULL COMMENT '학생번호', -- 학생번호
-  reg_dt     DATETIME           NOT NULL COMMENT '수강신청일', -- 수강신청일
-  state      <데이터 타입 없음> NULL     DEFAULT 0 COMMENT '수강신청상태' -- 수강신청상태
+  ad_id      INTEGER  NOT NULL COMMENT '수강신청번호', -- 수강신청번호
+  lecture_id INTEGER  NOT NULL COMMENT '강의번호', -- 강의번호
+  student_id INTEGER  NOT NULL COMMENT '학생번호', -- 학생번호
+  reg_dt     DATETIME NOT NULL COMMENT '수강신청일', -- 수강신청일
+  state      INTEGER  NULL     DEFAULT 0 COMMENT '수강신청상태' -- 수강신청상태
 )
 COMMENT '수강신청';
 
@@ -216,11 +226,20 @@ ALTER TABLE subjects
       subject_id -- 강의과목번호
     );
 
+-- 강의과목 유니크 인덱스
+CREATE UNIQUE INDEX UIX_subjects
+  ON subjects ( -- 강의과목
+    title ASC -- 과목명
+  );
+
 -- 강의과목 인덱스
 CREATE INDEX IX_subjects
   ON subjects( -- 강의과목
     title ASC -- 과목명
   );
+
+ALTER TABLE subjects
+  MODIFY COLUMN subject_id INTEGER NOT NULL AUTO_INCREMENT COMMENT '강의과목번호';
 
 -- 강사강의과목
 CREATE TABLE teacher_subject (
@@ -261,8 +280,8 @@ CREATE TABLE members (
   post_no     CHAR(6)      NULL     COMMENT '우편번호', -- 우편번호
   bas_addr    VARCHAR(255) NULL     COMMENT '기본주소', -- 기본주소
   det_addr    VARCHAR(255) NULL     COMMENT '상세주소', -- 상세주소
-  last_sg_id  INTEGER      NULL     COMMENT '최종학력번호', -- 최종학력번호
-  last_school VARCHAR(25)  NULL     COMMENT '최종학교', -- 최종학교
+  last_sg_id  INTEGER      NOT NULL COMMENT '최종학력', -- 최종학력
+  last_school VARCHAR(25)  NOT NULL COMMENT '최종학교', -- 최종학교
   major       VARCHAR(25)  NOT NULL COMMENT '전공' -- 전공
 )
 COMMENT '회원';
@@ -274,6 +293,12 @@ ALTER TABLE members
       member_id -- 회원번호
     );
 
+-- 회원 유니크 인덱스
+CREATE UNIQUE INDEX UIX_members
+  ON members ( -- 회원
+    email ASC -- 이메일
+  );
+
 -- 회원 인덱스
 CREATE INDEX IX_members
   ON members( -- 회원
@@ -283,7 +308,7 @@ CREATE INDEX IX_members
 -- 학력
 CREATE TABLE school_grade (
   sg_id INTEGER     NOT NULL COMMENT '학력번호', -- 학력번호
-  name  VARCHAR(25) NULL     COMMENT '학력명' -- 학력명
+  name  VARCHAR(25) NOT NULL COMMENT '학력명' -- 학력명
 )
 COMMENT '학력';
 
@@ -300,11 +325,14 @@ CREATE UNIQUE INDEX UIX_school_grade
     name ASC -- 학력명
   );
 
+ALTER TABLE school_grade
+  MODIFY COLUMN sg_id INTEGER NOT NULL AUTO_INCREMENT COMMENT '학력번호';
+
 -- 학생
-ALTER TABLE student
-  ADD CONSTRAINT FK_members_TO_student -- 회원 -> 학생
+ALTER TABLE students
+  ADD CONSTRAINT FK_members_TO_students -- 회원 -> 학생
     FOREIGN KEY (
-      member_id -- 학생번호
+      student_id -- 학생번호
     )
     REFERENCES members ( -- 회원
       member_id -- 회원번호
@@ -362,12 +390,12 @@ ALTER TABLE add_drop
 
 -- 수강신청
 ALTER TABLE add_drop
-  ADD CONSTRAINT FK_student_TO_add_drop -- 학생 -> 수강신청
+  ADD CONSTRAINT FK_students_TO_add_drop -- 학생 -> 수강신청
     FOREIGN KEY (
-      member_id -- 학생번호
+      student_id -- 학생번호
     )
-    REFERENCES student ( -- 학생
-      member_id -- 학생번호
+    REFERENCES students ( -- 학생
+      student_id -- 학생번호
     );
 
 -- 교실사진
@@ -424,8 +452,10 @@ ALTER TABLE lecture_teacher
 ALTER TABLE members
   ADD CONSTRAINT FK_school_grade_TO_members -- 학력 -> 회원
     FOREIGN KEY (
-      last_sg_id -- 최종학력번호
+      last_sg_id -- 최종학력
     )
     REFERENCES school_grade ( -- 학력
       sg_id -- 학력번호
     );
+    
+    SET FOREIGN_KEY_CHECKS = 1;
