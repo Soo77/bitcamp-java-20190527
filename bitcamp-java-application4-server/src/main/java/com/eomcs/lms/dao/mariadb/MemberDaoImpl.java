@@ -22,6 +22,7 @@ public class MemberDaoImpl implements MemberDao {
     try (Connection con  = dataSource.getConnection();
         PreparedStatement stmt = con.prepareStatement(
             "insert into lms_member(name,email,pwd,cdt,tel,photo)"
+            
                 + " values(?,?,password(?),now(),?,?)")) {
 
       stmt.setString(1, member.getName());
