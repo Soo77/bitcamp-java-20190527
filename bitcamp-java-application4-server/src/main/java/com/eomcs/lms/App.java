@@ -1,5 +1,4 @@
-// v37_6 : 스레드풀 적용하기
-
+// v41_1 : 커넥션풀 도입하기
 package com.eomcs.lms;
 
 import java.io.BufferedReader;
@@ -7,19 +6,20 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import javax.sql.rowset.spi.TransactionalWriter;
 import com.eomcs.lms.dao.BoardDao;
 import com.eomcs.lms.dao.LessonDao;
 import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.dao.PhotoBoardDao;
+import com.eomcs.lms.dao.PhotoFileDao;
 import com.eomcs.lms.dao.mariadb.BoardDaoImpl;
 import com.eomcs.lms.dao.mariadb.LessonDaoImpl;
 import com.eomcs.lms.dao.mariadb.MemberDaoImpl;
 import com.eomcs.lms.dao.mariadb.PhotoBoardDaoImpl;
+import com.eomcs.lms.dao.mariadb.PhotoFileDaoImpl;
 import com.eomcs.lms.handler.BoardAddCommand;
 import com.eomcs.lms.handler.BoardDeleteCommand;
 import com.eomcs.lms.handler.BoardDetailCommand;
@@ -42,31 +42,43 @@ import com.eomcs.lms.handler.PhotoBoardDeleteCommand;
 import com.eomcs.lms.handler.PhotoBoardDetailCommand;
 import com.eomcs.lms.handler.PhotoBoardListCommand;
 import com.eomcs.lms.handler.PhotoBoardUpdateCommand;
+import com.eomcs.util.DataSource;
+import com.eomcs.util.PlatformTransactionManager;
 
 public class App {
-  ExecutorService executorService = Executors.newCachedThreadPool();
   private static final int CONTINUE = 1;
   private static final int STOP = 0;
 
-  Connection con;
   HashMap<String,Command> commandMap = new HashMap<>();
   int state;
+ 
+  ExecutorService executorService = Executors.newCachedThreadPool();
 
+  DataSource dataSource;
+  
   public App() throws Exception {
 
     // 처음에는 클라이언트 요청을 처리해야하는 상태로 설정한다.
     state = CONTINUE;
     
     try {
-      // DAO가 사용할 Connection 객체 준비하기
-      con = DriverManager.getConnection(
-          "jdbc:mariadb://localhost/bitcampdb?user=bitcamp&password=1111");
+      // 커넥션 관리자를 준비한다.
+      dataSource = new DataSource( 
+          
+          "org.mariadb.jdbc.Driver",
+          "jdbc:mariadb://localhost/bitcampdb",
+          "bitcamp",
+          "1111");
+
+      // 트랜잭션 관리자를 준비한다.
+      PlatformTransactionManager txManager = new PlatformTransactionManager(dataSource);
 
       // Command 객체가 사용할 데이터 처리 객체를 준비한다.
-      BoardDao boardDao = new BoardDaoImpl(con);
-      MemberDao memberDao = new MemberDaoImpl(con);
-      LessonDao lessonDao = new LessonDaoImpl(con);
-      PhotoBoardDao photoBoardDao = new PhotoBoardDaoImpl(con);
+      BoardDao boardDao = new BoardDaoImpl(dataSource);
+      MemberDao memberDao = new MemberDaoImpl(dataSource);
+      LessonDao lessonDao = new LessonDaoImpl(dataSource);
+      PhotoBoardDao photoBoardDao = new PhotoBoardDaoImpl(dataSource);
+      PhotoFileDao photoFileDao = new PhotoFileDaoImpl(dataSource);
 
       // 클라이언트 명령을 처리할 커맨드 객체를 준비한다.
       commandMap.put("/lesson/add", new LessonAddCommand(lessonDao));
@@ -89,10 +101,11 @@ public class App {
       commandMap.put("/board/update", new BoardUpdateCommand(boardDao));
       
       commandMap.put("/photoboard/list", new PhotoBoardListCommand(photoBoardDao));
-      commandMap.put("/photoboard/add", new PhotoBoardAddCommand(photoBoardDao));
-      commandMap.put("/photoboard/detail", new PhotoBoardDetailCommand(photoBoardDao));
-      commandMap.put("/photoboard/delete", new PhotoBoardDeleteCommand(photoBoardDao));
-      commandMap.put("/photoboard/update", new PhotoBoardUpdateCommand(photoBoardDao));
+      commandMap.put("/photoboard/add", new PhotoBoardAddCommand(txManager, photoBoardDao, photoFileDao));
+      commandMap.put("/photoboard/detail", new PhotoBoardDetailCommand(photoBoardDao, photoFileDao));
+      commandMap.put("/photoboard/delete", new PhotoBoardDeleteCommand(txManager, 
+          photoBoardDao, photoFileDao));
+      commandMap.put("/photoboard/update", new PhotoBoardUpdateCommand(txManager, photoBoardDao, photoFileDao));
       
 
     } catch (Exception e) {
@@ -133,16 +146,13 @@ public class App {
       
       System.out.println("애플리케이션 서버를 종료함!");
 
+      
     } catch (Exception e) {
-      System.out.println("소켓 통신 오류!");
+      System.out.println("소켓 통신 오류!"); 
+      
+      
+      
       e.printStackTrace();
-    }
-
-    // DBMS와의 연결을 끊는다.
-    try {
-      con.close();
-    } catch (Exception e) {
-      // 연결 끊을 때 발생되는 예외는 무시한다.
     }
   }
 
@@ -188,6 +198,12 @@ public class App {
 
       } catch (Exception e) {
         System.out.println("클라이언트와 통신 오류!");
+      } finally {
+        // 현재 스레드가 클라이언트 요청을 처리했으면 (정상처리든 오류가 발생 했든)
+        // 현재 스레드에 보관된 커넥션 객체를 제거해야 된다.
+        // 그래야만 다음 클라이언트 요청이 들어왔을 때
+        // 새 커넥션 객체를 사용할 것이다.
+        dataSource.clearConnection();
       }
     }
   }
@@ -203,13 +219,4 @@ public class App {
     }
   }
 }
-
-
-
-
-
-
-
-
-
 
