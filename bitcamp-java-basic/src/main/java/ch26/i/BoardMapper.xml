@@ -12,11 +12,9 @@
     <result column="view_count"   property="viewCount"/>
   </resultMap>
 
-
   <select id="select" resultMap="boardMap">
     select * from x_board
   </select>
-  
   
   <insert id="insert" parameterType="board">
     insert into x_board(title,contents) 

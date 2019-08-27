@@ -10,23 +10,23 @@ import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
-public class SqlSessionProxy implements SqlSession{
+public class SqlSessionProxy implements SqlSession {
   
   SqlSession realSession;
   
   public SqlSessionProxy(SqlSession realSession) {
     this.realSession = realSession;
   }
-
+  
   public void close() {
-    // close() 메소드를 무력화시킨다.
+    // close() 메서드를 무력화시킨다.
     // => 대신 모든 작업이 완료된 후에는 realClose()를 호출하게 한다.
   }
   
   public void realClose() {
     realSession.close();
   }
-
+  
   public <T> T selectOne(String statement) {
     return realSession.selectOne(statement);
   }
@@ -144,5 +144,6 @@ public class SqlSessionProxy implements SqlSession{
   public Connection getConnection() {
     return realSession.getConnection();
   }
-
+  
+  
 }
