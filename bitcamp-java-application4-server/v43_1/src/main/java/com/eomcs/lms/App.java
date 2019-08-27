@@ -1,4 +1,4 @@
-// v43_2 : Mybatis 도입하기 + 도메인 클래스 별명 적용
+// v43_1 : Mybatis 도입하기
 
 package com.eomcs.lms;
 
