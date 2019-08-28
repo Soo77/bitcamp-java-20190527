@@ -5,12 +5,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import com.eomcs.lms.dao.LessonDao;
 import com.eomcs.lms.domain.Lesson;
-import com.eomcs.util.DataSource;
 
 public class LessonDaoImpl implements LessonDao {
 
   SqlSessionFactory sqlSessionFactory;
-  DataSource dataSource;
 
   public LessonDaoImpl(SqlSessionFactory sqlSessionFactory) {
     this.sqlSessionFactory = sqlSessionFactory;
@@ -18,14 +16,14 @@ public class LessonDaoImpl implements LessonDao {
 
   @Override
   public int insert(Lesson lesson) throws Exception {
-    try (SqlSession sqlSession = sqlSessionFactory.openSession(true)) {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       return sqlSession.insert("LessonDao.insert", lesson);
     }
   }
 
   @Override
   public List<Lesson> findAll() throws Exception {
-    try (SqlSession sqlSession = sqlSessionFactory.openSession(true)) {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       return sqlSession.selectList("LessonDao.findAll");
     }
   }

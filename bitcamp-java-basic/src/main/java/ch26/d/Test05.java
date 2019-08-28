@@ -18,6 +18,7 @@ public class Test05 {
     SqlSessionFactory sqlSessionFactory =
       new SqlSessionFactoryBuilder().build(inputStream);
     
+    
     SqlSession sqlSession = sqlSessionFactory.openSession();
     
     // select 결과를 맵 객체로 받을 수 있다.

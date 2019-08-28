@@ -17,14 +17,14 @@ public class PhotoBoardDaoImpl implements PhotoBoardDao {
 
   @Override
   public int insert(PhotoBoard photoBoard) throws Exception {
-    try (SqlSession sqlSession = sqlSessionFactory.openSession(true)) {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       return sqlSession.insert("PhotoBoardDao.insert", photoBoard);
     }
   }
 
   @Override
   public List<PhotoBoard> findAll() throws Exception {
-    try (SqlSession sqlSession = sqlSessionFactory.openSession(true)) {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       return sqlSession.selectList("PhotoBoardDao.findAll");
     }
   }
@@ -52,14 +52,14 @@ public class PhotoBoardDaoImpl implements PhotoBoardDao {
 
   @Override
   public int update(PhotoBoard photoBoard) throws Exception {
-    try (SqlSession sqlSession = sqlSessionFactory.openSession(true)) {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       return sqlSession.update("PhotoBoardDao.update", photoBoard);
     }
   }
 
   @Override
   public int delete(int no) throws Exception {
-    try (SqlSession sqlSession = sqlSessionFactory.openSession(true)) {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       return sqlSession.delete("PhotoBoardDao.delete", no);
     }
   }

@@ -2,15 +2,11 @@ package com.eomcs.lms.handler;
 
 import java.io.BufferedReader;
 import java.io.PrintStream;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
-import com.eomcs.lms.App;
 import com.eomcs.lms.dao.PhotoBoardDao;
 import com.eomcs.lms.dao.PhotoFileDao;
 import com.eomcs.lms.domain.PhotoBoard;
 import com.eomcs.lms.domain.PhotoFile;
-import com.eomcs.util.DataSource;
 import com.eomcs.util.Input;
 import com.eomcs.util.PlatformTransactionManager;
 
