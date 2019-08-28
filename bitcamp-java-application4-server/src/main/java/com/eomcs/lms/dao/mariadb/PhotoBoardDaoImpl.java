@@ -4,7 +4,6 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import com.eomcs.lms.dao.PhotoBoardDao;
-import com.eomcs.lms.domain.Board;
 import com.eomcs.lms.domain.PhotoBoard;
 
 public class PhotoBoardDaoImpl implements PhotoBoardDao {

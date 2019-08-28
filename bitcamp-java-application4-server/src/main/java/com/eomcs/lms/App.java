@@ -1,4 +1,4 @@
-// v43_2 : Mybatis 도입하기 + 도메인 클래스 별명 적용 + SQL 매퍼에 resultMap 적용 + 트랜잭션 적용
+// v44_1 : dynamic sql 사용하기 
 package com.eomcs.lms;
 
 import java.io.BufferedReader;
@@ -138,7 +138,7 @@ public class App {
         
         // 한 클라이언트가 serverstop 명령을 보내면 종료 상태로 설정되고 
         // 다음 요청을 처리할 때 즉시 실행을 멈춘다.
-        if (state == STOP)
+        if (state ==  STOP)
           break;
       }
 
