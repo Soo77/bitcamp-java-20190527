@@ -2,21 +2,24 @@ package com.eomcs.lms.handler;
 
 import java.io.BufferedReader;
 import java.io.PrintStream;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import com.eomcs.lms.dao.LessonDao;
 import com.eomcs.lms.domain.Lesson;
 import com.eomcs.util.Input;
 
 public class LessonDetailCommand implements Command {
   
-  private LessonDao lessonDao;
+  private SqlSessionFactory sqlSessionFactory;
   
-  public LessonDetailCommand(LessonDao lessonDao) {
-    this.lessonDao = lessonDao;
+  public LessonDetailCommand(SqlSessionFactory sqlSessionFactory) {
+    this.sqlSessionFactory = sqlSessionFactory;
   }
 
   @Override
   public void execute(BufferedReader in, PrintStream out) {
-    try {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()){
+      LessonDao lessonDao = sqlSession.getMapper(LessonDao.class);
       int no = Input.getIntValue(in, out, "번호? ");
      
       Lesson lesson = lessonDao.findBy(no);

@@ -2,22 +2,26 @@ package com.eomcs.lms.handler;
 
 import java.io.BufferedReader;
 import java.io.PrintStream;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import com.eomcs.lms.dao.BoardDao;
 import com.eomcs.lms.domain.Board;
 import com.eomcs.util.Input;
 
 public class BoardUpdateCommand implements Command {
   
-  private BoardDao boardDao;
+  private SqlSessionFactory sqlSessionFactory;
   
-  public BoardUpdateCommand(BoardDao boardDao) {
-    this.boardDao = boardDao;
+  public BoardUpdateCommand(SqlSessionFactory sqlSessionFactory) {
+    this.sqlSessionFactory = sqlSessionFactory;
   }
 
   @Override
   public void execute(BufferedReader in, PrintStream out) {
     
-    try {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()){
+      BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+      
       int no = Input.getIntValue(in, out, "번호? ");
       
       Board board = boardDao.findBy(no);

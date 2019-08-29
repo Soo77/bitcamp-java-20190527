@@ -3,20 +3,23 @@ package com.eomcs.lms.handler;
 import java.io.BufferedReader;
 import java.io.PrintStream;
 import java.util.List;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.domain.Member;
 import com.eomcs.util.Input;
 
 public class MemberSearchCommand implements Command {
-  private MemberDao memberDao;
+  private SqlSessionFactory sqlSessionFactory;
   
-  public MemberSearchCommand(MemberDao memberDao) {
-    this.memberDao = memberDao;
+  public MemberSearchCommand(SqlSessionFactory sqlSessionFactory) {
+    this.sqlSessionFactory = sqlSessionFactory;
   }
-  
+
   @Override
   public void execute(BufferedReader in, PrintStream out) {
-    try {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()){
+      MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
       String keyword = Input.getStringValue(in, out, "검색어? ");
       
       List<Member> members = memberDao.findByKeyword(keyword);

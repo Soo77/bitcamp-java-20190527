@@ -2,20 +2,23 @@ package com.eomcs.lms.handler;
 
 import java.io.BufferedReader;
 import java.io.PrintStream;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.domain.Member;
 import com.eomcs.util.Input;
 
 public class MemberDetailCommand implements Command {
-  private MemberDao memberDao;
+  private SqlSessionFactory sqlSessionFactory;
   
-  public MemberDetailCommand(MemberDao memberDao) {
-    this.memberDao = memberDao;
+  public MemberDetailCommand(SqlSessionFactory sqlSessionFactory) {
+    this.sqlSessionFactory = sqlSessionFactory;
   }
 
   @Override
   public void execute(BufferedReader in, PrintStream out) {
-    try {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()){
+      MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
       int no = Input.getIntValue(in, out, "번호? ");
       
       Member member = memberDao.findBy(no);

@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 public class Test03 {
 
   public static void main(String[] args) throws Exception {
+
     
     Class<?> clazz = C.class;
     

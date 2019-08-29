@@ -2,25 +2,31 @@ package com.eomcs.lms.handler;
 
 import java.io.BufferedReader;
 import java.io.PrintStream;
+import java.util.HashMap;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.domain.Member;
 import com.eomcs.util.Input;
 
 public class LoginCommand implements Command {
   
-  private MemberDao memberDao;
+  private SqlSessionFactory sqlSessionFactory;
   
-  public LoginCommand(MemberDao memberDao) {
-    this.memberDao = memberDao;
+  public LoginCommand(SqlSessionFactory sqlSessionFactory) {
+    this.sqlSessionFactory = sqlSessionFactory;
   }
 
   @Override
   public void execute(BufferedReader in, PrintStream out) {
-    try {
-      String email = Input.getStringValue(in, out, "이메일? ");
-      String password = Input.getStringValue(in, out, "암호? ");
-
-      Member member = memberDao.findByEmailPassword(email, password);
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()){
+      MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+      HashMap<String,Object> params = new HashMap<>();
+      params.put("email", Input.getStringValue(in, out, "이메일? "));
+      params.put("password", Input.getStringValue(in, out, "암호? "));
+      
+      
+      Member member = memberDao.findByEmailPassword(params);
       if (member == null) {
         out.println("이메일 혹은 암호가 맞지 않습니다!");
       } else {

@@ -2,19 +2,22 @@ package com.eomcs.lms.handler;
 
 import java.io.BufferedReader;
 import java.io.PrintStream;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.util.Input;
 
 public class MemberDeleteCommand implements Command {
-  private MemberDao memberDao;
-
-  public MemberDeleteCommand(MemberDao memberDao) {
-    this.memberDao = memberDao;
+  private SqlSessionFactory sqlSessionFactory;
+  
+  public MemberDeleteCommand(SqlSessionFactory sqlSessionFactory) {
+    this.sqlSessionFactory = sqlSessionFactory;
   }
 
   @Override
   public void execute(BufferedReader in, PrintStream out) {
-    try {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()){
+      MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
       int no = Input.getIntValue(in, out, "번호? ");
 
       if (memberDao.delete(no) > 0) {

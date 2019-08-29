@@ -3,20 +3,22 @@ package com.eomcs.lms.handler;
 import java.io.BufferedReader;
 import java.io.PrintStream;
 import java.util.List;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import com.eomcs.lms.dao.LessonDao;
 import com.eomcs.lms.domain.Lesson;
 
 public class LessonListCommand implements Command {
+  private SqlSessionFactory sqlSessionFactory;
   
-  private LessonDao lessonDao;
-  
-  public LessonListCommand(LessonDao lessonDao) {
-    this.lessonDao = lessonDao;
+  public LessonListCommand(SqlSessionFactory sqlSessionFactory) {
+    this.sqlSessionFactory = sqlSessionFactory;
   }
 
   @Override
   public void execute(BufferedReader in, PrintStream out) {
-    try {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()){
+      LessonDao lessonDao = sqlSession.getMapper(LessonDao.class);
       List<Lesson> lessons = lessonDao.findAll();
       for (Lesson lesson : lessons) {
         out.printf("%s, %s, %s ~ %s, %s\n", 

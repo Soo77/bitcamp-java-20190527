@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="PhotoBoardDao">
+<mapper namespace="com.eomcs.lms.dao.PhotoBoardDao">
 
    <resultMap type="PhotoBoard" id="PhotoBoardMap">
       <id column="photo_id" property="no" />
@@ -11,14 +11,35 @@
       <result column="vw_cnt" property="viewCount" />
       <result column="lesson_id" property="lessonNo" />
    </resultMap>
+   
+      <resultMap type="PhotoBoard" id="PhotoBoardWithFilesMap">
+      <id column="photo_id" property="no" />
+      <result column="titl" property="title" />
+      <result column="cdt" property="createdDate" />
+      <result column="vw_cnt" property="viewCount" />
+      <result column="lesson_id" property="lessonNo" />
 
-   <select id="findAll" resultMap="PhotoBoardMap">
+   <!-- 자식 테이블의 데이터와 PhotoFile 객체 연결 -->
+   <collection property="files" ofType="photoFile">
+   <id column="photo_file_id" property="no"/>
+   <result column="file_path" property="filePath"/>
+   <result column="boardNo" property="boardNo"/>
+   </collection>
+   </resultMap>
+   
+
+   <sql id="basicColumn">
       select
       photo_id,
       titl,
       cdt,
       vw_cnt,
       lesson_id
+   </sql>
+   
+   <sql id="where1">where photo_id=#{no}</sql>
+   <select id="findAll" resultMap="PhotoBoardMap">
+      <include refid="basicColumn" />
       from
       lms_photo
       order by
@@ -27,24 +48,33 @@
 
    <select id="findBy" parameterType="int"
       resultMap="PhotoBoardMap">
-      select
-      photo_id,
-      titl,
-      cdt,
-      vw_cnt,
-      lesson_id
+      <include refid="basicColumn" />
       from
       lms_photo
+      <include refid="where1"/>
+   </select>
+   
+      <select id="findWithFilesBy" parameterType="int" resultMap="PhotoBoardWithFilesMap">
+            select
+      p.photo_id,
+      p.titl,
+      p.cdt,
+      p.vw_cnt,
+      p.lesson_id,
+      f.photo_file_id,
+      f.file_path
+      from
+      lms_photo p
+      left outer join lms_photo_file f on p.photo_id=f.photo_id
       where
-      photo_id=#{value}
+      p.photo_id=#{value}
    </select>
 
    <update id="increaseViewCount" parameterType="int">
       update lms_photo
       set
       vw_cnt=vw_cnt + 1
-      where
-      photo_id=#{value}
+      <include refid="where1"/>
    </update>
 
    <insert id="insert" parameterType="PhotoBoard"
@@ -59,13 +89,12 @@
       <set>
          <if test="title != null">titl=#{title}</if>
       </set>
-      where photo_id=#{no}
+      <include refid="where1"/>
    </update>
 
    <delete id="delete" parameterType="int">
       delete from lms_photo
-      where
-      photo_id=#{no}
+      <include refid="where1"/>
    </delete>
 
 </mapper>

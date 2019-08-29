@@ -29,7 +29,7 @@ public class Test05 {
             p.getType().getName() // 파라미터 타입명
         );
       }
-      
+      /*
       System.out.println("리턴 타입:");
       System.out.printf("    %s\n", m.getReturnType().getName());
       
@@ -47,6 +47,7 @@ public class Test05 {
       
       if ((modifiers & FINAL) != 0)
         System.out.println("    final");
+        */
       System.out.println("-------------------------------------");
     }
     
