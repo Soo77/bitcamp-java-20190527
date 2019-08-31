@@ -20,9 +20,9 @@ public class PhotoBoardListCommand implements Command {
       List<PhotoBoard> photoBoards = photoBoardDao.findAll();
       for (PhotoBoard photoBoard : photoBoards) {
         out.printf("%d, %-30s, %s, %d, %d\n", 
-            photoBoard.getNo(),
+            photoBoard.getNo(), 
             photoBoard.getTitle(), 
-            photoBoard.getCreatedDate(),
+            photoBoard.getCreatedDate(), 
             photoBoard.getViewCount(),
             photoBoard.getLessonNo());
       }

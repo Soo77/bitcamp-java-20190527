@@ -1,4 +1,4 @@
-// v44_1 : mybatis의 dynamic sql 사용하기 
+// v45_1 : Java Proxy를 이용하여 DAO 구현체 자동 생성하기
 package com.eomcs.lms;
 
 import java.io.BufferedReader;
@@ -58,7 +58,6 @@ public class App {
   
   SqlSessionFactory sqlSessionFactory;
   
-  
   public App() throws Exception {
 
     // 처음에는 클라이언트 요청을 처리해야 하는 상태로 설정한다.
@@ -67,16 +66,14 @@ public class App {
     try {
       InputStream inputStream = 
           Resources.getResourceAsStream("com/eomcs/lms/conf/mybatis-config.xml");
-      
-      sqlSessionFactory =
-        new SqlSessionFactoryProxy(
-            new SqlSessionFactoryBuilder().build(inputStream));
+      sqlSessionFactory =new SqlSessionFactoryProxy(
+          new SqlSessionFactoryBuilder().build(inputStream));
       
       // 트랜잭션 관리자를 준비한다.
       PlatformTransactionManager txManager = 
           new PlatformTransactionManager(sqlSessionFactory);
       
-      // DAO 구현체 생성기를 준빟나다.
+      // DAO 구현체 생성기를 준비한다.
       MybatisDaoFactory daoFactory = new MybatisDaoFactory(sqlSessionFactory);
       
       // Command 객체가 사용할 데이터 처리 객체를 준비한다.
@@ -137,7 +134,7 @@ public class App {
         
         // 한 클라이언트가 serverstop 명령을 보내면 종료 상태로 설정되고 
         // 다음 요청을 처리할 때 즉시 실행을 멈춘다.
-        if (state ==  STOP)
+        if (state == STOP)
           break;
       }
 
@@ -223,6 +220,7 @@ public class App {
     }
   }
 }
+
 
 
 

@@ -18,19 +18,20 @@ public class PlatformTransactionManager {
   }
   
   public void commit() throws Exception {
-    // 현재 스레드의 주머니에서 SqlSession을  꺼낸다.
+    // 현재 스레드의 주머니에서 SqlSession을 꺼낸다.
     SqlSession sqlSession = sqlSessionFactory.openSession();
     sqlSession.commit();
     ((SqlSessionProxy)sqlSession).realClose();
   }
   
   public void rollback() throws Exception {
-    // 현재 스레드의 주머니에서 커넥션 객체를 꺼낸다.
+    // 현재 스레드의 주머니에서 SqlSession을 꺼낸다.
     SqlSession sqlSession = sqlSessionFactory.openSession();
     sqlSession.rollback();
     ((SqlSessionProxy)sqlSession).realClose();
   }
 }
+
 
 
 

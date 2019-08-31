@@ -12,17 +12,17 @@ import com.eomcs.util.DataSource;
 public class LessonDaoImpl implements LessonDao {
 
   DataSource dataSource;
-
+  
   public LessonDaoImpl(DataSource conFactory) {
     this.dataSource = conFactory;
   }
-
+  
   @Override
   public int insert(Lesson lesson) throws Exception {
-    try (Connection con  = dataSource.getConnection();
+    try (Connection con = dataSource.getConnection();
         PreparedStatement stmt = con.prepareStatement(
             "insert into lms_lesson(sdt,edt,tot_hr,day_hr,titl,conts)"
-                + " values(?,?,?,?,?,?)")) {
+            + " values(?,?,?,?,?,?)")) {
 
       stmt.setDate(1, lesson.getStartDate());
       stmt.setDate(2, lesson.getEndDate());
@@ -30,40 +30,39 @@ public class LessonDaoImpl implements LessonDao {
       stmt.setInt(4, lesson.getDayHours());
       stmt.setString(5, lesson.getTitle());
       stmt.setString(6, lesson.getContents());
-
+      
       return stmt.executeUpdate();
     }
   }
 
   @Override
   public List<Lesson> findAll() throws Exception {
-    try (Connection con  = dataSource.getConnection();
+    try (Connection con = dataSource.getConnection();
         PreparedStatement stmt = con.prepareStatement(
             "select lesson_id,titl,sdt,edt,tot_hr"
                 + " from lms_lesson"
-                + " order by sdt desc")) {
+                + " order by sdt desc");
+        ResultSet rs = stmt.executeQuery()) {
 
-
-      try (ResultSet rs = stmt.executeQuery()) {
-        ArrayList<Lesson> list = new ArrayList<>();
-        while (rs.next()) {
-          Lesson lesson = new Lesson();
-          lesson.setNo(rs.getInt("lesson_id"));
-          lesson.setTitle(rs.getString("titl"));
-          lesson.setStartDate(rs.getDate("sdt"));
-          lesson.setEndDate(rs.getDate("edt"));
-          lesson.setTotalHours(rs.getInt("tot_hr"));
-
-          list.add(lesson);
-        }
-        return list;
+      ArrayList<Lesson> list = new ArrayList<>();
+      
+      while (rs.next()) {
+        Lesson lesson = new Lesson();
+        lesson.setNo(rs.getInt("lesson_id"));
+        lesson.setTitle(rs.getString("titl"));
+        lesson.setStartDate(rs.getDate("sdt"));
+        lesson.setEndDate(rs.getDate("edt"));
+        lesson.setTotalHours(rs.getInt("tot_hr"));
+        
+        list.add(lesson);
       }
+      return list;
     }
   }
 
   @Override
   public Lesson findBy(int no) throws Exception {
-    try (Connection con  = dataSource.getConnection();
+    try (Connection con = dataSource.getConnection();
         PreparedStatement stmt = con.prepareStatement(
             "select *"
                 + " from lms_lesson"
@@ -72,7 +71,6 @@ public class LessonDaoImpl implements LessonDao {
       stmt.setInt(1, no);
       
       try (ResultSet rs = stmt.executeQuery()) {
-
         if (rs.next()) {
           Lesson lesson = new Lesson();
           lesson.setNo(rs.getInt("lesson_id"));
@@ -82,9 +80,8 @@ public class LessonDaoImpl implements LessonDao {
           lesson.setEndDate(rs.getDate("edt"));
           lesson.setTotalHours(rs.getInt("tot_hr"));
           lesson.setDayHours(rs.getInt("day_hr"));
-
+          
           return lesson;
-
         } else {
           return null;
         }
@@ -94,7 +91,7 @@ public class LessonDaoImpl implements LessonDao {
 
   @Override
   public int update(Lesson lesson) throws Exception {
-    try (Connection con  = dataSource.getConnection();
+    try (Connection con = dataSource.getConnection();
         PreparedStatement stmt = con.prepareStatement(
             "update lms_lesson set"
                 + " titl=?, conts=?, sdt=?, edt=?, tot_hr=?, day_hr=?"
@@ -114,13 +111,13 @@ public class LessonDaoImpl implements LessonDao {
 
   @Override
   public int delete(int no) throws Exception {
-    try (Connection con  = dataSource.getConnection();
+    try (Connection con = dataSource.getConnection();
         PreparedStatement stmt = con.prepareStatement(
             "delete from lms_lesson where lesson_id=?")) {
-
+      
       stmt.setInt(1, no);
+      
       return stmt.executeUpdate();
     }
   }
-
 }

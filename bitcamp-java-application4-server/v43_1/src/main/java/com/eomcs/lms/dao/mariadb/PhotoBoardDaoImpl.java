@@ -4,7 +4,6 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import com.eomcs.lms.dao.PhotoBoardDao;
-import com.eomcs.lms.domain.Board;
 import com.eomcs.lms.domain.PhotoBoard;
 
 public class PhotoBoardDaoImpl implements PhotoBoardDao {
@@ -31,22 +30,12 @@ public class PhotoBoardDaoImpl implements PhotoBoardDao {
 
   @Override
   public PhotoBoard findBy(int no) throws Exception {
-    SqlSession sqlSession = sqlSessionFactory.openSession();
-    try {
-      PhotoBoard photoBoard = sqlSession.selectOne("PhotoBoardDao.findBy", no);
-      if (photoBoard != null) {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession(true)) {
+      PhotoBoard board = sqlSession.selectOne("PhotoBoardDao.findBy", no);
+      if (board != null) {
         sqlSession.update("PhotoBoardDao.increaseViewCount", no);
-        sqlSession.commit();
       }
-      return photoBoard;
-      
-    } catch (Exception e) {
-      sqlSession.rollback();
-      throw e;
-      
-    } finally {
-      sqlSession.close();
-      
+      return board;
     }
   }
 

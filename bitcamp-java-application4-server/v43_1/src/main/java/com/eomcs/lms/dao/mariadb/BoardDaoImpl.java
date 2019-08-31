@@ -5,13 +5,11 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import com.eomcs.lms.dao.BoardDao;
 import com.eomcs.lms.domain.Board;
-import com.eomcs.util.DataSource;
 
 public class BoardDaoImpl implements BoardDao {
 
   SqlSessionFactory sqlSessionFactory;
-  DataSource dataSource;
-
+  
   public BoardDaoImpl(SqlSessionFactory sqlSessionFactory) {
     this.sqlSessionFactory = sqlSessionFactory;
   }
@@ -20,7 +18,6 @@ public class BoardDaoImpl implements BoardDao {
   public int insert(Board board) throws Exception {
     SqlSession sqlSession = sqlSessionFactory.openSession();
     try {
-
       int count = sqlSession.insert("BoardDao.insert", board);
       sqlSession.commit();
       return count;
@@ -28,6 +25,7 @@ public class BoardDaoImpl implements BoardDao {
     } catch (Exception e) {
       sqlSession.rollback();
       throw e;
+      
     } finally {
       sqlSession.close();
     }
@@ -37,7 +35,6 @@ public class BoardDaoImpl implements BoardDao {
   public List<Board> findAll() throws Exception {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       return sqlSession.selectList("BoardDao.findAll");
-
     }
   }
 
@@ -47,8 +44,8 @@ public class BoardDaoImpl implements BoardDao {
     try {
       Board board = sqlSession.selectOne("BoardDao.findBy", no);
       if (board != null) {
-        sqlSession.update("BoardDao.increaseViewCount", no);
-        sqlSession.commit();
+          sqlSession.update("BoardDao.increaseViewCount", no);
+          sqlSession.commit();
       }
       return board;
       
@@ -58,7 +55,6 @@ public class BoardDaoImpl implements BoardDao {
       
     } finally {
       sqlSession.close();
-      
     }
   }
 

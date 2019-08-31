@@ -6,15 +6,16 @@
 
   <!-- 설정 파일에서 사용할 .properties 파일을 지정한다. -->
   <properties resource="com/eomcs/lms/conf/jdbc.properties"></properties>
-
-  <!-- DBMS 접속 정보
-  default: Mybatis를 실행하는 동안 사용할 DBMS
+  
+  <!-- DBMS 접속 정보 목록 
+    default: Mybatis를 실행하는 동안 사용할 DBMS 정보 아이디
   -->
   <environments default="development">
-  
+    
     <!-- 한 개의 DBMS 접속 정보 -->
     <environment id="development">
-      <!-- 트랜잭션 설정  -->
+      
+      <!-- 트랜잭션 설정 -->
       <transactionManager type="JDBC"/>
       
       <!-- DB 커넥션풀 정보 -->
@@ -27,11 +28,10 @@
     </environment>
   </environments>
   
-  
   <!-- SQL 문이 저장된 파일 목록 -->
   <mappers>
   
-  <!-- SQL 문이 저장된 파일 -->
+    <!-- SQL 문이 저장된 파일 -->
     <mapper resource="com/eomcs/lms/mapper/BoardMapper.xml"/>
     <mapper resource="com/eomcs/lms/mapper/MemberMapper.xml"/>
     <mapper resource="com/eomcs/lms/mapper/LessonMapper.xml"/>
@@ -39,3 +39,11 @@
     <mapper resource="com/eomcs/lms/mapper/PhotoFileMapper.xml"/>
   </mappers>
 </configuration>
+
+
+
+
+
+
+
+
