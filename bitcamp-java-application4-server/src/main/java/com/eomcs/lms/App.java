@@ -26,7 +26,7 @@ public class App {
 
   ApplicationContext appCtx;
   RequestMappingHandlerMapping handlerMapping;
-  int state;
+  int state; 
   
   // 스레드풀
   ExecutorService executorService = Executors.newCachedThreadPool();    
