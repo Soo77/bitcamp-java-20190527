@@ -20,12 +20,12 @@ public class PhotoBoardAddCommand implements Command {
       PhotoBoard photoBoard = new PhotoBoard();
       photoBoard.setTitle(Input.getStringValue(in, out, "제목? "));
       photoBoard.setLessonNo(Input.getIntValue(in, out, "수업? "));
-
+      
       photoBoardDao.insert(photoBoard);
-      out.println("사진을 저장했습니다.");
+      out.println("저장하였습니다.");
       
     } catch (Exception e) {
-      out.println("사진 저장에 실패했습니다!");
+      out.println("데이터 저장에 실패했습니다!");
       System.out.println(e.getMessage());
     }
   }

@@ -11,7 +11,9 @@ public class PhotoBoardDeleteCommand implements Command {
   private PhotoBoardDao photoBoardDao;
   private PhotoFileDao photoFileDao;
   
-  public PhotoBoardDeleteCommand(PhotoBoardDao photoBoardDao, PhotoFileDao photoFileDao) {
+  public PhotoBoardDeleteCommand(
+      PhotoBoardDao photoBoardDao,
+      PhotoFileDao photoFileDao) {
     this.photoBoardDao = photoBoardDao;
     this.photoFileDao = photoFileDao;
   }
@@ -26,7 +28,7 @@ public class PhotoBoardDeleteCommand implements Command {
         return;
       }
       
-      // 먼저 게시무의 첨부파일을 삭제한다.
+      // 먼저 게시물의 첨부파일을 삭제한다.
       photoFileDao.deleteAll(no);
       
       // 게시물을 삭제한다.
@@ -35,7 +37,7 @@ public class PhotoBoardDeleteCommand implements Command {
       out.println("데이터를 삭제하였습니다.");
       
     } catch (Exception e) {
-      out.println("사진 삭제에 실패했습니다!");
+      out.println("데이터 삭제에 실패했습니다!");
       System.out.println(e.getMessage());
     }
   }

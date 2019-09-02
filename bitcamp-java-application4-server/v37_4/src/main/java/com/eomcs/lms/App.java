@@ -135,9 +135,9 @@ public class App {
           command.execute(in, out);
         }
       }
-
       out.println("!end!");
       out.flush();
+
       System.out.println("클라이언트와 연결 끊음!");
 
     } catch (Exception e) {

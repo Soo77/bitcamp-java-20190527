@@ -19,13 +19,13 @@ public class PhotoBoardDeleteCommand implements Command {
       int no = Input.getIntValue(in, out, "번호? ");
       
       if (photoBoardDao.delete(no) > 0) {
-        out.println("사진을 삭제하였습니다.");
+        out.println("데이터를 삭제하였습니다.");
       } else {
-        out.println("해당 사진이 없습니다.");
+        out.println("해당 데이터가 없습니다.");
       }
       
     } catch (Exception e) {
-      out.println("사진 삭제에 실패했습니다!");
+      out.println("데이터 삭제에 실패했습니다!");
       System.out.println(e.getMessage());
     }
   }

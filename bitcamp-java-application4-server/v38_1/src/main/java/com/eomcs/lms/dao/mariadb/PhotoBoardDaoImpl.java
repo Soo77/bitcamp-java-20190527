@@ -3,7 +3,6 @@ package com.eomcs.lms.dao.mariadb;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -97,10 +96,9 @@ public class PhotoBoardDaoImpl implements PhotoBoardDao {
   public static void main(String[] args) throws Exception {
     try (Connection con = DriverManager.getConnection(
         "jdbc:mariadb://localhost/bitcampdb?user=bitcamp&password=1111");) {
-      
-      PhotoBoardDao dao = new PhotoBoardDaoImpl(con);
-      
-      
+    
+      //PhotoBoardDao dao = new PhotoBoardDaoImpl(con);
+    
       //1) insert() 테스트
       /*
       PhotoBoard b = new PhotoBoard();
@@ -119,7 +117,6 @@ public class PhotoBoardDaoImpl implements PhotoBoardDao {
       */
       
       //3) findBy() 테스트
-     
       /*
       PhotoBoard b = dao.findBy(9);
       System.out.println(b);
@@ -134,10 +131,22 @@ public class PhotoBoardDaoImpl implements PhotoBoardDao {
       */
       
       //5) delete() 테스트
-      //dao.delete(9);
-    
+      /*
+      dao.delete(9);
+      */
+      
       System.out.println("실행 완료!");
     }
   }
 
 }
+
+
+
+
+
+
+
+
+
+

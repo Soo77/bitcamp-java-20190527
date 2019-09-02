@@ -19,7 +19,7 @@ public class MemberDaoImpl implements MemberDao {
   
   @Override
   public int insert(Member member) throws Exception {
-    try (Connection con  = conFactory.getConnection();
+    try (Connection con = conFactory.getConnection();
         Statement stmt = con.createStatement()) {
 
       return stmt.executeUpdate(
@@ -36,7 +36,7 @@ public class MemberDaoImpl implements MemberDao {
 
   @Override
   public List<Member> findAll() throws Exception {
-    try (Connection con  = conFactory.getConnection();
+    try (Connection con = conFactory.getConnection();
         Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery(
             "select member_id,name,email,tel,cdt"
@@ -61,7 +61,7 @@ public class MemberDaoImpl implements MemberDao {
 
   @Override
   public Member findBy(int no) throws Exception {
-    try (Connection con  = conFactory.getConnection();
+    try (Connection con = conFactory.getConnection();
         Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery(
             "select *"
@@ -87,7 +87,7 @@ public class MemberDaoImpl implements MemberDao {
   
   @Override
   public List<Member> findByKeyword(String keyword) throws Exception {
-    try (Connection con  = conFactory.getConnection();
+    try (Connection con = conFactory.getConnection();
         Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery(
             "select member_id,name,email,tel,cdt"
@@ -116,7 +116,7 @@ public class MemberDaoImpl implements MemberDao {
 
   @Override
   public int update(Member member) throws Exception {
-    try (Connection con  = conFactory.getConnection();
+    try (Connection con = conFactory.getConnection();
         Statement stmt = con.createStatement()) {
 
       return stmt.executeUpdate("update lms_member set"
@@ -131,7 +131,7 @@ public class MemberDaoImpl implements MemberDao {
 
   @Override
   public int delete(int no) throws Exception {
-    try (Connection con  = conFactory.getConnection();
+    try (Connection con = conFactory.getConnection();
         Statement stmt = con.createStatement()) {
 
       return stmt.executeUpdate("delete from lms_member where member_id=" + no);

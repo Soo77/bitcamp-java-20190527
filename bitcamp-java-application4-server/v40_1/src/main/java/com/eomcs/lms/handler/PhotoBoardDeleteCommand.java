@@ -3,32 +3,35 @@ package com.eomcs.lms.handler;
 import java.io.BufferedReader;
 import java.io.PrintStream;
 import java.sql.Connection;
-import java.sql.SQLException;
-import com.eomcs.lms.App;
 import com.eomcs.lms.dao.PhotoBoardDao;
 import com.eomcs.lms.dao.PhotoFileDao;
 import com.eomcs.util.ConnectionFactory;
 import com.eomcs.util.Input;
 
 public class PhotoBoardDeleteCommand implements Command {
+  
   private ConnectionFactory conFactory;
   private PhotoBoardDao photoBoardDao;
   private PhotoFileDao photoFileDao;
   
-  public PhotoBoardDeleteCommand(ConnectionFactory conFactory, PhotoBoardDao photoBoardDao, PhotoFileDao photoFileDao) {
-    this.conFactory = conFactory; 
+  public PhotoBoardDeleteCommand(
+      ConnectionFactory conFactory,
+      PhotoBoardDao photoBoardDao,
+      PhotoFileDao photoFileDao) {
+    this.conFactory = conFactory;
     this.photoBoardDao = photoBoardDao;
     this.photoFileDao = photoFileDao;
   }
   
   @Override
   public void execute(BufferedReader in, PrintStream out) {
-    
     Connection con = null;
     
     try {
       con = conFactory.getConnection();
+      
       con.setAutoCommit(false);
+      
       int no = Input.getIntValue(in, out, "번호? ");
       
       if (photoBoardDao.findBy(no) == null) {
@@ -36,7 +39,7 @@ public class PhotoBoardDeleteCommand implements Command {
         return;
       }
       
-      // 먼저 게시무의 첨부파일을 삭제한다.
+      // 먼저 게시물의 첨부파일을 삭제한다.
       photoFileDao.deleteAll(no);
       
       // 게시물을 삭제한다.
@@ -47,14 +50,11 @@ public class PhotoBoardDeleteCommand implements Command {
       
     } catch (Exception e) {
       try {con.rollback();} catch (Exception e2) {}
-      out.println("데이터 저장에 실패했습니다!");
+      
+      out.println("데이터 삭제에 실패했습니다!");
       System.out.println(e.getMessage());
-      e.printStackTrace();
       
     } finally {
-      // 커넥션 객체를 원래의 자동 커밋 상태로 설정한다.
-      // 즉 DBMS 쪽 담당자(스레드)에게 이제부터 모든 데이터 변경 작업은 즉시 실행할 것을 명령한다.
-      //
       try {con.setAutoCommit(true);} catch (Exception e) {}
     }
   }
