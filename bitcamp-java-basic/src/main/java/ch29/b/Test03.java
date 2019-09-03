@@ -5,12 +5,14 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
+import ch29.SpringUtils;
 
 public class Test03 {
   public static void main(String[] args) {
     ApplicationContext iocContainer = 
         new ClassPathXmlApplicationContext("ch29/b/application-context-03.xml");
     
+    SpringUtils.printTypes(iocContainer);
     System.out.println("---------------------------------------");
     
     // Singleton 객체는 IoC 컨테이너를 생성할 때 미리 생성된다. 

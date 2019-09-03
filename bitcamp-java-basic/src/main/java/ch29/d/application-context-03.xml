@@ -33,7 +33,7 @@
     <property name="maker" value="비트자동차"/>
     <property name="model" value="모델2"/>
     <property name="blackBox">
-      <bean class="ch29.d.BlackBox">
+      <bean class="ch29.d.BlackBox"> <!-- 이름 안지어줌 어차ㅣㅍ 지어봤짜 못찾음 -->
         <property name="maker" value="비트오토"/>
         <property name="model" value="비트박스OK"/>
       </bean>
