@@ -16,7 +16,7 @@ public class Test01_2 {
     
     
     ApplicationContext iocContainer2 = 
-        new AnnotationConfigApplicationContext(AppConfig.class);
+        new AnnotationConfigApplicationContext(AppConfig02.class);
     System.out.println("[Java Config IoC 컨테이너]");
     SpringUtils.printObjects(iocContainer2);
     

@@ -3,6 +3,7 @@ package ch29.j;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import ch29.SpringUtils;
 
 public class Test01 {
   public static void main(String[] args) {
@@ -11,6 +12,8 @@ public class Test01 {
     ApplicationContext iocContainer = 
         new AnnotationConfigApplicationContext(AppConfig1.class);
     
+    System.out.println("---------------------------------------");
+    SpringUtils.printObjects(iocContainer);
     System.out.println("---------------------------------------");
     
     String[] names = iocContainer.getBeanDefinitionNames();

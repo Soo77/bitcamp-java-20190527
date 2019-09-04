@@ -29,6 +29,11 @@ public class MyCustomDateEditor extends PropertyEditorSupport {
     this.setValue(date);
   }
 
+  @Override
+  public Object getValue() {
+    System.out.println("MyCustomDateEditor.getValue()");
+    return super.getValue();
+  }
 }
 
 

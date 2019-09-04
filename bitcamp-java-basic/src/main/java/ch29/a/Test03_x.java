@@ -22,8 +22,8 @@ public class Test03_x {
     System.out.println(obj1);
     
     // @Component가 붙지 않은 클래스는 자동으로 객체를 생성하지 않는다.
-    Student obj2 = (Student) iocContainer.getBean("student");
-    System.out.println(obj2);
+//    Student obj2 = (Student) iocContainer.getBean("student");
+//    System.out.println(obj2);
     
     System.out.println("실행 완료!");
   }
