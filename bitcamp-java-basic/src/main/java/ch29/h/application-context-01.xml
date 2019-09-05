@@ -11,6 +11,7 @@
        각각의 빈을 생성한 후 그 객체에게 보고한다.
   -->
   
+  <!-- 
   <bean id="c1" class="ch29.h.Car">
     <property name="maker" value="비트자동차"/>
     <property name="model" value="모델1"/>
@@ -18,6 +19,7 @@
     <property name="valve" value="16"/>
     <property name="auto" value="true"/>
   </bean>
+   -->
   
   <bean id="blackBox" class="ch29.h.BlackBox">
     <property name="maker" value="비트오토"/>
