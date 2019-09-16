@@ -41,7 +41,7 @@ public class Servlet02 extends HttpServlet {
     response.setContentType("text/plain;charset=UTF-8");
     PrintWriter out = response.getWriter();
     
-    out.println("보관소에 저장된 값 꺼내기 - /ex09/s2");
+    out.println("보관소에 저장된 값 꺼내기 메에에 - /ex09/s2 베");
     out.printf("v1 = %s\n", v1);
     out.printf("v2 = %s\n", v2);
     out.printf("v3 = %s\n", v3);

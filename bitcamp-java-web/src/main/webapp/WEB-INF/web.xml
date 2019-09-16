@@ -33,8 +33,8 @@
     <param-value>UTF-8</param-value>
   </context-param>
 
-  <!-- 리스너 배치 정보 -->
-  <!--  
+<!-- 리스너 배치 정보 -->
+<!--  
   <listener>
     <listener-class>bitcamp.ex02.Listener01</listener-class>
   </listener>
@@ -43,16 +43,27 @@
   </listener>
 -->
 
-  <!-- 필터 배치 정보 -->
-  <!-- 
+<!-- 필터 배치 정보 -->
+<!-- 필터를 언제 실행할 지 결정하기 위해 URL을 지정한다. -->
+<!--  
   <filter>
     <filter-name>f1</filter-name>
     <filter-class>bitcamp.ex02.Filter01</filter-class>
   </filter>
+  <filter-mapping>
+    <filter-name>f1</filter-name>
+    <url-pattern>/ex02/*</url-pattern>
+  </filter-mapping>
+
   <filter>
     <filter-name>f2</filter-name>
     <filter-class>bitcamp.ex02.Filter02</filter-class>
   </filter>
+  <filter-mapping>
+    <filter-name>f2</filter-name>
+    <url-pattern>/ex02/a/s2</url-pattern>
+  </filter-mapping>
+  -->
   <filter>
     <filter-name>ex06 Filter01</filter-name>
     <filter-class>bitcamp.ex06.Filter01</filter-class>
@@ -61,23 +72,10 @@
       <param-value>UTF-8</param-value>
     </init-param>
   </filter>
-   -->
-   
-  <!-- 필터를 언제 실행할 지 결정하기 위해 URL을 지정한다. -->
-  <!--  
-  <filter-mapping>
-    <filter-name>f1</filter-name>
-    <url-pattern>/ex02/*</url-pattern>
-  </filter-mapping>
-  <filter-mapping>
-    <filter-name>f2</filter-name>
-    <url-pattern>/ex02/a/s2</url-pattern>
-  </filter-mapping>
   <filter-mapping>
     <filter-name>ex06 Filter01</filter-name>
     <url-pattern>/ex06/*</url-pattern>
   </filter-mapping>
--->
 
   <!-- 서블릿 배치 정보 설정
        => 웹 애플리케이션에 어떤 서블릿이 있는지 지정한다. -->
@@ -85,7 +83,7 @@
     <servlet-name>Servlet01</servlet-name>
     <servlet-class>bitcamp.ex01.Servlet01</servlet-class>
   </servlet>
-    <!-- 서블릿에 URL을 지정한다.
+  <!-- 서블릿에 URL을 지정한다.
        => URL이 지정된 서블릿은 웹브라우저 쪽에서 그 URL로 실행을 요청할 수 있다.
        => URL이 지정되지 않은 서블릿은 웹브라우저 쪽에서 실행을 요청할 수 없다.
           왜? URL을 모르니까!-->
@@ -98,27 +96,27 @@
          반드시 루트 / 로 시작한다. -->
     <url-pattern>/ex01/s01</url-pattern>
   </servlet-mapping>
-
+  
+   
   <servlet>
     <servlet-name>Servlet02</servlet-name>
     <servlet-class>bitcamp.ex01.Servlet02</servlet-class>
   </servlet>
-    <servlet-mapping>
+  <servlet-mapping>
     <servlet-name>Servlet02</servlet-name>
     <url-pattern>/ex01/s02</url-pattern>
   </servlet-mapping>
   
-
-    <servlet>
+  <servlet>
     <servlet-name>Servlet03</servlet-name>
     <servlet-class>bitcamp.ex01.Servlet03</servlet-class>
   </servlet>
-    <servlet-mapping>
+  <servlet-mapping>
     <servlet-name>Servlet03</servlet-name>
     <url-pattern>/ex01/s03</url-pattern>
   </servlet-mapping>
   
-    <servlet>
+  <servlet>
     <servlet-name>bitcamp.ex04.Servlet05</servlet-name>
     <servlet-class>bitcamp.ex04.Servlet05</servlet-class>
     <multipart-config>
@@ -129,8 +127,6 @@
     <servlet-name>bitcamp.ex04.Servlet05</servlet-name>
     <url-pattern>/ex04/s5</url-pattern>
   </servlet-mapping>
-  
-    <!-- 
   <servlet>
     <servlet-name>bitcamp.ex06.Servlet02</servlet-name>
     <servlet-class>bitcamp.ex06.Servlet02</servlet-class>
@@ -156,9 +152,6 @@
       <param-value>1111</param-value>
     </init-param>
   </servlet>
-    -->
-<!-- 
-
 
   
   <servlet-mapping>
@@ -188,14 +181,12 @@
     <url-pattern>/fileupload/upload.jsp</url-pattern>
   </servlet-mapping>
   
-  -->
-  
+  <!-- 
   <session-config>
     <session-timeout>1</session-timeout>
   </session-config>
-  
+   -->
 </web-app>
-
 
 
 
