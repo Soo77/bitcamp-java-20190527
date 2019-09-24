@@ -12,27 +12,27 @@
   <div class='collapse navbar-collapse' id='navbarSupportedContent'>
     <ul class='navbar-nav'>
       <li class='nav-item active'>
-        <a class='nav-link' href='/board/list'>게시판</a>
+        <a class='nav-link' href='/app/board/list'>게시판</a>
       </li>
       <li class='nav-item active'>
-        <a class='nav-link' href='/lesson/list'>수업관리</a>
+        <a class='nav-link' href='/app/lesson/list'>수업관리</a>
       </li>
       <li class='nav-item active'>
-        <a class='nav-link' href='/member/list'>회원관리</a>
+        <a class='nav-link' href='/app/member/list'>회원관리</a>
       </li>
       <li class='nav-item active'>
-        <a class='nav-link' href='/photoboard/list'>사진게시판</a>
+        <a class='nav-link' href='/app/photoboard/list'>사진게시판</a>
       </li>
     </ul>
   </div>
     
   <div>
-<c:if test="${empty loginUser }">
-  <a href='/auth/login' class='btn btn-outline-dark btn-sm'>로그인</a>
+<c:if test="${empty loginUser}">
+  <a href='/app/auth/login' class='btn btn-outline-dark btn-sm'>로그인</a>
 </c:if>
 <c:if test="${not empty loginUser}">
   <a href='/member/detail?no=${loginUser.no}'>${loginUser.name}</a> 
-  <a href='/auth/logout' class='btn btn-outline-dark btn-sm'>로그아웃</a>
+  <a href='/app/auth/logout' class='btn btn-outline-dark btn-sm'>로그아웃</a>
 </c:if>
   </div>
 </nav>

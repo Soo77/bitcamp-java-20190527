@@ -28,18 +28,14 @@ public class LessonListServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) 
       throws IOException, ServletException {
     
-    response.setContentType("text/html;charset=UTF-8");
     try {
       List<Lesson> lessons = lessonDao.findAll();
-
       request.setAttribute("lessons", lessons);
-      request.getRequestDispatcher("/jsp/lesson/list.jsp").include(request, response);
-
-    } catch (Exception e) {
-      request.getRequestDispatcher("/jsp/error.jsp").include(request, response);
-      throw new RuntimeException(e);
+      request.setAttribute("viewUrl", "/jsp/lesson/list.jsp");
       
-    } 
+    } catch (Exception e) {
+      request.setAttribute("error", e);
+    }
   }
 }
 

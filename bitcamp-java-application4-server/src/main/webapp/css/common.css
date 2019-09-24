@@ -2,12 +2,11 @@
 
 #header {
   width: 1100px;
-  margin: auto auto;
+  margin: 0 auto;
 }
 
 #header img {
   height: 35px;
-  top: -6px;
 }
 
 #footer {

@@ -26,7 +26,6 @@ public class MemberUpdateServlet extends HttpServlet {
     ApplicationContext appCtx = 
         (ApplicationContext) getServletContext().getAttribute("iocContainer");
     memberDao = appCtx.getBean(MemberDao.class);
-    
     uploadDir = getServletContext().getRealPath("/upload/member");
   }
 
@@ -50,13 +49,11 @@ public class MemberUpdateServlet extends HttpServlet {
       }
       
       memberDao.update(member);
-      response.sendRedirect("/member/list");
+      request.setAttribute("viewUrl", "redirect:list");
       
     } catch (Exception e) {
-      request.setAttribute("message", "데이터 변경에 실패했습니다!");
-      request.setAttribute("refresh", "/member/list");
       request.setAttribute("error", e);
-      request.getRequestDispatcher("/jsp/error").forward(request, response);
+      request.setAttribute("refresh", "list");
     }
   }
 }

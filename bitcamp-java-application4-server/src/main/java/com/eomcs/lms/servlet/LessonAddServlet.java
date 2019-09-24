@@ -1,6 +1,7 @@
 package com.eomcs.lms.servlet;
 
 import java.io.IOException;
+import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,9 +27,7 @@ public class LessonAddServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) 
       throws IOException, ServletException {
-    
-    response.setContentType("text/html;charset=UTF-8");
-    request.getRequestDispatcher("/jsp/lesson/form.jsp").include(request, response);
+    request.setAttribute("viewUrl", "/jsp/lesson/form.jsp");
   }
   
   @Override
@@ -36,14 +35,20 @@ public class LessonAddServlet extends HttpServlet {
       throws IOException, ServletException {
     try {
       Lesson lesson = new Lesson();
+      lesson.setTitle(request.getParameter("title"));
       lesson.setContents(request.getParameter("contents"));
+      lesson.setStartDate(Date.valueOf(request.getParameter("startDate")));
+      lesson.setEndDate(Date.valueOf(request.getParameter("endDate")));
+      lesson.setTotalHours(Integer.parseInt(request.getParameter("totalHours")));
+      lesson.setDayHours(Integer.parseInt(request.getParameter("dayHours")));
+      
       lessonDao.insert(lesson);
-      response.sendRedirect("/lesson/list");
+      
+      request.setAttribute("viewUrl", "redirect:list");
       
     } catch (Exception e) {
-      request.setAttribute("message", "데이터 목록을 가져오는데 실패했습니다!");
       request.setAttribute("error", e);
-      request.getRequestDispatcher("/jsp/error.jsp").forward(request, response);
+      request.setAttribute("refresh", "list");
     }
   }
 }

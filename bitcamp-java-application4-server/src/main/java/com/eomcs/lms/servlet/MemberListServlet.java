@@ -28,19 +28,14 @@ public class MemberListServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) 
       throws IOException, ServletException {
     
-    response.setContentType("text/html;charset=UTF-8");
     try {
       List<Member> members = memberDao.findAll();
-
       
       request.setAttribute("members", members);
-      request.getRequestDispatcher("/jsp/member/list.jsp").include(request, response);
-
+      request.setAttribute("viewUrl", "/jsp/member/list.jsp");
       
     } catch (Exception e) {
-      request.getRequestDispatcher("/jsp/error.jsp").include(request, response);
-      throw new RuntimeException(e);
-    
+      request.setAttribute("error", e);
     }
   }
 }

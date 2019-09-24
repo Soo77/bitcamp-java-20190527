@@ -26,16 +26,13 @@ public class MemberAddServlet extends HttpServlet {
     ApplicationContext appCtx = 
         (ApplicationContext) getServletContext().getAttribute("iocContainer");
     memberDao = appCtx.getBean(MemberDao.class);
-    
     uploadDir = getServletContext().getRealPath("/upload/member");
   }
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) 
       throws IOException, ServletException {
-    
-    response.setContentType("text/html;charset=UTF-8");
-    request.getRequestDispatcher("/jsp/member/form.jsp").include(request, response);
+    request.setAttribute("viewUrl", "/jsp/member/form.jsp");
   }
   
   @Override
@@ -44,11 +41,13 @@ public class MemberAddServlet extends HttpServlet {
     
     try {
       Member member = new Member();
+      
       member.setName(request.getParameter("name"));
       member.setEmail(request.getParameter("email"));
       member.setPassword(request.getParameter("password"));
       member.setTel(request.getParameter("tel"));
 
+      // 업로드 된 사진 파일 처리
       Part photoPart = request.getPart("photo");
       if (photoPart != null && photoPart.getSize() > 0) {
         String filename = UUID.randomUUID().toString();
@@ -57,12 +56,11 @@ public class MemberAddServlet extends HttpServlet {
       }
       
       memberDao.insert(member);
-      response.sendRedirect("/member/list");
+      request.setAttribute("viewUrl", "redirect:list");
       
     } catch (Exception e) {
-      request.setAttribute("message", "데이터 저장에 실패했습니다!");
       request.setAttribute("error", e);
-      request.getRequestDispatcher("/jsp/error").forward(request, response);
-    }
+      request.setAttribute("refresh", "list");
+    } 
   }
 }
