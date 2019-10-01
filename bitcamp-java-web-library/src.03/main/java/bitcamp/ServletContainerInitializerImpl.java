@@ -12,20 +12,17 @@ import javax.servlet.ServletRegistration.Dynamic;
 //       /META-INF/services/javax.servlet.ServletContainerInitializer 파일
 // 
 
-//만약 서블릿 컨테이너에게 특정 타입의 객체를 찾아 보고하라고 지정하고 싶으면 
-//다음 애노테이션을 사용하여 찾고자 하는 타입을 알려줘라!
 public class ServletContainerInitializerImpl 
   implements ServletContainerInitializer{
 
   @Override
   public void onStartup(Set<Class<?>> types, ServletContext ctx) throws ServletException {
-    // 이 메서드는 서블릿 컨테이너가 시작될 때 자동 호출될 것이다.
     System.out.println("ServletContainerInitializerImpl.onStartup()...호출됨!");
-
+    
     // 프로그램 코드로 서블릿 배치하기
     // => 서블릿 객체를 등록한다.
-    Dynamic register =  ctx.addServlet("hi", new HiServlet());
-  
+    Dynamic register = ctx.addServlet("hi", new HiServlet());
+    
     // => 서블릿에 URL을 붙인다.
     register.addMapping("/hi");
   }

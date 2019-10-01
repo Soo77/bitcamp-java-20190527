@@ -10,31 +10,26 @@
 - Spring Web MVC 라이브러리 추가
 - HelloController 생성
 - /WEB-INF/app-context.xml 파일 생성
-    - Spring IoC 컨테이너 설정 파일
+  - Spring IoC 컨테이너 설정 파일
 - /WEB-INF/web.xml 파일 준비
-    - 프론트 컨트롤러 역할을 수행할 스프링 webmvc 에서 제공하는 프론트 역할을 수행할 서블릿을 배치한다.
-    
+  - 프론트 컨트롤러 역할을 수행할 스프링 webmvc 에서 제공하는 서블릿을 배치한다.
+
 ## src.03 : IoC 설정 파일의 위치 
 
-- /config/app-context.xml 로 위치 이동 및 이름 변경
-- <mvc:annotation-driven/> 태그 추가
+- /config/app-context.xml 로 위치 이동
 - /WEB-INF/web.xml 변경
-    - ContextLoaderListener 추가
-    - ContextLoaderListener가 사용할 ContextConfigLocation 파라미터 설정
-    - DispatcherServlet에 contextConfigLocation 초기화 파라미터 추가. 값은 빈채로 된다.
 
-## src.04 : IoC 설정파일의 위치
+## src.04 : IoC 설정 파일의 위치 
 
-- /WEB-INF/app-context.xml 로 위치 이동 및 이름 변경
+- /WEB-INF/app-servlet.xml 로 위치 이동 및 이름 변경
 - /WEB-INF/web.xml 변경
-  - ContextLoaderListener 추가
   - contextConfigLocation 초기화 파라미터 삭제
 
 ## src.05 : ContextLoaderListener와 DispatcherServlet의 IoC 컨테이너
 
-- /WEB-INF/app-context.xml 로 위치 이동 및 이름 변경
-  - <mvc:annotaion-driven/> 태그 추가
-  - ContextLoaderListener는 WebMVC 고나련 애노테이션을 처리할 객체가 없기 떄문에
+- /WEB-INF/config/app-context.xml 로 위치 이동 및 이름 변경
+  - <mvc:annotation-driven/> 태그 추가 
+  - ContextLoaderListener는 WebMVC 관련 애노테이션을 처리할 객체가 없기 때문에
     <mvc:annotation-driven/> 태그를 사용하여 별도로 등록해야 한다.
 - /WEB-INF/web.xml 변경
   - ContextLoaderListener 추가
@@ -57,27 +52,41 @@
 - bitcamp.AppConfig 클래스 생성
 - /WEB-INF/web.xml 변경
 
+## src.08 : SerlvetContainerInitializer 구현체의 활용 
 
-## src.08 : ServletContainerInitializer 구현체의 활용
 - Spring WebMVC의 WebApplicationInitializer를 이해하기 위한 기반 기술 소개.
 - bitcamp-java-web-library 프로젝트 준비
-- 자세한 것은 해당 프로젝트의 README.md 파일을 읽어 볼 것.
-
-## src.09 : web.xml 대신 WebApplicationInitializer 구현체에서 DispatcherServlet 등록하기
-
-- WebApplicationInitializerImpl 생성
+  - 자세한 것은 해당 프로젝트의 README.md 파일을 읽어 볼 것.
+- bitcamp-java-spring-webmvc/lib 폴더 생성
+  - bitcamp-java-web-library.jar 파일 넣기
+- build.gradle 에 lib 폴더에 있는 .jar 파일을 의존 라이브러리에 추가하기
+- MyWebInitializerImpl 클래스 생성 
+  - 이 클래스에서 DispatcherServlet 서블릿 등록하기 
 - web.xml 변경
   - DispatcherServlet 배치 정보 삭제
+  
+## src.09 : WebApplicationInitializer 구현체를 통해 DispatcherServlet 등록하기
 
+- build.gradle 변경 
+  - 기존에 테스트를 위해 포함했던 bitcamp-java-web-library.jar 파일 제거
+- WebApplicationInitializerImpl 생성
+  - 직접 IoC 컨테이너 준비
+  - DispatcherServlet 생성
+  - ServletContext를 통해 배치 
 
+## src.10 : WebApplicationInitializer 구현체를 통해 DispatcherServlet 등록하기 II
 
-## src03 : Spring Web MVC 설정하기 - Java config 설정
+- WebApplicationInitializerImpl 변경
+  - 직접 인터페이스를 구현하는 대신에 추상 클래스를 상속 받아 적절한 메서드를 오버라이딩 한다.
+  - AbstractAnnotationConfigDispatcherServletInitializer 클래스 상속 받기
 
-- DispatcherServlet 이 사용할 IoC 컨테이너를 설정한다.
-    - 자바 클래스로 설정하는 방법
-    - WebApplicationInitializer 구현체를 이용하여 설정하는 방법
+## src.11 : WebApplicationInitializer 구현체를 통해 DispatcherServlet 등록하기 III
 
-## src04 : Request Handler 정의하는 방법
+- WebApplicationInitializerImpl 변경
+  - 직접 인터페이스를 구현하는 대신에 추상 클래스를 상속 받아 적절한 메서드를 오버라이딩 한다.
+  - AbstractDispatcherServletInitializer 클래스를 상속 받기
+
+## src.12 : Request Handler 정의하는 방법
 
 - @Controller를 사용하여 페이지 컨트롤러 표시하기
 - Request Handler의 아규먼트

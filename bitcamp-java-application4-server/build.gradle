@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     
-    // 프로젝트를 웹 애플리케이션 프로젝트를 다룰 때 사용할 명령어 포함시키기.
+    // 웹 애플리케이션 프로젝트를 다룰 때 사용할 명령어 포함시키기
     id 'war'
     id 'eclipse-wtp'
 }
@@ -21,7 +21,6 @@ repositories {
 }
 
 dependencies {
-
     // Mybatis Persistence Framework
     compile group: 'org.mybatis', name: 'mybatis', version: '3.5.2'
     
@@ -29,7 +28,7 @@ dependencies {
     compile group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.4.3'
     
     // Spring IoC 컨테이너 - spring-webmvc 를 추가하면 이 라이브러리는 자동으로 포함된다.
-    // compile group: 'org.springframework', name: 'spring-context', version: '5.1.9.RELEASE'
+    //compile group: 'org.springframework', name: 'spring-context', version: '5.1.9.RELEASE'
     
     // Spring JDBC
     compile group: 'org.springframework', name: 'spring-jdbc', version: '5.1.9.RELEASE'
@@ -37,11 +36,8 @@ dependencies {
     // Mybatis-Spring
     compile group: 'org.mybatis', name: 'mybatis-spring', version: '2.0.2'
     
-    // Spring-Web MVC
+    // Spring WebMVC
     compile group: 'org.springframework', name: 'spring-webmvc', version: '5.1.9.RELEASE'
-    
-    // Log4j
-    compile group: 'log4j', name: 'log4j', version: '1.2.17'
     
     // Log4j2
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.12.1'
@@ -61,9 +57,12 @@ dependencies {
     // Reflections
     compile group: 'org.reflections', name: 'reflections', version: '0.9.11'
     
+    // JSON 데이터 처리
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.10'
     
+    // 파일 업로드 처리
+    compile group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
     
     implementation 'com.google.guava:guava:27.1-jre'
     testImplementation 'junit:junit:4.12'
 }
-

@@ -9,15 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 
 @SuppressWarnings("serial")
 public class HiServlet extends HttpServlet {
-
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
-    resp.setContentType("text/plain);charset=UTF-8");
+    resp.setContentType("text/plain;charset=UTF-8");
     PrintWriter out = resp.getWriter();
     out.println("안녕하세요!");
   }
-  
-  
-  
 }
